@@ -3,7 +3,7 @@
 copyright:
   years: 2017
 
-lastupdated: "2017-07-14"
+lastupdated: "2017-07-18"
 
 ---
 
@@ -286,7 +286,7 @@ To delete a rule, complete the following steps:
 ## Listing all rules
 {: #list}
 
-To delete a rule, complete the following steps:
+To list all rules, complete the following steps:
 
 1. Log in to a {{site.data.keyword.Bluemix_notm}} region, organization, and space. Run the command:
 

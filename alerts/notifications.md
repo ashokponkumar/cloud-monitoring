@@ -3,7 +3,7 @@
 copyright:
   years: 2017
 
-lastupdated: "2017-07-10"
+lastupdated: "2017-07-18"
 
 ---
 
@@ -284,7 +284,7 @@ To create a notification, complete the following steps:
 	
 	* *X-Auth-Scope-Id* is a parameter that passes the space GUID. The GUID must be prefixed with *s-* to identify a space. This header is required if you use an UAA token authentication. If you use an IAM authentication token, then this header is optional, and the domain information that is bound to the token is used.
 	
-	* Token is the UAA or IAM authentication token.
+	* Token is the UAA token, the IAM token, or the API key.
 	
 	* Space is the GUID of the space. It is only required when you use a UAA token.
 	
