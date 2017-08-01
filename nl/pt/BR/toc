@@ -1,0 +1,78 @@
+{:navgroup: .navgroup}
+{:topicgroup: .topicgroup}
+
+{: .toc subcollection="cloud-monitoring" audience="service" href="/docs/services/Cloud-Monitoring/index.html"}
+IBM Cloud Monitoring
+
+    {: .navgroup id="learn"}
+    index.md
+    
+    {: .topicgroup}
+    Sobre o IBM Cloud Monitoring
+        monitoring_ov.md
+        security_ov.md
+        send_retrieve_metrics_ov.md
+        config_alerts_ov.md
+        analyze_metrics_ov.md
+
+    {: .topicgroup}
+    Monitorando
+        containers/monitoring_containers_ov.md
+
+    {: .topicgroup}
+    Links relacionados
+        [Grafana User Guide](http://docs.grafana.org/guides/getting_started/)
+    {: .navgroup-end}
+
+    {: .navgroup id="howto"}
+    how-to/provision.md
+    plan/change_plan.md
+    
+    {: .topicgroup}
+    Alertas
+        alerts/notifications.md
+        alerts/rules.md
+        alerts/notifications.md
+        alerts/configure_alerts.md
+        alerts/retrieve_history.md
+
+    {: .topicgroup}
+    Contêineres do Docker
+        containers/analyzing_metrics_bmx_ui.md
+
+    {: .topicgroup}
+    Grafana
+        grafana/navigating_grafana.md
+
+    {: .topicgroup}
+    Métrica
+        send-metrics/send_data_api.md
+        retrieve-metrics/retrieve_data_api.md
+
+    {: .topicgroup}
+    Segurança
+        security/auth_iam.md
+        security/auth_uaa.md
+    {: .navgroup-end}
+
+    {: .navgroup id="help"}
+    monitoring_gettinghelp.md
+
+    {: .topicgroup}
+    Perguntas mais frequentes
+        qa/qa.md
+        qa/cli_qa.md
+        qa/grafana_qa.md
+    {: .navgroup-end}
+
+    {: .navgroup id="reference"}
+    [API de métricas](http://console.bluemix.net/apidocs/927-ibm-cloud-monitoring-rest-api)
+    [API de alertas](http://console.bluemix.net/apidocs/940-ibm-cloud-monitoring-rest-api)
+	
+    {: .navgroup-end}
+
+
+
+
+	
+    

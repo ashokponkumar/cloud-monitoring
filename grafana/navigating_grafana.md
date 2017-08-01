@@ -3,7 +3,7 @@
 copyright:
   years: 2017
 
-lastupdated: "2017-05-25"
+lastupdated: "2017-08-01"
 
 ---
 
@@ -60,7 +60,26 @@ The query that is used to filter the data that is displayed in Grafana retrieves
 
 Complete the following steps to launch Grafana from a browser:
 
-1. Open [https://metrics.ng.bluemix.net](https://metrics.ng.bluemix.net) to log in to the Grafana user interface.
+1. Open a web browser. 
+2. Enter the URL for the region where you want to monitor metrics. 
+
+    The following table lists the URLs per region:
+	<table>
+      <caption>URLs to launch Grafana in different regions</caption>
+      <tr>
+        <th>Region</th>
+	    <th>Endpoint</th>
+      </tr>
+      <tr>
+        <td>US South</td>
+    	<td>[https://metrics.ng.bluemix.net](https://metrics.ng.bluemix.net)</td>
+      </tr>
+      <tr>
+        <td>United Kingdom</td>
+	    <td>[https://metrics.eu-gb.bluemix.net](https://metrics.eu-gb.bluemix.net)</td>
+      </tr>
+    </table>
+	
 2. Select **Grafana**.
      
 

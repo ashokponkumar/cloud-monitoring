@@ -3,7 +3,7 @@
 copyright:
   years: 2017
 
-lastupdated: "2017-07-12"
+lastupdated: "2017-08-01"
 
 ---
 
@@ -79,18 +79,21 @@ The following table outlines the plans that are available:
         <th>Sending of metrics by using the API</th>
         <th>Metrics retention period</th>
         <th>Alerts</th>
+		<th>Notification methods</th>
       </tr>
       <tr>
         <td>Lite (default)</td>
         <td>Not available</td>
         <td>15 days</td>
         <td>You can define up to 10 single metric alerting rules or 1 rule that includes a wildcard.</td>
+		<td>Email</td>
       </tr>
       <tr>
         <td>Premium</td>
         <td>Available</td>
         <td>45 days</td>
         <td>You can define alerting rules including rules with wildcards.</td>
+		<td>Email, webhook, PagerDuty</td>
       </tr>
 </table>
 
@@ -140,9 +143,10 @@ Consider the following information about the {{site.data.keyword.monitoringshort
 ## Regions
 {: #regions}
 
-The {{site.data.keyword.monitoringshort}} service is available in the following region:
+The {{site.data.keyword.monitoringshort}} service is available in the following regions:
 
 * US South
+* United Kingdom
 
 
 
@@ -156,17 +160,21 @@ The {{site.data.keyword.monitoringshort}} service is available to anyone with a 
 * There is a single URL that is shared by the ingest and API/Web UI endpoints.
 * Port 443 is a TLS port that is used to access metrics through the API and the Web UI (Grafana).
 
-The following table lists the URL to the public cloud environment that is supported:
+The following table lists the URLs per region:
 
 <table>
-  <caption>Table 3. List of endpoints to work with the {{site.data.keyword.monitoringshort}} service.</caption>
+  <caption>Table 3. List of endpoints to work with the {{site.data.keyword.monitoringshort}} service</caption>
   <tr>
     <th>Region</th>
 	<th>Endpoint</th>
   </tr>
   <tr>
     <td>US South</td>
-	<td>metrics.ng.bluemix.net</td>
+	<td>[metrics.ng.bluemix.net](metrics.ng.bluemix.net)</td>
+  </tr>
+  <tr>
+    <td>United Kingdom</td>
+	<td>[metrics.eu-gb.bluemix.net](metrics.eu-gb.bluemix.net)</td>
   </tr>
 </table>
 

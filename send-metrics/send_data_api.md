@@ -3,7 +3,7 @@
 copyright:
   years: 2017
 
-lastupdated: "2017-07-12"
+lastupdated: "2017-08-01"
 
 ---
 
@@ -33,7 +33,30 @@ To send metrics to a {{site.data.keyword.Bluemix_notm}} space, complete the foll
 
 1. Log in to a {{site.data.keyword.Bluemix_notm}} region, organization, and space. Run the command:
 
-    For example, to log in to the US South region, run the following comnmand:
+    ```
+	cf login -a Endpoint
+	```
+	{: codeblock}
+	
+	Where *Endpoint* is the URL to log in to {{site.data.keyword.Bluemix_notm}}. This URL is different per region.
+	
+	<table>
+	    <caption>List of endpoints to access {{site.data.keyword.Bluemix_notm}}</caption>
+		<tr>
+		  <th>Region</th>
+		  <th>URL</th>
+		</tr>
+		<tr>
+		  <td>US South</td>
+		  <td>[api.ng.bluemix.net](api.ng.bluemix.net)</td>
+		</tr>
+		<tr>
+		  <td>United Kingdom</td>
+		  <td>[api.eu-gb.bluemix.net](api.eu-gb.bluemix.net)</td>
+		</tr>
+	</table>
+
+    For example, to log in to the US South region, run the following command:
 	
 	```
     cf login -a https://api.ng.bluemix.net
@@ -104,7 +127,7 @@ To send metrics to a {{site.data.keyword.Bluemix_notm}} space, complete the foll
 5. Run the following cURL command to send metrics:
 
     ```
-	curl -XPOST -d @Metric_File --header "X-Auth-User-Token:uaa ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/metrics
+	curl -XPOST -d @Metric_File --header "X-Auth-User-Token:uaa ${Token}" --header "X-Auth-Scope-Id: ${Space}" Endpoint/v1/metrics
 	```
 	{: codeblock}
 	
@@ -121,6 +144,24 @@ To send metrics to a {{site.data.keyword.Bluemix_notm}} space, complete the foll
 	* Token represents the UAA token.
 	
 	* Space represents the GUID of the space. 
+	
+	* Endpoint represents the entry point to the service. Each region has a different URL. The following table lists the endpoints by region:
+	
+		<table>
+	    <caption>List of endpoints</caption>
+		<tr>
+		  <th>Region</th>
+		  <th>URL</th>
+		</tr>
+		<tr>
+		  <td>US South</td>
+		  <td>[https://metrics.ng.bluemix.net](https://metrics.ng.bluemix.net)</td>
+		</tr>
+		<tr>
+		  <td>United Kingdom</td>
+		  <td>[https://metrics.eu-gb.bluemix.net](https://metrics.eu-gb.bluemix.net)</td>
+		</tr>
+	    </table>
 	
 	For example, you can run the following command to send 2 metrics, `myhost.cpu.idle` and `myapp.login.attempts`, to the {{site.data.keyword.monitoringshort}} service:
 	
@@ -153,7 +194,30 @@ To send metrics to a {{site.data.keyword.Bluemix_notm}} space, complete the foll
 
 1. Log in to a {{site.data.keyword.Bluemix_notm}} region, organization, and space. Run the command:
 
-    For example, to log in to the US South region, run the following comnmand:
+    ```
+	bx login -a Endpoint
+	```
+	{: codeblock}
+	
+	Where *Endpoint* is the URL to log in to {{site.data.keyword.Bluemix_notm}}. This URL is different per region.
+	
+	<table>
+	    <caption>List of endpoints to access {{site.data.keyword.Bluemix_notm}}</caption>
+		<tr>
+		  <th>Region</th>
+		  <th>URL</th>
+		</tr>
+		<tr>
+		  <td>US South</td>
+		  <td>[api.ng.bluemix.net](api.ng.bluemix.net)</td>
+		</tr>
+		<tr>
+		  <td>United Kingdom</td>
+		  <td>[api.eu-gb.bluemix.net](api.eu-gb.bluemix.net)</td>
+		</tr>
+	</table>
+	
+	For example, to log in to the US South region, run the following command:
 	
 	```
     bx login -a https://api.ng.bluemix.net
@@ -227,7 +291,7 @@ To send metrics to a {{site.data.keyword.Bluemix_notm}} space, complete the foll
 5. Run a cURL command to send metrics.
 
     ```
-	curl -XPOST -d @Metric_File --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/metrics
+	curl -XPOST -d @Metric_File --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" Endpoint/v1/metrics
 	```
 	{: codeblock}
 	
@@ -247,9 +311,27 @@ To send metrics to a {{site.data.keyword.Bluemix_notm}} space, complete the foll
 	* Token represents the IAM token, or API key.
 	
 	* Space represents the GUID of the space. 
+	
+	* Endpoint represents the entry point to the service. Each region has a different URL. The following table lists the endpoints by region:
+	
+		<table>
+	    <caption>List of endpoints</caption>
+		<tr>
+		  <th>Region</th>
+		  <th>URL</th>
+		</tr>
+		<tr>
+		  <td>US South</td>
+		  <td>[https://metrics.ng.bluemix.net](https://metrics.ng.bluemix.net)</td>
+		</tr>
+		<tr>
+		  <td>United Kingdom</td>
+		  <td>[https://metrics.eu-gb.bluemix.net](https://metrics.eu-gb.bluemix.net)</td>
+		</tr>
+	    </table>
 
 	
-For example, you can run the following command to send two metrics, `myhost.cpu.idle` and `myapp.login.retries`, to a space into the {{site.data.keyword.monitoringshort}} service:
+For example, in the US South region, you can run the following command to send two metrics, `myhost.cpu.idle` and `myapp.login.retries`, to a space into the {{site.data.keyword.monitoringshort}} service:
 	
 ```
 curl -XPOST @metric.json --header "X-Auth-User-Token:iam ${Token}" https://metrics.ng.bluemix.net/v1/metrics

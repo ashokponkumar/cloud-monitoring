@@ -1,0 +1,595 @@
+---
+
+copyright:
+  years: 2017
+
+lastupdated: "2017-07-18"
+
+---
+
+{:shortdesc: .shortdesc}
+{:new_window: target="_blank"}
+{:codeblock: .codeblock}
+{:screen: .screen}
+{:pre: .pre}
+
+
+# Utilisation de règles à l'aide de l'API Alerts
+{: #rules}
+
+Utilisez l'API Alerts pour créer, supprimer et mettre à jour une règle, afficher les détails d'une règle, et répertorier les règles qui sont définies dans votre espace {{site.data.keyword.Bluemix_notm}}.
+{:shortdesc}
+
+
+## Création d'une règle
+{: #create}
+
+Pour créer une règle, procédez comme suit :
+
+1. Créez un fichier de règle contenant un code JSON valide. Sauvegardez le fichier. 
+
+    Par exemple, pour sauvegarder le fichier, utilisez un préfixe tel que *s-* pour les règles que vous définissez pour les requêtes s'exécutant dans un espace {{site.data.keyword.Bluemix_notm}}.
+	
+	**Astuces :** 
+	
+	* Définissez des règles différentes pour une requête afin de signaler des erreurs ou des avertissements à l'aide d'une méthode de notification différente. Vous ne pouvez définir qu'une seule méthode de notification par règle. 
+	* Créez votre fichier de règle dans le répertoire *~/cloud-monitoring/rules/* afin de regrouper les ressources du service {{site.data.keyword.monitoringshort_notm}}. 
+
+    Entrez les informations suivantes dans le fichier de règle :
+	
+	* *name* : entrez un nom unique. La valeur de cette zone sera utilisée ultérieurement pour mettre à jour ou supprimer la règle, ou afficher ses détails.
+	* *description* : entrez une description.
+	* *expression* : entrez la requête à surveiller.
+	* *enabled* : définissez *true* pour activer la règle.
+	* *from* : point de départ pour l'analyse des données en fonction des valeurs de seuil.
+	* *until*: point de fin pour l'analyse des données en fonction des valeurs de seuil.
+	* *comparison* : opération de comparaison utilisée pour identifier le type de vérification à effectuer, par exemple *below*.
+	* *error_level* : définit le seul que vous avez configuré pour le déclenchement d'une alerte d'erreur.
+	* *warning_level* : définit le seul que vous avez configuré pour le déclenchement d'une alerte d'avertissement.
+	* *frequency* : définit la fréquence à laquelle vous vérifiez les données.
+	* *dashboard_url* : définit une adresse URL qui affiche un tableau comportant la requête dans Grafana.
+	* *notifications* : méthode de notification si l'alerte décrite par cette règle est déclenchée.
+	
+	Par exemple, 
+	
+	```
+	{
+    "name": "checkbytesin",
+    "description": "MH check Bytes In per second",
+    "expression": "movingAverage(messagehub.65qser11-8034-1234-5678-c82fb42wdfgh.1.kafka-java-console-sample-topic.BytesInPerSec.15MinuteRate,\"5min\")",
+    "enabled": true,
+    "from": "-5min",
+    "until": "now",
+    "comparison": "above",
+    "comparison_scope": "last",
+    "error_level" : 27,
+    "warning_level" : 25,
+    "frequency": "1min",
+    "dashboard_url": "https://metrics.ng.bluemix.net",
+    "notifications": [
+      "emailXXX"
+    ]
+    }
+    ```
+	{: screen}
+	
+2. Connectez-vous à une région, une organisation et un espace {{site.data.keyword.Bluemix_notm}}. Exécutez la commande :
+
+    Par exemple, pour vous connecter à la région du sud des États-Unis, exécutez la commande suivante :
+	
+	```
+    bx login -a https://api.ng.bluemix.net
+    ```
+    {: codeblock}
+
+    Suivez les instructions. Entrez vos données d'identification {{site.data.keyword.Bluemix_notm}} et sélectionnez une organisation et un espace.
+
+3. Obtenez le jeton d'authentification ou la clé d'API.
+
+    * Pour l'authentification IAM, voir [Obtention du jeton IAM à l'aide de l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) ou [Génération d'une clé d'API IAM à l'aide de l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	
+	* Pour l'authentification UAA, voir [Obtention du jeton UAA via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) ou [Obtention du jeton UAA via l'API REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
+
+	Par exemple, pour utiliser le jeton IAM, exécutez la commande suivante :
+
+    ```
+	bx iam oauth-tokens
+	```
+	{: codeblock}
+	
+	Le résultat de cette commande est le suivant :
+	
+	```
+	IAM token:  Bearer djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ
+    UAA token:  Bearer eyJhbGciOiJIUz..Ky6vagp3k_QcIcKJ-td83qXhO5Uze43KcplG6PzcGs8
+	```
+	{: screen}
+	
+	Exportez ensuite la variable *Token* :
+	
+	```
+	export Token="djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ"
+	```
+	{: screen}
+	
+	**Remarque :** le jeton exclut *Bearer*.
+	
+4. Obtenez l'identificateur global unique de l'espace. Un identificateur global unique identifiant un espace doit avoir le préfixe *s-*.
+
+    Exécutez la commande suivante :
+	
+	```
+	bx iam space SpaceName --guid
+	```
+	{: codeblock}
+	
+	Où *SpaceName* est le nom de l'espace dans lequel vous allez définir une notification.
+	
+	Par exemple, pour obtenir l'identificateur global unique d'un espace dont le nom est *dev*, exécutez la commande suivante :
+	
+	```
+	bx iam space dev --guid
+	```
+	{: screen}
+	
+	Le résultat de cette commande est le suivant :
+	
+	```
+	667fadfc-jhtg-1234-9f0e-cf4123451095
+	```
+	{: screen}
+	
+	Exportez ensuite la variable *Space* :
+	
+	```
+	export Space="s-667fadfc-jhtg-1234-9f0e-cf4123451095"
+	```
+	{: screen}
+	
+5. Exécutez la commande cURL suivante pour créer une règle :
+
+    ```
+	curl -XPOST -d @Rule_File --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rule
+	```
+	{: codeblock}
+	
+	où
+	
+	* Rule_File est le fichier JSON qui définit votre règle d'alerte.
+	
+	* *X-Auth-User-Token* est un paramètre qui transmet le jeton {{site.data.keyword.Bluemix_notm}} UAA, le jeton IAM ou la clé d'API.
+	
+	* *Auth_Type* est le préfixe qui définit le type de jeton ou de clé d'API. La liste ci-dessous répertorie les valeurs valides : *apikey*, *iam* et *uaa*, où
+
+        * *apikey* indique que le jeton est une clé d'API.
+		* *iam* indique que le jeton spécifié est un jeton généré par IAM.
+		* *uaa* indique que le jeton spécifié est un jeton généré par UAA.
+	
+	* *X-Auth-Scope-Id* est un paramètre qui transmet l'identificateur global unique de l'espace. Un identificateur global unique identifiant un espace doit avoir le préfixe *s-*. Cet en-tête est requis si vous utilisez un jeton d'authentification UAA. Si vous utilisez un jeton d'authentification IAM, cet en-tête est facultatif et les informations de domaine qui sont associées au jeton sont utilisées.
+	
+	* Token est le jeton d'authentification UAA ou IAM, ou la clé d'API.
+	
+	* Space est l'identificateur global unique de l'espace. Il n'est requis que si vous utilisez un jeton UAA.
+	
+    Par exemple 	
+	
+	```
+	curl -XPOST -d @s-rule-1.json --header "X-Auth-User-Token:iam ${Token}" https://metrics.ng.bluemix.net/v1/alert/rule
+	```
+	{: screen}
+
+## Suppression d'une règle
+{: #delete}
+
+Pour supprimer une règle, procédez comme suit :
+
+1. Connectez-vous à une région, une organisation et un espace {{site.data.keyword.Bluemix_notm}}. Exécutez la commande :
+
+    Par exemple, pour vous connecter à la région du sud des États-Unis, exécutez la commande suivante :
+
+```
+    bx login -a https://api.ng.bluemix.net
+    ```
+    {: codeblock}
+
+    Suivez les instructions. Entrez vos données d'identification {{site.data.keyword.Bluemix_notm}} et sélectionnez une organisation et un espace.
+
+2. Obtenez le jeton d'authentification ou la clé d'API.
+
+    * Pour l'authentification IAM, voir [Obtention du jeton IAM via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) ou [Génération d'une clé d'API IAM via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	
+	* Pour l'authentification UAA, voir [Obtention du jeton UAA via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) ou [Obtention du jeton UAA via l'API REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
+	Par exemple, pour utiliser le jeton IAM, exécutez la commande suivante :
+
+    ```
+	bx iam oauth-tokens
+	```
+	{: codeblock}
+	
+	Le résultat de cette commande est le suivant :
+	
+	```
+	IAM token:  Bearer djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ
+    UAA token:  Bearer eyJhbGciOiJIUz..Ky6vagp3k_QcIcKJ-td83qXhO5Uze43KcplG6PzcGs8
+	```
+	{: screen}
+	
+	Exportez ensuite la variable *Token* :
+	
+	```
+	export Token="djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ"
+	```
+	{: screen}
+	
+	**Remarque :** le jeton exclut *Bearer*.
+	
+3. Obtenez l'identificateur global unique de l'espace. Un identificateur global unique identifiant un espace doit avoir le préfixe *s-*.
+
+    Exécutez la commande suivante :
+	
+	```
+	bx iam space SpaceName --guid
+	```
+	{: codeblock}
+	
+	Où *SpaceName* est le nom de l'espace dans lequel vous allez définir une notification.
+	
+	Par exemple, pour obtenir l'identificateur global unique d'un espace dont le nom est *dev*, exécutez la commande suivante :
+	
+	```
+	bx iam space dev --guid
+	```
+	{: screen}
+	
+	Le résultat de cette commande est le suivant :
+	
+	```
+	667fadfc-jhtg-1234-9f0e-cf4123451095
+	```
+	{: screen}
+	
+	Exportez ensuite la variable *Space* :
+	
+	```
+	export Space="s-667fadfc-jhtg-1234-9f0e-cf4123451095"
+	```
+	{: screen}
+	
+4. Exécutez la commande cURL suivante pour supprimer une règle :
+
+    ```
+	curl -XDELETE --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rule/Rule_Name
+	```
+	{: codeblock}
+	
+	où
+	
+    * *X-Auth-User-Token* est un paramètre qui transmet le jeton {{site.data.keyword.Bluemix_notm}} UAA, le jeton IAM ou la clé d'API.
+	
+	* *Auth_Type* est le préfixe qui définit le type de jeton ou de clé d'API. La liste ci-dessous répertorie les valeurs valides : *apikey*, *iam* et *uaa*, où
+
+        * *apikey* indique que le jeton est une clé d'API.
+		* *iam* indique que le jeton spécifié est un jeton généré par IAM.
+		* *uaa* indique que le jeton spécifié est un jeton généré par UAA.
+	
+	* *X-Auth-Scope-Id* est un paramètre qui transmet l'identificateur global unique de l'espace. Un identificateur global unique identifiant un espace doit avoir le préfixe *s-*. Cet en-tête est requis si vous utilisez un jeton d'authentification UAA. Si vous utilisez un jeton d'authentification IAM, cet en-tête est facultatif et les informations de domaine qui sont associées au jeton sont utilisées.
+	
+	* Token est le jeton d'authentification UAA ou IAM, ou la clé d'API.
+	
+	* Space est l'identificateur global unique de l'espace. Il n'est requis que si vous utilisez un jeton UAA.
+	
+	* Rule_Name est le nom de la règle tel que spécifié dans la zone *name*.
+	
+    
+	
+## Listing all rules
+{: #list}
+
+Pour afficher la liste de toutes les règles, procédez comme suit :
+
+1. Connectez-vous à une région, une organisation et un espace {{site.data.keyword.Bluemix_notm}}. Exécutez la commande :
+
+    Par exemple, pour vous connecter à la région du sud des États-Unis, exécutez la commande suivante :
+
+```
+    bx login -a https://api.ng.bluemix.net
+    ```
+    {: codeblock}
+
+    Suivez les instructions. Entrez vos données d'identification {{site.data.keyword.Bluemix_notm}} et sélectionnez une organisation et un espace.
+
+2. Obtenez le jeton d'authentification ou la clé d'API.
+
+    * Pour l'authentification IAM, voir [Obtention du jeton IAM via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) ou [Génération d'une clé d'API IAM via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	
+	* Pour l'authentification UAA, voir [Obtention du jeton UAA via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) ou [Obtention du jeton UAA via l'API REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
+	Par exemple, pour utiliser le jeton IAM, exécutez la commande suivante :
+
+    ```
+	bx iam oauth-tokens
+	```
+	{: codeblock}
+	
+	Le résultat de cette commande est le suivant :
+	
+	```
+	IAM token:  Bearer djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ
+    UAA token:  Bearer eyJhbGciOiJIUz..Ky6vagp3k_QcIcKJ-td83qXhO5Uze43KcplG6PzcGs8
+	```
+	{: screen}
+	
+	Exportez ensuite la variable *Token* :
+	
+	```
+	export Token="djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ"
+	```
+	{: screen}
+	
+	**Remarque :** le jeton exclut *Bearer*.
+	
+3. Obtenez l'identificateur global unique de l'espace. Un identificateur global unique identifiant un espace doit avoir le préfixe *s-*.
+
+    Exécutez la commande suivante :
+	
+	```
+	bx iam space SpaceName --guid
+	```
+	{: codeblock}
+	
+	Où *SpaceName* est le nom de l'espace dans lequel vous allez définir une notification.
+	
+	Par exemple, pour obtenir l'identificateur global unique d'un espace dont le nom est *dev*, exécutez la commande suivante :
+	
+	```
+	bx iam space dev --guid
+	```
+	{: screen}
+	
+	Le résultat de cette commande est le suivant :
+	
+	```
+	667fadfc-jhtg-1234-9f0e-cf4123451095
+	```
+	{: screen}
+	
+	Exportez ensuite la variable *Space* :
+	
+	```
+	export Space="s-667fadfc-jhtg-1234-9f0e-cf4123451095"
+	```
+	{: screen}
+	
+4. Exécutez la commande cURL suivante pour répertorier toutes les règles d'un espace :
+
+    ```
+	curl -XGET --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rules
+	```
+	{: codeblock}
+	
+	où
+	
+	* *X-Auth-User-Token* est un paramètre qui transmet le jeton {{site.data.keyword.Bluemix_notm}} UAA, le jeton IAM ou la clé d'API.
+	
+	* *Auth_Type* est le préfixe qui définit le type de jeton ou de clé d'API. La liste ci-dessous répertorie les valeurs valides : *apikey*, *iam* et *uaa*, où
+
+        * *apikey* indique que le jeton est une clé d'API.
+		* *iam* indique que le jeton spécifié est un jeton généré par IAM.
+		* *uaa* indique que le jeton spécifié est un jeton généré par UAA.
+	
+	* *X-Auth-Scope-Id* est un paramètre qui transmet l'identificateur global unique de l'espace. Un identificateur global unique identifiant un espace doit avoir le préfixe *s-*. Cet en-tête est requis si vous utilisez un jeton d'authentification UAA. Si vous utilisez un jeton d'authentification IAM, cet en-tête est facultatif et les informations de domaine qui sont associées au jeton sont utilisées.
+	
+	* Token est le jeton d'authentification UAA ou IAM, ou la clé d'API.
+	
+	* Space est l'identificateur global unique de l'espace. Il n'est requis que si vous utilisez un jeton UAA.
+	
+
+	
+	
+
+## Affichage des détails d'une règle
+{: show}
+
+Pour afficher les détails d'une règle, procédez comme suit :
+
+1. Connectez-vous à une région, une organisation et un espace {{site.data.keyword.Bluemix_notm}}. Exécutez la commande :
+
+    Par exemple, pour vous connecter à la région du sud des États-Unis, exécutez la commande suivante :
+
+```
+    bx login -a https://api.ng.bluemix.net
+    ```
+    {: codeblock}
+
+    Suivez les instructions. Entrez vos données d'identification {{site.data.keyword.Bluemix_notm}} et sélectionnez une organisation et un espace.
+
+2. Obtenez le jeton d'authentification ou la clé d'API.
+
+    * Pour l'authentification IAM, voir [Obtention du jeton IAM via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) ou [Génération d'une clé d'API IAM via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	
+	* Pour l'authentification UAA, voir [Obtention du jeton UAA via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) ou [Obtention du jeton UAA via l'API REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
+	Par exemple, pour utiliser le jeton IAM, exécutez la commande suivante :
+
+    ```
+	bx iam oauth-tokens
+	```
+	{: codeblock}
+	
+	Le résultat de cette commande est le suivant :
+	
+	```
+	IAM token:  Bearer djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ
+    UAA token:  Bearer eyJhbGciOiJIUz..Ky6vagp3k_QcIcKJ-td83qXhO5Uze43KcplG6PzcGs8
+	```
+	{: screen}
+	
+	Exportez ensuite la variable *Token* :
+	
+	```
+	export Token="djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ"
+	```
+	{: screen}
+	
+	**Remarque :** le jeton exclut *Bearer*.
+	
+3. Obtenez l'identificateur global unique de l'espace. Un identificateur global unique identifiant un espace doit avoir le préfixe *s-*.
+
+    Exécutez la commande suivante :
+	
+	```
+	bx iam space SpaceName --guid
+	```
+	{: codeblock}
+	
+	Où *SpaceName* est le nom de l'espace dans lequel vous allez définir une notification.
+	
+	Par exemple, pour obtenir l'identificateur global unique d'un espace dont le nom est *dev*, exécutez la commande suivante :
+	
+	```
+	bx iam space dev --guid
+	```
+	{: screen}
+	
+	Le résultat de cette commande est le suivant :
+	
+	```
+	667fadfc-jhtg-1234-9f0e-cf4123451095
+	```
+	{: screen}
+	
+	Exportez ensuite la variable *Space* :
+	
+	```
+	export Space="s-667fadfc-jhtg-1234-9f0e-cf4123451095"
+	```
+	{: screen}
+	
+4. Exécutez la commande cURL suivante pour afficher les détails d'une règle :
+
+    ```
+	curl -XGET --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rule/Rule_Name
+	```
+	{: codeblock}
+	
+	où
+	
+	* *X-Auth-User-Token* est un paramètre qui transmet le jeton {{site.data.keyword.Bluemix_notm}} UAA, le jeton IAM ou la clé d'API.
+	
+	* *Auth_Type* est le préfixe qui définit le type de jeton ou de clé d'API. La liste ci-dessous répertorie les valeurs valides : *apikey*, *iam* et *uaa*, où
+
+        * *apikey* indique que le jeton est une clé d'API.
+		* *iam* indique que le jeton spécifié est un jeton généré par IAM.
+		* *uaa* indique que le jeton spécifié est un jeton généré par UAA.
+	
+	* *X-Auth-Scope-Id* est un paramètre qui transmet l'identificateur global unique de l'espace. Un identificateur global unique identifiant un espace doit avoir le préfixe *s-*. Cet en-tête est requis si vous utilisez un jeton d'authentification UAA. Si vous utilisez un jeton d'authentification IAM, cet en-tête est facultatif et les informations de domaine qui sont associées au jeton sont utilisées.
+	
+	* Token est le jeton d'authentification UAA ou IAM, ou la clé d'API.
+	
+	* Space est l'identificateur global unique de l'espace. Il n'est requis que si vous utilisez un jeton UAA.
+	
+	* Rule_Name est le nom de la règle tel que spécifié dans la zone *name*.
+	
+
+## Mise à jour d'une règle
+{: #update}
+
+Pour mettre à jour une règle, procédez comme suit :
+
+1. Connectez-vous à une région, une organisation et un espace {{site.data.keyword.Bluemix_notm}}. Exécutez la commande :
+
+    Par exemple, pour vous connecter à la région du sud des États-Unis, exécutez la commande suivante :
+
+```
+    bx login -a https://api.ng.bluemix.net
+    ```
+    {: codeblock}
+
+    Suivez les instructions. Entrez vos données d'identification {{site.data.keyword.Bluemix_notm}} et sélectionnez une organisation et un espace.
+
+2. Obtenez le jeton d'authentification ou la clé d'API.
+
+    * Pour l'authentification IAM, voir [Obtention du jeton IAM via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) ou [Génération d'une clé d'API IAM via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	
+	* Pour l'authentification UAA, voir [Obtention du jeton UAA via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) ou [Obtention du jeton UAA via l'API REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
+	Par exemple, pour utiliser le jeton IAM, exécutez la commande suivante :
+
+    ```
+	bx iam oauth-tokens
+	```
+	{: codeblock}
+	
+	Le résultat de cette commande est le suivant :
+	
+	```
+	IAM token:  Bearer djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ
+    UAA token:  Bearer eyJhbGciOiJIUz..Ky6vagp3k_QcIcKJ-td83qXhO5Uze43KcplG6PzcGs8
+	```
+	{: screen}
+	
+	Exportez ensuite la variable *Token* :
+	
+	```
+	export Token="djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ"
+	```
+	{: screen}
+	
+	**Remarque :** le jeton exclut *Bearer*.
+	
+3. Obtenez l'identificateur global unique de l'espace. Un identificateur global unique identifiant un espace doit avoir le préfixe *s-*.
+
+    Exécutez la commande suivante :
+	
+	```
+	bx iam space SpaceName --guid
+	```
+	{: codeblock}
+	
+	Où *SpaceName* est le nom de l'espace dans lequel vous allez définir une notification.
+	
+	Par exemple, pour obtenir l'identificateur global unique d'un espace dont le nom est *dev*, exécutez la commande suivante :
+	
+	```
+	bx iam space dev --guid
+	```
+	{: screen}
+	
+	Le résultat de cette commande est le suivant :
+	
+	```
+	667fadfc-jhtg-1234-9f0e-cf4123451095
+	```
+	{: screen}
+	
+	Exportez ensuite la variable *Space* :
+	
+	```
+	export Space="s-667fadfc-jhtg-1234-9f0e-cf4123451095"
+	```
+	{: screen}
+	
+4. Exécutez la commande cURL suivante pour mettre à jour une règle :
+
+    ```
+	curl -XPUT `-d @Rule_File` --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rule
+	```
+	{: codeblock}
+	
+	où
+	
+	* Rule_File est le fichier JSON qui définit votre règle d'alerte.
+	
+	* *X-Auth-User-Token* est un paramètre qui transmet le jeton {{site.data.keyword.Bluemix_notm}} UAA, le jeton IAM ou la clé d'API.
+	
+	* *Auth_Type* est le préfixe qui définit le type de jeton ou de clé d'API. La liste ci-dessous répertorie les valeurs valides : *apikey*, *iam* et *uaa*, où
+
+        * *apikey* indique que le jeton est une clé d'API.
+		* *iam* indique que le jeton spécifié est un jeton généré par IAM.
+		* *uaa* indique que le jeton spécifié est un jeton généré par UAA.
+	
+	* *X-Auth-Scope-Id* est un paramètre qui transmet l'identificateur global unique de l'espace. Un identificateur global unique identifiant un espace doit avoir le préfixe *s-*. Cet en-tête est requis si vous utilisez un jeton d'authentification UAA. Si vous utilisez un jeton d'authentification IAM, cet en-tête est facultatif et les informations de domaine qui sont associées au jeton sont utilisées.
+	
+	* Token est le jeton d'authentification UAA ou IAM, ou la clé d'API.
+	
+	* Space est l'identificateur global unique de l'espace. Il n'est requis que si vous utilisez un jeton UAA.
+
+	
+	

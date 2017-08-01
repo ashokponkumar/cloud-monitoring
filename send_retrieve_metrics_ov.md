@@ -3,7 +3,7 @@
 copyright:
   years: 2017
 
-lastupdated: "2017-07-10"
+lastupdated: "2017-07-31"
 
 ---
 
@@ -32,7 +32,7 @@ For {{site.data.keyword.Bluemix_notm}} Docker containers, basic system metrics a
 
 To send metrics into the {{site.data.keyword.monitoringshort}} service, consider the following information: 
 
-* You must set the {{site.data.keyword.Bluemix_notm}} space from where you want to retrieve the data.
+* You must set the {{site.data.keyword.Bluemix_notm}} space where you want to send the data.
 
 * You must provide a security token or API key to work with the {{site.data.keyword.monitoringshort}} service. 
 

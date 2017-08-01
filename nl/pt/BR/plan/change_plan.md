@@ -1,0 +1,125 @@
+---
+
+copyright:
+  years: 2017
+lastupdated: "2017-07-10"
+
+---
+
+{:new_window: target="_blank"}
+{:shortdesc: .shortdesc}
+{:screen: .screen}
+{:codeblock: .codeblock}
+{:pre: .pre}
+
+
+# Alterando o plano
+{: #change_plan}
+
+É possível mudar o seu plano de serviços {{site.data.keyword.monitoringshort}} em {{site.data.keyword.Bluemix}} no Painel de serviços ou executando o comando `cf update-service`. É possível fazer upgrade ou reduzir seu plano a qualquer momento.
+{:shortdesc}
+
+## Mudando o plano de serviços por meio da UI
+{: #change_plan_ui}
+
+Para mudar o seu plano de serviços no {{site.data.keyword.Bluemix_notm}} no Painel de serviços, conclua as etapas a seguir:
+
+1. Efetue login no {{site.data.keyword.Bluemix_notm}} e, em seguida, clique no serviço {{site.data.keyword.monitoringshort}} no painel do {{site.data.keyword.Bluemix_notm}}. 
+    
+2. Selecione a guia **Plano** na UI do {{site.data.keyword.Bluemix_notm}}.
+
+    Informações sobre o plano atual são exibidas.
+	
+3. Selecione um novo plano para fazer upgrade do seu plano ou reduzi-lo. 
+
+4. Clique em **Salvar**.
+
+
+
+## Mudando o plano de serviços por meio da CLI
+{: #change_plan_cli}
+
+Para mudar o seu plano de serviços no {{site.data.keyword.Bluemix_notm}} por meio da CLI, conclua as etapas a seguir:
+
+1. 1. Efetue login em uma região, uma organização e um espaço do {{site.data.keyword.Bluemix_notm}}. Execute o
+comando:
+
+    ```
+    cf login -a [https://api.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>](https://api.{DomainName})
+    ```
+    {: codeblock}
+	
+2. Execute o comando `cf services` para verificar o seu plano atual e para obter o nome do serviço do {{site.data.keyword.loganalysisshort}} na lista de serviços que está disponível no espaço. 
+
+    O valor do campo **nome** é aquele que deve-se ser usado para mudar o plano. 
+
+    Por exemplo,
+	
+	```
+	$ cf services
+	Getting services in org MyOrg / space dev as xxx@yyy.com...
+	OK
+	name            service      plan   bound apps   last operation
+	Monitoring-0c   Monitoring   premium             create succeeded
+    ```
+	{: screen}
+    
+3. Faça upgrade ou reduzir seu plano. Execute o `cf update-service` comando.
+    
+	```
+	Cf update-service service_name [-p new_plan ]
+	```
+	{: codeblock}
+	
+	Em que 
+	
+	* *service_name* é o nome do seu serviço. É possível executar o comando `cf services` para obter o valor.
+	* *new_plan* é o nome do plano.
+	
+	A tabela a seguir lista os planos diferentes e seus valores suportados:
+	
+	<table>
+	  <caption>Tabela 1.  Lista de planos.</caption>
+	  <tr>
+	    <th>Plan</th>
+		<th>Recursos</th>
+	    <th>Nome</th>
+	  </tr>
+	  <tr>
+	    <td>Lite</td>
+	    <td>Monitoramento de cortesia.</td>
+		<td>Lite</td>
+	  </tr>
+	  <tr>
+	    <td>Premium</td>
+	    <td>Monitoramento Premium.</td>
+		<td>Premium</td>
+	  </tr>
+	</table>
+	
+	Por exemplo, para reduzir seu plano para o plano *Lite*, execute o comando a seguir:
+	
+	```
+	cf update-service "Monitoring-0c" -p lite
+    Updating service instance Monitoring-0c as xxx@yyy.com...
+    OK
+	```
+	{: screen}
+
+4. Verifique se o novo plano é alterado. Execute o `cf services` comando.
+
+    ```
+	cf services
+    Getting services in org MyOrg / space dev as xxx@yyy.com...
+    OK
+
+    name              service       plan   bound apps   last operation
+    Monitoring-0c     Monitoring    lite                create succeeded
+	```
+	{: screen}
+
+
+
+
+
+
