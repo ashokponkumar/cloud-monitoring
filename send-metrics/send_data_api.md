@@ -48,11 +48,11 @@ To send metrics to a {{site.data.keyword.Bluemix_notm}} space, complete the foll
 		</tr>
 		<tr>
 		  <td>US South</td>
-		  <td>[api.ng.bluemix.net](api.ng.bluemix.net)</td>
+		  <td>api.ng.bluemix.net</td>
 		</tr>
 		<tr>
 		  <td>United Kingdom</td>
-		  <td>[api.eu-gb.bluemix.net](api.eu-gb.bluemix.net)</td>
+		  <td>api.eu-gb.bluemix.net</td>
 		</tr>
 	</table>
 
@@ -209,11 +209,11 @@ To send metrics to a {{site.data.keyword.Bluemix_notm}} space, complete the foll
 		</tr>
 		<tr>
 		  <td>US South</td>
-		  <td>[api.ng.bluemix.net](api.ng.bluemix.net)</td>
+		  <td>api.ng.bluemix.net</td>
 		</tr>
 		<tr>
 		  <td>United Kingdom</td>
-		  <td>[api.eu-gb.bluemix.net](api.eu-gb.bluemix.net)</td>
+		  <td>api.eu-gb.bluemix.net</td>
 		</tr>
 	</table>
 	

@@ -170,11 +170,11 @@ The following table lists the URLs per region:
   </tr>
   <tr>
     <td>US South</td>
-	<td>[metrics.ng.bluemix.net](metrics.ng.bluemix.net)</td>
+	<td>[https://metrics.ng.bluemix.net/](https://metrics.ng.bluemix.net/)</td>
   </tr>
   <tr>
     <td>United Kingdom</td>
-	<td>[metrics.eu-gb.bluemix.net](metrics.eu-gb.bluemix.net)</td>
+	<td>[https://metrics.eu-gb.bluemix.net](https://metrics.eu-gb.bluemix.net)</td>
   </tr>
 </table>
 
