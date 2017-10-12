@@ -41,41 +41,64 @@ The following figure shows a high level view of monitoring for the {{site.data.k
 
 ![High level component overview for containers deployed in a Kubernetes cluster](images/monitoring_kube.gif "High level component overview for containers deployed in a Kubernetes cluster")
 
-The crawler is a process that is running in the host and performs agentless monitoring for metrics. The crawler constantly collects the following metrics from all of the containers by default:
+The crawler is a process that is running in the host and performs agentless monitoring for metrics. The crawler constantly collects the following CPU and memory metrics from all of the containers by default:
 
 <table>
-  <caption>Table 1. Metrics captured by default</caption>
+  <caption>Table 1. CPU metrics captured by default</caption>
   <tr>
-    <th>Metric Type</th>
     <th>Metric Name</th>
     <th>Description</th>
   </tr>
   <tr>
-    <td>Memory</td>
+    <td>*cpu_num_cores*</td>
+    <td>This metric reports the number of CPU cores that are available to the container. <br><br>By default, this metric reports the number of cores on the worker. If you set a limit on the number of cores available to the container, then this metric reports the number of cores that you set in that limit.</td>
+  </tr>
+  <tr>
+    <td>*cpu_usage*</td>
+    <td>This metric reports the nanoseconds of CPU time across all cores. <br><br>When the CPU usage is high, you may experience delay. High CPU usage indicates insufficient processing power.</td>
+  </tr>
+  <tr>
+    <td>*cpu_usage_pct*</td>
+    <td>This metric reports on the CPU time that is used as a percentage of the CPU's capacity. <br><br>By default, CPU capacity is determined by the number of cores on the worker. If you set limits to container CPU capacity, then this metric reports the CPU usage as a percentage of the limits that you set. When the percentage of CPU usage is high, you may experience delay. High CPU usage indicates insufficient processing power.</td>
+  </tr>
+  <tr>
+    <td>*cpu_usage_pct_container_requested*</td>
+    <td>This metric reports the CPU time that is used as a percentage of the container's requested CPU. <br><br>If you do not set requested CPU on a container, then this metric is not exposed for the container.</td>
+  </tr>
+  <tr>
+    <td>*load_avg_1*</td>
+    <td>This metric reports the average CPU load for the Kubernetes host over the past 1 minute. <br><br>An average CPU load that is greater than the number of cores on the worker indicates that traffic to the host is queuing.</td>
+  </tr>
+  <tr>
+    <td>*load_avg_5*</td>
+    <td>This metric reports the average CPU load for the Kubernetes host over the past 5 minutes. <br><br>An average CPU load that is greater than the number of cores on the worker indicates that traffic to the host is queuing.</td>
+  </tr>
+  <tr>
+    <td>*load_avg_15*</td>
+    <td>This metric reports the average CPU load for the Kubernetes host over the past 15 minutes. <br><br>An average CPU load that is greater than the number of cores on the worker indicates that traffic to the host is queuing.</td>
+  </tr>
+</table>
+
+<table>
+  <caption>Table 2. Memory metrics captured by default</caption>
+  <tr>
+    <th>Metric Name</th>
+    <th>Description</th>
+  </tr>
+  <tr>
     <td>*memory_current*</td>
     <td>This metric reports the bytes of memory that the container is currently using. </td>
   </tr>
   <tr>
-    <td>Memory</td>
     <td>*memory_limit*</td>
-    <td>This metric reports on the memory amount that a container is allowed to swap to disk in comparison to the maximum and minimum limits set for a pod. <br> <br>By default, pods run with unlimited memory limits. A pod can consume as much memory as is on the worker where it is running. When you deploy a pod, you can set limits to the amount of memory that a pod can use. </td>
+    <td>This metric reports the memory amount that a container is allowed to swap to disk in comparison to the maximum and minimum limits set for a pod. <br> <br>By default, pods run with unlimited memory limits. A pod can consume as much memory as is on the worker where it is running. When you deploy a pod, you can set limits to the amount of memory that a pod can use. </td>
   </tr>
   <tr>
-    <td>CPU</td>
-    <td>*cpu_usage*</td>
-    <td>This metric reports the nanoseconds of cpu time across all cores. <br><br>When the CPU usage is high, you may experience delay. High CPU usage indicates insufficient processing power.</td>
-  </tr>
-  <tr>
-    <td>CPU</td>
-    <td>*cpu_usage_pct*</td>
-    <td>This metric reports on the CPU time that is used as a percentage of the CPU's capacity. <br><br>When the percentage of CPU usage is high, you may experience delay. High CPU usage indicates insufficient processing power.</td>
-  </tr>
-  <tr>
-    <td>CPU</td>
-    <td>*cpu_num_cores*</td>
-    <td>This metric reports on the number of CPU cores that are available to the container.</td>
+    <td>*memory_usage_pct*</td>
+    <td>This metric reports the memory that is used as a percentage of the container's memory limit. <br> <br>If you set limits to the amount of memory that a container can use, then this metric reports the memory usage as a percentage of the limits that you set. </td>
   </tr>
 </table>
+
 
 
 ## Collecting default metrics for a container managed in Bluemix

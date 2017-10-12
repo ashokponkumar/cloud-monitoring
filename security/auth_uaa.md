@@ -3,7 +3,7 @@
 copyright:
   years: 2017
 
-lastupdated: "2017-07-12"
+lastupdated: "2017-08-02"
 
 ---
 
@@ -42,9 +42,27 @@ To get the authorization token, complete the following steps:
 2. Log in to a {{site.data.keyword.Bluemix_notm}} region, organization, and space. Run the command:
 
     ```
-    cf login -a [https://api.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>](https://api.{DomainName})
+    cf login -a Endpoint
     ```
     {: codeblock}
+	
+	Where *Endpoint* is the URL to log in to {{site.data.keyword.Bluemix_notm}}. This URL is different per region.
+	
+	<table>
+	    <caption>List of endpoints to access {{site.data.keyword.Bluemix_notm}}</caption>
+		<tr>
+		  <th>Region</th>
+		  <th>URL</th>
+		</tr>
+		<tr>
+		  <td>US South</td>
+		  <td>api.ng.bluemix.net</td>
+		</tr>
+		<tr>
+		  <td>United Kingdom</td>
+		  <td>api.eu-gb.bluemix.net</td>
+		</tr>
+	</table>
 
     Follow the instructions. Enter your {{site.data.keyword.Bluemix_notm}} credentials, select an organization and a space.
 	
@@ -87,44 +105,5 @@ To get the authorization token, complete the following steps:
 	* TOKEN is the {{site.data.keyword.Bluemix_notm}} UAA token that you get in a previous step without the bearer prefix.
 	* METRICS_ENDPOINT is the metrics endpoint (https://metrics.ng.bluemix.net/token) for the {{site.data.keyword.Bluemix_notm}} region where the organization and space are available.
 
-	
-## Getting the UAA token by using the API
-{: #uaa_api}
-
-To get the authorization token, run the following cURL command:
-
-```
-curl -XPOST -d 'user=USERNAME&passwd=PASSWORD&space=SPACE_NAME&organization=ORG_NAME' METRICS_ENDPOINT
-```
-{: codeblock}
-
-where
-
-* USERNAME is a {{site.data.keyword.Bluemix_notm}} ID for which you want to get the authentication token to work with the {{site.data.keyword.monitoringshort}} service.
-* PASSWORD is the password of the user ID used to log in to {{site.data.keyword.Bluemix_notm}}.
-* SPACE_NAME is the name of the space where metrics are collected.
-* ORG_NAME is the organization name in {{site.data.keyword.Bluemix_notm}} where the space is hosted.
-* METRICS_ENDPOINT is the metrics endpoint (https://metrics.ng.bluemix.net/login) for the {{site.data.keyword.Bluemix_notm}} region where the organization and space are available.
-
-The output is a JSON document that contains the UAA token. Get the value for the token from the field **access-token**. 
-
-For example, a sample JSON document looks as follows:
-
-```
-{
-    "access_token": "eyJhbGc...",
-    "logging_token": "xxxxxxxxxxxx",
-    "org_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-    "space_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
-}
-```
-{: screen}
-
-The value of the *logging_token* corresponds to the UAA token that you need to work with the {{site.data.keyword.monitoringshort}} service.
- 
-**Note:** 
-
-* If you are not using cURL, you must set the header **Content-Type: application/x-www-form-urlencoded**.
-* If you get the error code *BXNMS0122E: User credentials are invalid*, check that you are using a valid {{site.data.keyword.IBM_notm}} ID.
 
 
