@@ -3,7 +3,7 @@
 copyright:
   years: 2017
 
-lastupdated: "2017-06-21"
+lastupdated: "2017-11-09"
 
 ---
 
@@ -15,10 +15,10 @@ lastupdated: "2017-06-21"
 {:pre: .pre}
 
 
-# Monitoring for the IBM Bluemix Container service
+# Monitoring for the {{site.data.keyword.containershort_notm}} service
 {: #monitoring_bmx_containers_ov}
 
-In {{site.data.keyword.Bluemix}}, container metrics are collected automatically from outside of the container, without having to install and maintain agents inside of the container. You can use Grafana to visualize container metrics. You can also use the Kubernetes UI to view metrics for nodes (workers) and pods.
+In the {{site.data.keyword.Bluemix}}, container metrics are collected automatically from outside of the container, without having to install and maintain agents inside of the container. You can use Grafana to visualize container metrics. You can also use the Kubernetes UI to view metrics for nodes (workers) and pods.
 {:shortdesc}
 
 ## Collecting metrics for a container that runs in a Kubernetes cluster
@@ -26,11 +26,11 @@ In {{site.data.keyword.Bluemix}}, container metrics are collected automatically 
 
 In {{site.data.keyword.Bluemix_notm}}, when you deploy applications in a Kubernetes cluster, consider the following information:
 
-* In a {{site.data.keyword.Bluemix_notm}} account, you can have 1 or more organizations.
-* Each organization can have 1 or more {{site.data.keyword.Bluemix_notm}} spaces.
+* In an {{site.data.keyword.Bluemix_notm}} account, you can have 1 or more organizations.
+* Each organization can have 1 or more spaces.
 * You can have 1 or more Kubernetes clusters in an organization.
 * Collection of metrics is enabled automatically when you create a Kubernetes cluster.
-* A Kubernetes cluster is independent of {{site.data.keyword.Bluemix_notm}} spaces. However, the metrics collected for a cluster and its resources is associated with a {{site.data.keyword.Bluemix_notm}} space.
+* A Kubernetes cluster is independent of {{site.data.keyword.Bluemix_notm}} spaces. However, the metrics collected for a cluster and its resources are associated with an {{site.data.keyword.Bluemix_notm}} space.
 * Metrics are collected for a container as soon as the pod is deployed.
 * You can view metrics in Grafana or in the Kubernetes UI.
 * To visualize metric data for a cluster, you must configure Grafana dashboards for the Cloud Public region where the cluster is created.
@@ -41,10 +41,15 @@ The following figure shows a high level view of monitoring for the {{site.data.k
 
 ![High level component overview for containers deployed in a Kubernetes cluster](images/monitoring_kube.gif "High level component overview for containers deployed in a Kubernetes cluster")
 
-The crawler is a process that is running in the host and performs agentless monitoring for metrics. The crawler constantly collects the following CPU and memory metrics from all of the containers by default:
+The crawler is a process that is running in the host and performs agentless monitoring for metrics. The crawler constantly collects the following CPU and memory metrics from all of the containers by default.
+
+## CPU metrics for containers
+{: #cpu_metrics_containers}
+
+The following table lists the CPU metrics that are captured  automatically for a container:
 
 <table>
-  <caption>Table 1. CPU metrics captured by default</caption>
+  <caption>Table 1. CPU metrics for containers</caption>
   <tr>
     <th>Metric Name</th>
     <th>Description</th>
@@ -65,6 +70,19 @@ The crawler is a process that is running in the host and performs agentless moni
     <td>*cpu_usage_pct_container_requested*</td>
     <td>This metric reports the CPU time that is used as a percentage of the container's requested CPU. <br><br>If you do not set requested CPU on a container, then this metric is not exposed for the container.</td>
   </tr>
+</table>
+
+## CPU metrics for workers
+{: #cpu_metrics_workers}
+
+The following table lists the CPU metrics that are captured  automaticaaly for a worker:
+
+<table>
+  <caption>Table 2. CPU metrics for workers</caption>
+  <tr>
+    <th>Metric Name</th>
+    <th>Description</th>
+  </tr>
   <tr>
     <td>*load_avg_1*</td>
     <td>This metric reports the average CPU load for the Kubernetes host over the past 1 minute. <br><br>An average CPU load that is greater than the number of cores on the worker indicates that traffic to the host is queuing.</td>
@@ -79,8 +97,13 @@ The crawler is a process that is running in the host and performs agentless moni
   </tr>
 </table>
 
+## Memory metrics 
+{: #memory_metrics}
+
+The following table lists the memory metrics captured automatically:
+
 <table>
-  <caption>Table 2. Memory metrics captured by default</caption>
+  <caption>Table 3. Memory metrics</caption>
   <tr>
     <th>Metric Name</th>
     <th>Description</th>
@@ -100,13 +123,24 @@ The crawler is a process that is running in the host and performs agentless moni
 </table>
 
 
+## Monitoring metrics for a container that runs in a Kubernetes cluster
+{: #monitoring_metrics_kube}
 
-## Collecting default metrics for a container managed in Bluemix
+Metrics are collected and displayed in both the Kubernetes UI and Grafana:
+
+* Use Grafana, an open source analytics and visualization platform, to monitor, search, analyze, and visualize your metrics in a variety of graphs, for example charts and tables.
+
+    You can launch Grafana from a browser. For more information, see [Navigating to the Grafana dashboard from a web browser](/docs/services/cloud-monitoring/grafana/navigating_grafana.html#launch_grafana_from_browser).
+
+* Use the Kubernetes UI to view metrics for nodes and pods. For more information, see [Web UI Dashboard ![(External link icon)](../../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/){: new_window}.
+
+
+## Collecting default metrics for a container managed in Bluemix (Deprecated)
 {: #metrics_containers_bmx_ov}
 
 The following figure shows a high level view of monitoring for the {{site.data.keyword.containershort}}:
 
-![High level component overview for containers deployed in a {{site.data.keyword.Bluemix_notm}}-managed cloud infrastructure](images/monitoring_bmx.gif "High level component overview for containers deployed in a {{site.data.keyword.Bluemix_notm}}-managed cloud infrastructure")
+![High level component overview for containers deployed in an {{site.data.keyword.Bluemix_notm}}-managed infrastructure](images/monitoring_bmx.gif "High level component overview for containers deployed in an {{site.data.keyword.Bluemix_notm}}-managed infrastructure")
 
 The crawler constantly collects the following metrics from all of the containers by default:
 
@@ -114,34 +148,15 @@ The crawler constantly collects the following metrics from all of the containers
 * Memory
 * Network information
 
-
-## Monitoring metrics for a container that runs in a Kubernetes cluster
-{: #monitoring_metrics_kube}
-
-Metrics are collected and displayed in both the Kubernetes UI and Grafana:
-
-* Use Grafana, an open source analytics and visualization platform, to monitor, search, analyze, and visualize your metrics in a variety of graphs, for example charts and tables.
- 
-    You can launch Grafana from a browser. For more information, see [Navigating to the Grafana dashboard from a web browser](/docs/services/cloud-monitoring/grafana/navigating_grafana.html#launch_grafana_from_browser).
-    
-* Use the Kubernetes UI to view metrics for nodes and pods. For more information, see [Web UI Dashboard ![(External link icon)](../../../icons/launch-glyph.svg "External link icon")](https://kubernetes.io/docs/tasks/access-application-cluster/web-ui-dashboard/){: new_window}.
-
-
-## Monitoring metrics for a container managed in Bluemix
+## Monitoring metrics for a container managed in the IBM Cloud (Deprecated)
 {: #monitoring_metrics_bmx}
 
 Metrics are collected and displayed in both the {{site.data.keyword.Bluemix_notm}} UI and Grafana:
 
 * Use Grafana, an open source analytics and visualization platform, to monitor, search, analyze, and visualize your metrics in a variety of graphs, for example charts and tables.
- 
+
     You can launch Grafana from the {{site.data.keyword.Bluemix_notm}} UI or from a browser. For more information, see [Navigating to the Grafana dashboard](/docs/services/cloud-monitoring/grafana/navigating_grafana.html#navigating_grafana).
-    
 
 * Use the {{site.data.keyword.Bluemix_notm}} UI to view the latest metrics.
 
-    To view the metrics in the {{site.data.keyword.Bluemix_notm}} UI, see [Analyzing metrics from the Bluemix console](/docs/services/cloud-monitoring/containers/analyzing_metrics_bmx_ui.html#analyzing_metrics_bmx_ui).
-
-
-
-    
-
+    To view the metrics in the {{site.data.keyword.Bluemix_notm}} UI, see [Analyzing metrics from the {{site.data.keyword.Bluemix_notm}} console](/docs/services/cloud-monitoring/containers/analyzing_metrics_bmx_ui.html#analyzing_metrics_bmx_ui).

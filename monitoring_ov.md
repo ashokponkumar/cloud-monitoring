@@ -3,7 +3,7 @@
 copyright:
   years: 2017
 
-lastupdated: "2017-08-01"
+lastupdated: "2017-11-09"
 
 ---
 
@@ -21,17 +21,17 @@ lastupdated: "2017-08-01"
 Use the {{site.data.keyword.monitoringlong}} service to expand your collection and retention capabilities when working with metrics, and to be able to define rules and alerts that notify you of conditions that require attention. Empower your DevOps team with features that give you insight into how your apps are performing and consuming resources. Quickly identify trends, detect and diagnose problems; all with immediate time to value and low total cost of ownership. Use Grafana to monitor your environment. 
 {:shortdesc}
 
-{{site.data.keyword.Bluemix}}, by default, collects and displays metrics for CPU usage, memory utilization, and network I/O for the {{site.data.keyword.containershort}}. You can use the {{site.data.keyword.monitoringshort}} service in {{site.data.keyword.Bluemix_notm}} to automatically collect and measure key metrics from your environment and applications. No special instrumentation is required to collect metrics. For example, you can use information provided by performance metrics to monitor how a service is running in the cloud, detect resource bottlenecks, and keep an eye on the service level agreement (SLA). When you analyze performance data for a service, you can detect situations that can lead to a resource bottleneck and consequently affect your service SLA to your clients. By taking early action, you can prevent situations that can impact your business negatively.  
-
-You can send metrics for your Cloud Founfry (CF) applications and Virtual Machines (VMs) into the {{site.data.keyword.monitoringshort}} service.  
-
 The following figure shows a high level view of the different resources from where you can send metrics to the {{site.data.keyword.monitoringshort}} service for analysis:
 
 ![High level component overview of the components in the {{site.data.keyword.monitoringlong}} service](images/cloud_monitoring_ov.gif)
 
-For more information on how to send metrics, see [Sending metrics to the {{site.data.keyword.monitoringshort}} service](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#send_retrieve_metrics_ov).
+The {{site.data.keyword.Bluemix}}, by default, collects and displays metrics for CPU usage, memory utilization, and network I/O for the {{site.data.keyword.containershort}}. You can use the {{site.data.keyword.monitoringshort}} service in the {{site.data.keyword.Bluemix_notm}} to automatically collect and measure key metrics from your environment and applications. No special instrumentation is required to collect metrics. For example, you can use information provided by performance metrics to monitor how a service is running in the cloud, detect resource bottlenecks, and keep an eye on the service level agreement (SLA). When you analyze performance data for a service, you can detect situations that can lead to a resource bottleneck and consequently affect your service SLA to your clients. By taking early action, you can prevent situations that can impact your business negatively.  
 
-You can access the {{site.data.keyword.monitoringlong}} service through the {{site.data.keyword.Bluemix_notm}} catalog.  For the {{site.data.keyword.containershort}} with single and group containers, you can also access the service from the {{site.data.keyword.Bluemix_notm}} UI.
+You can send metrics for your Cloud Founfry (CF) applications and Virtual Machines (VMs) into the {{site.data.keyword.monitoringshort}} service. For more information on how to send metrics, see [Sending metrics to the {{site.data.keyword.monitoringshort}} service](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#send_retrieve_metrics_ov).
+
+You can provision the {{site.data.keyword.monitoringshort}} service through the {{site.data.keyword.Bluemix_notm}} catalog.  
+
+You can view and analyze metrics collected by the {{site.data.keyword.monitoringshort}} service through the {{site.data.keyword.Bluemix_notm}} dashboard.  
 
 ## Why use the Monitoring service
 {: #value}
@@ -97,8 +97,10 @@ The following table outlines the plans that are available:
       </tr>
 </table>
 
-**Note:** The Lite plan offers the same features as the integrated monitoring capabilities in {{site.data.keyword.Bluemix_notm}}.
+**Note:** 
 
+* The Lite plan offers the same features as the integrated monitoring capabilities in the {{site.data.keyword.Bluemix_notm}}.
+* To see the metrics for a Kubernetes cluster, you must provision the {{site.data.keyword.monitoringshort}} service in the same space where the cluster was created, and select the Premium plan. 
 
 ## Metrics retention period
 {: #metrics_retention}
@@ -130,7 +132,7 @@ Metrics that have not received data for the last 7 days are deleted. The {{site.
 ## Provisioning the Monitoring service
 {: #provision}
 
-In the {{site.data.keyword.Bluemix_notm}} catalog, you can find the {{site.data.keyword.monitoringshort}} service in the **DevOps** section. For more information about provisioning a service in {{site.data.keyword.Bluemix_notm}}, see [Provisioning the {{site.data.keyword.monitoringshort}} service](/docs/services/cloud-monitoring/how-to/provision.html#provision).
+In the {{site.data.keyword.Bluemix_notm}} catalog, you can find the {{site.data.keyword.monitoringshort}} service in the **DevOps** section. For more information about provisioning a service in the {{site.data.keyword.Bluemix_notm}}, see [Provisioning the {{site.data.keyword.monitoringshort}} service](/docs/services/cloud-monitoring/how-to/provision.html#provision).
 
 Consider the following information about the {{site.data.keyword.monitoringshort}} service:
 
@@ -154,7 +156,7 @@ The {{site.data.keyword.monitoringshort}} service is available in the following 
 ## URLs for the Monitoring service
 {: #region}
 
-The {{site.data.keyword.monitoringshort}} service is available to anyone with a {{site.data.keyword.Bluemix_notm}} user ID and access to a space in a {{site.data.keyword.Bluemix_notm}} organization. 
+The {{site.data.keyword.monitoringshort}} service is available to anyone with an {{site.data.keyword.Bluemix_notm}} ID and permissions to work with the service in the {{site.data.keyword.Bluemix_notm}}.
 
 * For each region where the {{site.data.keyword.monitoringshort}} service is available, there is a different set of endpoints. 
 * There is a single URL that is shared by the ingest and API/Web UI endpoints.

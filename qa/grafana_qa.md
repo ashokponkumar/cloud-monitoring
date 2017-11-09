@@ -3,7 +3,7 @@
 copyright:
   years: 2017
 
-lastupdated: "2017-06-19"
+lastupdated: "2017-11-09"
 
 ---
 
@@ -34,7 +34,7 @@ When you use the [UAA authentication model](/docs/services/cloud-monitoring/secu
 
 To verify that you have access to the account, organization, and space where you want to log in, log in to the {{site.data.keyword.Bluemix_notm}} console and switch to the space. 
 
-You can also use the command line to verify that you have access to that space. Run the following command to log in to a {{site.data.keyword.Bluemix_notm}} region, organization, and space:
+You can also use the command line to verify that you have access to that space. Run the following command to log in to a region, organization, and space in the {{site.data.keyword.Bluemix_notm}}:
 
 ```
 bx login -a https://api.ng.bluemix.net

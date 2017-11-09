@@ -30,10 +30,11 @@ IBM Cloud Monitoring
     
     {: .topicgroup}
     Alerts
-        alerts/notifications.md
         alerts/rules.md
         alerts/notifications.md
-        alerts/configure_alerts.md
+        alerts/configure_email_alert.md
+        alerts/configure_pagerduty_alert.md
+        alerts/configure_webhook_alert.md
         alerts/retrieve_history.md
 
     {: .topicgroup}
@@ -45,14 +46,17 @@ IBM Cloud Monitoring
         grafana/navigating_grafana.md
 
     {: .topicgroup}
-    Metrics
+    Sending metrics
         send-metrics/send_data_api.md
+        send-metrics/conf_monitoring_plugin.md
         retrieve-metrics/retrieve_data_api.md
 
     {: .topicgroup}
     Security
+        security/auth_api_key.md
         security/auth_iam.md
         security/auth_uaa.md
+        security/assign_policy.md
     {: .navgroup-end}
 
     {: .navgroup id="help"}

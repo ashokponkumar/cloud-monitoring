@@ -3,7 +3,7 @@
 copyright:
   years: 2017
 
-lastupdated: "2017-07-12"
+lastupdated: "2017-11-09"
 
 ---
 
@@ -27,6 +27,10 @@ You can define alerts for one a single instance or for multiple instances. When 
 The following figure shows the different notification types that you can configure in the {{site.data.keyword.monitoringshort}} service to alert you:
 
 ![High level component overview of the notification types that are available in the {{site.data.keyword.monitoringlong}} service](images/alerts_ov_f1.gif)
+
+* To learn how to create an alert that sends an email, see [Configuring an alert that sends an email](/docs/services/cloud-monitoring/alerts/configure_email_alert.html#configure_email_alert).
+* To learn how to create an alert that sends a PagerDuty notification, see [Configuring an alert that sends a PagerDuty notification](/docs/services/cloud-monitoring/alerts/configure_pagerduty_alert.html#configure_pagerduty_alert).
+* To learn how to create an alert that sends a webhook notification, see [Configuring an alert that sends a PagerDuty notification](/docs/services/cloud-monitoring/alerts/configure_webhook_alert.html#configure_webhook_alert).
 
 ## Alert states
 {: #status}
@@ -60,6 +64,7 @@ The state of an alert is used to define the status in any of the following scena
 
 For example, if a warning threshold is exceeded, then a history record is generated that will record the transition from *OK* to *WARNING*. Similarly, when the value goes back below the threshold, a history record is generated to record the transition from *WARNING* to *OK*.
 
+For more information, see [Retrieving the history of a rule](/docs/services/cloud-monitoring/alerts/retrieve_history.html#retrieve_history).
 
 ## Rules
 {: #rules}
@@ -67,6 +72,12 @@ For example, if a warning threshold is exceeded, then a history record is genera
 A rule describes the metric query to be monitored, the threshold value, and the action to take when the threshold is crossed. 
 
 * You can create, delete, update, show the details for a rule, and list all the rules by using the Alerts API. For more information, see [Working with rules](/docs/services/cloud-monitoring/alerts/rules.html#rules).
+
+    * To create a rule, see [Creating a rule](/docs/services/cloud-monitoring/alerts/rules.html#create).
+	* To delete a rule, see [Deleting a rule](/docs/services/cloud-monitoring/alerts/rules.html#delete).
+	* To update a rule, see [Updating a rule](/docs/services/cloud-monitoring/alerts/rules.html#update).
+	* To list all rules, see [Listing all rules](/docs/services/cloud-monitoring/alerts/rules.html#list).
+	* To show information about a rule, see [Showing the details of a rule](/docs/services/cloud-monitoring/alerts/rules.html#showing-the-details-of-a-rule).
 
 * The alert system checks every 5 minutes the rules that are enabled in the space.
 
@@ -96,7 +107,7 @@ The following fields are required to define a rule:
   </tr>
   <tr>
     <td>expression</td>
-	<td>Metric query that you want to monitor and send an alert if a threshold is crossed. <br>Valid expressions are: a single metric name, multiple metrics identified with wildcards, or a function on top of one or more metrics. <br>**Tip:** You can copy a verified query from Grafana.</td>
+	<td>Metric query that you want to monitor and send an alert if a threshold is crossed. <br>Valid expressions are: a single metric name, multiple metrics identified with wildcards, or functions to aggregate data. <br>**Tip:** You can copy a verified query from Grafana.</td>
   </tr>
   <tr>
     <td>enabled</td>
@@ -157,8 +168,8 @@ mple-topic.BytesInPerSec.15MinuteRate,\"5min\")",
   "until": "now",
   "comparison": "below",
   "comparison_scope": "last",
-   "error_level" : 22.94,
-   "warning_level" : 25,
+  "error_level" : 22.94,
+  "warning_level" : 25,
   "frequency": "1min",
   "dashboard_url": "https://metrics.ng.bluemix.net",
   "notifications": [
@@ -185,48 +196,26 @@ A notification describes the method and details that is used to notify when an a
 
 * You can use the [Alerts REST API](https://console.bluemix.net/apidocs/940-ibm-cloud-monitoring-alerts-api?&language=node#introduction){: new_window} to create, delete, and update a notification, to show the details for a notification, and to list the notifications that are defined in a space.
 
+    * To create a notification, see [Creating a notification](/docs/services/cloud-monitoring/alerts/notifications.html#create).
+	* To delete a notification, see [Deleting a notification](/docs/services/cloud-monitoring/alerts/notifications.html#delete).
+	* To update a notification, see [Updating a notification](/docs/services/cloud-monitoring/alerts/notifications.html#update).
+	* To list all notification, see [Listing all notifications](/docs/services/cloud-monitoring/alerts/notifications.html#list).
+	* To show information about a notification, see [Showing the details of a notification](/docs/services/cloud-monitoring/alerts/notifications.html#show).
 
-The following notification methods are supported:
-
-<table>
- <caption>Table 2. List of notification methods.</caption>
- <tr>
-    <th>Method</th>
-	<th>More information</th>
- </tr>
- <tr>
-    <td>Email</td>
-	<td>[Configuring an email notification](/docs/services/cloud-monitoring/alerts/configure_alerts.html#send_email)</td>
-  </tr>
-  <tr>
-    <td>PagerDuty</td>
-	<td>[Configuring a PagerDuty notification](/docs/services/cloud-monitoring/alerts/configure_alerts.html#config_alert_pagerduty)</td>
-  </tr>
-  <tr>
-    <td>Webhook</td>
-	<td>[Configuring a webhook notification](/docs/services/cloud-monitoring/alerts/configure_alerts.html#config_webhook)</td>
-  </tr>
-</table>
+* You can configure an email notification, a PagerDuty configuration, and a webhook notification. 
 
 **Note:** You define alert notifications independently of rules so that you can reuse the notifications with multiple rules.
+
 	
-## Notification templates
+## Notification - JSON templates
 {: #notification_template}
 	
 A notification is a JSON file. 
 
-You can create any number of notification templates, and then reuse them to create notifications of that type in your organization. 
-
-You can define any of the following types of notifications:
-
-* Email: Define a notification of type *Email* to send an email to a valid email address. 
-* Webhook: Define a notification of type *Webhook* for https endpoints only. Add a parameter to the endpoint to help reduce the chance of someone else attempting to invoke your endpoint.
-* Pagerduty: Define a notification of type *PagerDuty* to send the alert data for a metric to your PagerDuty incident management system. 
-
-For example, the following table list examples of notification templates:
+The following table includes a notification template for type of notification method:
 
 <table>
-  <caption>Table 3. Examples of notification templates</caption>
+  <caption>Table 3. Notification templates</caption>
   <tr>
     <th>Type</th>
 	<th>Template</th>
@@ -319,3 +308,30 @@ Where
 For more information, see [Creating a notification template](/docs/services/cloud-monitoring/alerts/notifications.html#template).
 
 
+## Rules - JSON template
+{: #rules_template}
+
+A rule is described by using a JSON file. 
+
+The following code is a template for a rule:
+
+```
+{
+"name": "Enter rule name",
+"description": "Desccribe rule",
+"expression": "Add metric query",
+"enabled": true,
+"from": "-5min",
+"until": "now",
+"comparison": "below",
+"comparison_scope": "last",
+"error_level" : xxxx,
+"warning_level" : xxxx,
+"frequency": "1min",
+"dashboard_url": "https://metrics.ng.bluemix.net",
+"notifications": [
+ "List of Notifications by name. Include all the motification methods for this rule separated by commas."
+ ]
+}
+```
+{: screen}

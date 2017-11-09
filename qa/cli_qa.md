@@ -3,7 +3,7 @@
 copyright:
   years: 2017
 
-lastupdated: "2017-06-19"
+lastupdated: "2017-11-09"
 
 ---
 
@@ -15,87 +15,126 @@ lastupdated: "2017-06-19"
 {:pre: .pre}
 
 
-# Frequent questions and answers using the Bluemix CLI
+# Frequent questions and answers using the IBM Cloud CLI
 {: #cli_qa}
 
-Here are the answers to common questions about using {{site.data.keyword.Bluemix}} CLI with the {{site.data.keyword.monitoringshort}} service. 
+Here are the answers to common questions about using the {{site.data.keyword.Bluemix}} CLI with the {{site.data.keyword.monitoringshort}} service. 
 {:shortdesc}
 
-* [How do I install the {{site.data.keyword.Bluemix_notm}} CLI](#install_bmx_cli)
-* [How do I get the GUID of an account](#account_guid)
-* [How do I get the GUID of an organization](#org_guid)
-* [How do I get the GUID of a space](#space_guid)
+* [How do I log in to the {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login)
+* [How do I install the {{site.data.keyword.Bluemix_notm}} CLI](/docs/services/cloud-monitoring/qa/cli_qa.html#install_bmx_cli)
+* [How do I get the GUID of an account](/docs/services/cloud-monitoring/qa/cli_qa.html#account_guid)
+* [How do I get the GUID of an organization](/docs/services/cloud-monitoring/qa/cli_qa.html#org_guid)
+* [How do I get the GUID of a space](/docs/services/cloud-monitoring/qa/cli_qa.html#space_guid)
 
+## How do I login in to the IBM Cloud?
+{: #login}
 
-## How do I install the Bluemix CLI?
+Run the following command to log in to a region, organization, and space in the {{site.data.keyword.Bluemix_notm}}:
+
+```
+bx login -a Endpoint
+```
+{: codeblock}
+	
+Where *Endpoint* is the URL to log in to the {{site.data.keyword.Bluemix_notm}}. This URL is different per region.
+	
+<table>
+    <caption>List of endpoints to access the {{site.data.keyword.Bluemix_notm}}</caption>
+	<tr>
+	  <th>Region</th>
+	  <th>URL</th>
+	</tr>
+	<tr>
+	  <td>Germany</td>
+	  <td>api.eu-de.bluemix.net</td>
+	</tr>
+	<tr>
+	  <td>Sydney</td>
+	  <td>api.au-syd.bluemix.net</td>
+	</tr>
+	<tr>
+	  <td>United Kingdom</td>
+	  <td>api.eu-gb.bluemix.net</td>
+	</tr>
+	<tr>
+	  <td>US South</td>
+	  <td>api.ng.bluemix.net</td>
+	</tr>
+</table>
+
+For example, to log in to the US South region, run the following command:
+	
+```
+bx login -a https://api.ng.bluemix.net
+```
+{: codeblock}
+
+Follow the instructions. 
+
+Then, set the organization and space. Run the following command:
+
+```
+bx target -o OrgName -s SpaceName
+```
+{: codeblock}
+
+where
+
+* OrgName is the name of the organization.
+* SpaceName is the name of the space.
+
+	
+## How do I install the IBM Cloud CLI?
 {: #install_bmx_cli}
 
-Complete the following steps to install the {{site.data.keyword.Bluemix_notm}} CLI:
+See [Download and install the {{site.data.keyword.Bluemix_notm}} CLI](/docs/cli/reference/bluemix_cli/download_cli.html#download_install).
 
-1. Download the CLI.
-
-    For example, to install the {{site.data.keyword.Bluemix_notm}} CLI package in a Ubuntu system, download the [{{site.data.keyword.Bluemix_notm}} CLI package ![External link icon](../../../icons/launch-glyph.svg "External link icon")](http://clis.ng.bluemix.net/ui/home.html){: new_window}. 
-
-2. Run the following command to extract the {{site.data.keyword.Bluemix_notm}} CLI package:
-    
-    ```
-    tar -xvf Bluemix_CLI_0.5.4_amd64.tar.gz
-    ```
-    {: codeblock}
-    
-3. Go to the *Bluemix_CLI* directory, and run the `./install_bluemix_cli` command with root permission to install the CF plugin. You can run the command as a root user or use the sudo command to get the root permission. For example:
-    
-    ```
-    cd Bluemix_CLI
-    ```
-    {: codeblock}
-    
-    ```
-    sudo ./install_bluemix_cli
-    ```
-    {: codeblock}
-    
-4. Verify the installition of the CF plugin. For example, check the version of the CF plugin. Run the following command:
-    
-    ```
-    cf -v
-    ```
-    {: codeblock}
-    
-    The output looks as follows:
-    
-    ```
-    cf version 6.25.0+787326d.2017-02-28
-    ```
-    {: screen}
-    
-5. Verify the installition of the {{site.data.keyword.Bluemix_notm}} CLI. For example, check the version of the plugin. Run the following command:
-    
-    ```
-    bx -version
-    ```
-    {: codeblock}
-    
-    The output looks as follows:
-    
-    ```
-    bx version 0.5.4+ae22935-2017-05-18T03:55:55+00:00
-    ```
-    {: screen}
-	
 ## How do I get the GUID of an account
 {: #account_guid}
 	
 Complete the following steps to get the GUID of an account:
 	
-1. Log in to a {{site.data.keyword.Bluemix_notm}} region, organization, and space. Run the command:
+1. Log in to a region, organization, and space in the {{site.data.keyword.Bluemix_notm}}. Run the command:
 
     ```
-    bx login -a [https://api.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>](https://api.{DomainName})
+	bx login -a Endpoint
+	```
+	{: codeblock}
+	
+	Where *Endpoint* is the URL to log in to the {{site.data.keyword.Bluemix_notm}}. This URL is different per region.
+	
+	<table>
+	    <caption>List of endpoints to access the {{site.data.keyword.Bluemix_notm}}</caption>
+		<tr>
+		  <th>Region</th>
+		  <th>URL</th>
+		</tr>
+		<tr>
+		  <td>US South</td>
+		  <td>api.ng.bluemix.net</td>
+		</tr>
+		<tr>
+		  <td>United Kingdom</td>
+		  <td>api.eu-gb.bluemix.net</td>
+		</tr>
+	</table>
+
+    For example, to log in to the US South region, run the following command:
+	
+	```
+    bx login -a https://api.ng.bluemix.net
     ```
     {: codeblock}
 
     Follow the instructions. Enter your {{site.data.keyword.Bluemix_notm}} credentials, select an organization and a space.
+	
+	For **federated user IDs**, run the following command and follow the instructions:
+	
+	```
+    bx login -a https://api.ng.bluemix.net --sso
+    ```
+    {: codeblock}
 	
 2. Run the `bx iam accounts` command to get the GUID of an account.
 
@@ -122,14 +161,46 @@ Complete the following steps to get the GUID of an account:
 
 Complete the following steps to get the GUID of an organization:
 	
-1. Log in to a {{site.data.keyword.Bluemix_notm}} region, organization, and space. Run the command:
+1. Log in to a region, organization, and space in the {{site.data.keyword.Bluemix_notm}}. Run the command:
 
     ```
-    bx login -a [https://api.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>](https://api.{DomainName})
+	bx login -a Endpoint
+	```
+	{: codeblock}
+	
+	Where *Endpoint* is the URL to log in to the {{site.data.keyword.Bluemix_notm}}. This URL is different per region.
+	
+	<table>
+	    <caption>List of endpoints to access the {{site.data.keyword.Bluemix_notm}}</caption>
+		<tr>
+		  <th>Region</th>
+		  <th>URL</th>
+		</tr>
+		<tr>
+		  <td>US South</td>
+		  <td>api.ng.bluemix.net</td>
+		</tr>
+		<tr>
+		  <td>United Kingdom</td>
+		  <td>api.eu-gb.bluemix.net</td>
+		</tr>
+	</table>
+
+    For example, to log in to the US South region, run the following command:
+	
+	```
+    bx login -a https://api.ng.bluemix.net
     ```
     {: codeblock}
 
     Follow the instructions. Enter your {{site.data.keyword.Bluemix_notm}} credentials, select an organization and a space.
+	
+	For federated user IDs, run the following command and follow the instructions:
+	
+	```
+    bx login -a https://api.ng.bluemix.net --sso
+    ```
+    {: codeblock}
 
 2. Run the `bx iam org` command to get the organization GUID. 
 
@@ -145,14 +216,46 @@ Complete the following steps to get the GUID of an organization:
 	
 Complete the following steps to get the GUID of a space:
 	
-1. Log in to a {{site.data.keyword.Bluemix_notm}} region, organization, and space. Run the command:
+1. Log in to a region, organization, and space in the {{site.data.keyword.Bluemix_notm}}. Run the command:
 
     ```
-    bx login -a [https://api.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>](https://api.{DomainName})
+	bx login -a Endpoint
+	```
+	{: codeblock}
+	
+	Where *Endpoint* is the URL to log in to the {{site.data.keyword.Bluemix_notm}}. This URL is different per region.
+	
+	<table>
+	    <caption>List of endpoints to access the {{site.data.keyword.Bluemix_notm}}</caption>
+		<tr>
+		  <th>Region</th>
+		  <th>URL</th>
+		</tr>
+		<tr>
+		  <td>US South</td>
+		  <td>api.ng.bluemix.net</td>
+		</tr>
+		<tr>
+		  <td>United Kingdom</td>
+		  <td>api.eu-gb.bluemix.net</td>
+		</tr>
+	</table>
+
+    For example, to log in to the US South region, run the following command:
+	
+	```
+    bx login -a https://api.ng.bluemix.net
     ```
     {: codeblock}
 
     Follow the instructions. Enter your {{site.data.keyword.Bluemix_notm}} credentials, select an organization and a space.
+	
+	For federated user IDs, run the following command and follow the instructions:
+	
+	```
+    bx login -a https://api.ng.bluemix.net --sso
+    ```
+    {: codeblock}
 	
 2. Run the `bx iam space` command to get the space GUID. 
 

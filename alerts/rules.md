@@ -3,7 +3,7 @@
 copyright:
   years: 2017
 
-lastupdated: "2017-07-18"
+lastupdated: "2017-11-09"
 
 ---
 
@@ -14,25 +14,27 @@ lastupdated: "2017-07-18"
 {:pre: .pre}
 
 
-# Working with rules by using the Alerts API
+# CRUD rules
 {: #rules}
 
-Use the Alerts API to create, delete, and update a rule, to show the details for a rule, and to list the rules that are defined in your {{site.data.keyword.Bluemix_notm}} space.
+Use the Alerts API to create, delete, or update a rule, to show the details for a rule, and to list the rules that are defined in a space.
 {:shortdesc}
 
 
 ## Creating a rule
 {: #create}
 
-To create a rule, complete the following steps:
+To configure a rule in the {{site.data.keyword.monitoringshort}} service, create a rule file that includes the rule details, and register the rule with the {{site.data.keyword.monitoringshort}} service.
+
+Complete the following steps:
 
 1. Create a rule file that contains valid JSON. Save the file. 
 
-    For example, to save the file, use a prefix like *s-* for rules that you define for the queries running in a {{site.data.keyword.Bluemix_notm}} space.
+    For example, to save the file, use a prefix like *s-* for rules that you define for the queries running in a space.
 	
 	**Tips:** 
 	
-	* Define different rules for a query to alert about errors or warnings by using a different notification method. You can only set 1 notification method per rule. 
+	* Define different rules for a query to alert about errors or warnings by using a different notification method. 
 	* Create your rule file in the following directory: *~/cloud-monitoring/rules/* to group resources of the {{site.data.keyword.monitoringshort_notm}} service. 
 
     Enter the following information in the rule's file:
@@ -50,7 +52,7 @@ To create a rule, complete the following steps:
 	* *dashboard_url*: Defines a URL that shows in Grafana a dashboard with the query.
 	* *notifications*: The method of notification in case the alert described with this rule is triggered.
 	
-	For example, 
+	For example, the rule file myrulefile.json looks as follows:
 	
 	```
 	{
@@ -73,46 +75,48 @@ To create a rule, complete the following steps:
     ```
 	{: screen}
 	
-2. Log in to a {{site.data.keyword.Bluemix_notm}} region, organization, and space. Run the command:
-
-    For example, to log in to the US South region, run the following command:
+	Then, export the variable *RULE_FILE*:
 	
 	```
-    bx login -a https://api.ng.bluemix.net
+	export RULE_FILE="myrulefile.json"
+	```
+	{: screen}
+	
+2. Log in to a region, organization, and space in the {{site.data.keyword.Bluemix_notm}}.
+
+    For more information, see [How do I log in to the {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+3. Get the security token. You can use a UAA token, an IAM token, or an API key. Choose one of the following methods to obtain the security token:
+	
+	* To get a UAA token, see [Getting the UAA token by using the {{site.data.keyword.Bluemix_notm}} CLI](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli.
+	
+	* To get an IAM token, see [Getting the IAM token by using the {{site.data.keyword.Bluemix_notm}} CLI](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* To get an API key, see [getting an API key](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
+	For example, to use the IAM token, run the following command:
+    
+    ```
+    bx iam oauth-tokens
     ```
     {: codeblock}
-
-    Follow the instructions. Enter your {{site.data.keyword.Bluemix_notm}} credentials, select an organization and a space.
-
-3. Get the authentication token or API key.
-
-    * For IAM authentication, see [Getting the IAM token by using the Bluemix CLI](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) or [Generating an IAM API key by using the Bluemix CLI](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
 	
-	* For UAA authentication, see [Getting the UAA token by using the Bluemix CLI](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) or [Getting the UAA token by using the REST API](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
-	For example, to use the IAM token, run the following command:
-
+    The result of this command is the following:
+	
     ```
-	bx iam oauth-tokens
-	```
-	{: codeblock}
-	
-	The result of this command is the following:
-	
-	```
-	IAM token:  Bearer djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ
+    IAM token:  Bearer djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ
     UAA token:  Bearer eyJhbGciOiJIUz..Ky6vagp3k_QcIcKJ-td83qXhO5Uze43KcplG6PzcGs8
-	```
-	{: screen}
+    ```
+    {: screen}
 	
-	Then, export the variable *Token*:
+    Then, export the variable *Token*:
 	
-	```
-	export Token="djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ"
-	```
-	{: screen}
+    ```
+    export Token="djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ"
+    ```
+    {: screen}
 	
-	**Note:** The token excludes *Bearer*.
+    **Note:** The token excludes *Bearer*.
 	
 4. Get the space GUID. The GUID must be prefixed with *s-* to identify a space.
 
@@ -146,16 +150,16 @@ To create a rule, complete the following steps:
 	```
 	{: screen}
 	
-5. Run the following cURL command to create a rule:
+5. Run the following cURL command to register the rule in the {{site.data.keyword.monitoringshort}} service:
 
     ```
-	curl -XPOST -d @Rule_File --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rule
+	curl -XPOST -d @$RULE_FILE --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/rule
 	```
 	{: codeblock}
 	
 	where
 	
-	* Rule_File is the JSON file that defines your alert rule.
+	* RULE_FILE is the JSON file that defines your alert rule.
 	
 	* The *X-Auth-User-Token* is a parameter that passes the {{site.data.keyword.Bluemix_notm}} UAA token, IAM token, or API key.
 	
@@ -169,12 +173,14 @@ To create a rule, complete the following steps:
 	
 	* Token is the UAA or IAM authentication token, or the API key.
 	
-	* Space is the GUID of the space. It is only required when you use a UAA token.
+	* Space is the GUID of the space. 
+	
+	* METRICS_ENDPOINT represents the entry point to the service. Each region has a different URL. To get the list of endpoints per region, see [Endpoints](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
     For example, 	
 	
 	```
-	curl -XPOST -d @s-rule-1.json --header "X-Auth-User-Token:iam ${Token}" https://metrics.ng.bluemix.net/v1/alert/rule
+	curl -XPOST -d @$RULE_FILE --header "X-Auth-User-Token:iam ${Token}" https://metrics.ng.bluemix.net/v1/alert/rule
 	```
 	{: screen}
 
@@ -183,23 +189,18 @@ To create a rule, complete the following steps:
 
 To delete a rule, complete the following steps:
 
-1. Log in to a {{site.data.keyword.Bluemix_notm}} region, organization, and space. Run the command:
+1. Log in to a region, organization, and space in the {{site.data.keyword.Bluemix_notm}}. 
 
-    For example, to log in to the US South region, run the following command:
+    For more information, see [How do I log in to the {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+2. Get the security token. You can use a UAA token, an IAM token, or an API key. Choose one of the following methods to obtain the security token:
 	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    Follow the instructions. Enter your {{site.data.keyword.Bluemix_notm}} credentials, select an organization and a space.
-
-2. Get the authentication token or API key.
-
-    * For IAM authentication, see [Getting the IAM token by using the Bluemix CLI](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) or [Generating an IAM API key by using the Bluemix CLI](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	* To get a UAA token, see [Getting the UAA token by using the {{site.data.keyword.Bluemix_notm}} CLI](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
 	
-	* For UAA authentication, see [Getting the UAA token by using the Bluemix CLI](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) or [Getting the UAA token by using the REST API](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
+	* To get an IAM token, see [Getting the IAM token by using the {{site.data.keyword.Bluemix_notm}} CLI](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* To get an API key, see [getting an API key](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
 	For example, to use the IAM token, run the following command:
 
     ```
@@ -255,17 +256,17 @@ To delete a rule, complete the following steps:
 	export Space="s-667fadfc-jhtg-1234-9f0e-cf4123451095"
 	```
 	{: screen}
-	
+		
 4. Run the following cURL command to delete a rule:
 
     ```
-	curl -XDELETE --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rule/Rule_Name
+	curl -XDELETE --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/rule/Rule_Name
 	```
 	{: codeblock}
 	
 	where
 	
-    * The *X-Auth-User-Token* is a parameter that passes the {{site.data.keyword.Bluemix_notm}} UAA token, IAM token, or API key.
+    * The *X-Auth-User-Token* is a parameter that passes the UAA token, IAM token, or API key.
 	
 	* *Auth_Type* is the prefix that defines the type of token or API key. The following list outlines the valid values: *apikey*, *iam* or *uaa*, where
 
@@ -277,9 +278,11 @@ To delete a rule, complete the following steps:
 	
 	* Token is the UAA or IAM authentication token, or the API key.
 	
-	* Space is the GUID of the space. It is only required when you use a UAA token.
+	* Space is the GUID of the space. 
 	
 	* Rule_Name is the name of the rule as specified in the field *name*.
+	
+	* METRICS_ENDPOINT represents the entry point to the service. Each region has a different URL. To get the list of endpoints per region, see [Endpoints](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
     
 	
@@ -288,23 +291,18 @@ To delete a rule, complete the following steps:
 
 To list all rules, complete the following steps:
 
-1. Log in to a {{site.data.keyword.Bluemix_notm}} region, organization, and space. Run the command:
+1. Log in to a region, organization, and space in the {{site.data.keyword.Bluemix_notm}}. 
 
-    For example, to log in to the US South region, run the following command:
+    For more information, see [How do I log in to the {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+2. Get the security token. You can use a UAA token, an IAM token, or an API key. Choose one of the following methods to obtain the security token:
 	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    Follow the instructions. Enter your {{site.data.keyword.Bluemix_notm}} credentials, select an organization and a space.
-
-2. Get the authentication token or API key.
-
-    * For IAM authentication, see [Getting the IAM token by using the Bluemix CLI](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) or [Generating an IAM API key by using the Bluemix CLI](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	* To get a UAA token, see [Getting the UAA token by using the {{site.data.keyword.Bluemix_notm}} CLI](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
 	
-	* For UAA authentication, see [Getting the UAA token by using the Bluemix CLI](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) or [Getting the UAA token by using the REST API](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
+	* To get an IAM token, see [Getting the IAM token by using the {{site.data.keyword.Bluemix_notm}} CLI](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* To get an API key, see [getting an API key](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
 	For example, to use the IAM token, run the following command:
 
     ```
@@ -364,13 +362,13 @@ To list all rules, complete the following steps:
 4. Run the following cURL command to list all the rules in a space:
 
     ```
-	curl -XGET --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rules
+	curl -XGET --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/rules
 	```
 	{: codeblock}
 	
 	where
 	
-	* The *X-Auth-User-Token* is a parameter that passes the {{site.data.keyword.Bluemix_notm}} UAA token, IAM token, or API key.
+	* The *X-Auth-User-Token* is a parameter that passes the UAA token, IAM token, or API key.
 	
 	* *Auth_Type* is the prefix that defines the type of token or API key. The following list outlines the valid values: *apikey*, *iam* or *uaa*, where
 
@@ -382,7 +380,9 @@ To list all rules, complete the following steps:
 	
 	* Token is the UAA or IAM authentication token, or the API key.
 	
-	* Space is the GUID of the space. It is only required when you use a UAA token.
+	* Space is the GUID of the space. 
+	
+	* METRICS_ENDPOINT represents the entry point to the service. Each region has a different URL. To get the list of endpoints per region, see [Endpoints](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
 
 	
@@ -393,23 +393,18 @@ To list all rules, complete the following steps:
 
 To show the details of a rule, complete the following steps:
 
-1. Log in to a {{site.data.keyword.Bluemix_notm}} region, organization, and space. Run the command:
+1. Log in to a region, organization, and space in the {{site.data.keyword.Bluemix_notm}}. 
 
-    For example, to log in to the US South region, run the following command:
+    For more information, see [How do I log in to the {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+2. Get the security token. You can use a UAA token, an IAM token, or an API key. Choose one of the following methods to obtain the security token:
 	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    Follow the instructions. Enter your {{site.data.keyword.Bluemix_notm}} credentials, select an organization and a space.
-
-2. Get the authentication token or API key.
-
-    * For IAM authentication, see [Getting the IAM token by using the Bluemix CLI](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) or [Generating an IAM API key by using the Bluemix CLI](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	* To get a UAA token, see [Getting the UAA token by using the {{site.data.keyword.Bluemix_notm}} CLI](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
 	
-	* For UAA authentication, see [Getting the UAA token by using the Bluemix CLI](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) or [Getting the UAA token by using the REST API](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
+	* To get an IAM token, see [Getting the IAM token by using the {{site.data.keyword.Bluemix_notm}} CLI](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* To get an API key, see [getting an API key](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
 	For example, to use the IAM token, run the following command:
 
     ```
@@ -469,13 +464,13 @@ To show the details of a rule, complete the following steps:
 4. Run the following cURL command to show the details of a rule:
 
     ```
-	curl -XGET --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rule/Rule_Name
+	curl -XGET --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/rule/Rule_Name
 	```
 	{: codeblock}
 	
 	where
 	
-	* The *X-Auth-User-Token* is a parameter that passes the {{site.data.keyword.Bluemix_notm}} UAA token, IAM token, or API key.
+	* The *X-Auth-User-Token* is a parameter that passes the UAA token, IAM token, or API key.
 	
 	* *Auth_Type* is the prefix that defines the type of token or API key. The following list outlines the valid values: *apikey*, *iam* or *uaa*, where
 
@@ -487,33 +482,30 @@ To show the details of a rule, complete the following steps:
 	
 	* Token is the UAA or IAM authentication token, or the API key.
 	
-	* Space is the GUID of the space. It is only required when you use a UAA token.
+	* Space is the GUID of the space. 
 	
 	* Rule_Name is the name of the rule as specified in the field *name*.
+	
+	* METRICS_ENDPOINT represents the entry point to the service. Each region has a different URL. To get the list of endpoints per region, see [Endpoints](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
 
 ## Updating a rule
 {: #update}
 
-To update a rule, complete the following steps:
+To update a rule, modify the rule by updating the rule file, then complete the following steps:
 
-1. Log in to a {{site.data.keyword.Bluemix_notm}} region, organization, and space. Run the command:
+1. Log in to a region, organization, and space in the {{site.data.keyword.Bluemix_notm}}. 
 
-    For example, to log in to the US South region, run the following command:
+    For more information, see [How do I log in to the {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+2. Get the security token. You can use a UAA token, an IAM token, or an API key. Choose one of the following methods to obtain the security token:
 	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    Follow the instructions. Enter your {{site.data.keyword.Bluemix_notm}} credentials, select an organization and a space.
-
-2. Get the authentication token or API key.
-
-    * For IAM authentication, see [Getting the IAM token by using the Bluemix CLI](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) or [Generating an IAM API key by using the Bluemix CLI](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	* To get a UAA token, see [Getting the UAA token by using the {{site.data.keyword.Bluemix_notm}} CLI](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
 	
-	* For UAA authentication, see [Getting the UAA token by using the Bluemix CLI](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) or [Getting the UAA token by using the REST API](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
+	* To get an IAM token, see [Getting the IAM token by using the {{site.data.keyword.Bluemix_notm}} CLI](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* To get an API key, see [getting an API key](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
 	For example, to use the IAM token, run the following command:
 
     ```
@@ -573,15 +565,15 @@ To update a rule, complete the following steps:
 4. Run the following cURL command to update a rule:
 
     ```
-	curl -XPUT `-d @Rule_File` --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rule
+	curl -XPUT `-d @$RULE_FILE` --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/rule
 	```
 	{: codeblock}
 	
 	where
 	
-	* Rule_File is the JSON file that defines your alert rule.
+	* RULE_FILE is the JSON file that defines your alert rule.
 	
-	* The *X-Auth-User-Token* is a parameter that passes the {{site.data.keyword.Bluemix_notm}} UAA token, IAM token, or API key.
+	* The *X-Auth-User-Token* is a parameter that passes the UAA token, IAM token, or API key.
 	
 	* *Auth_Type* is the prefix that defines the type of token or API key. The following list outlines the valid values: *apikey*, *iam* or *uaa*, where
 
@@ -593,7 +585,9 @@ To update a rule, complete the following steps:
 	
 	* Token is the UAA or IAM authentication token, or the API key.
 	
-	* Space is the GUID of the space. It is only required when you use a UAA token.
+	* Space is the GUID of the space. 
+	
+	* METRICS_ENDPOINT represents the entry point to the service. Each region has a different URL. To get the list of endpoints per region, see [Endpoints](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 
 	
 	

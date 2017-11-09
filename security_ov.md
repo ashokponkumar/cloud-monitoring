@@ -3,7 +3,7 @@
 copyright:
   years: 2017
 
-lastupdated: "2017-07-12"
+lastupdated: "2017-11-09"
 
 ---
 
@@ -18,30 +18,28 @@ lastupdated: "2017-07-12"
 # Security
 {: #security_ov}
 
-You can use different authentication methods to send metrics to the {{site.data.keyword.monitoringshort}} service. Permissions to access, modify, and delete metrics are controlled by using roles.
+To control the {{site.data.keyword.monitoringshort}} service actions that a user is allowed to perform, you can assign one or more roles to a user. To authenticate a user to work with metrics and alerts, you can use a UAA token, an IAM token, or an API Key. 
 {:shortdesc}
 
    
 ## Authentication models
 {: #auth}
 
-To access the metrics that are stored in the {{site.data.keyword.monitoringshort}} service for a {{site.data.keyword.Bluemix_notm}} space, you require an authentication token or API key. 
+To work with metrics that are stored in the {{site.data.keyword.monitoringshort}} service for a space, you require an authentication token or an API key. 
 
-The {{site.data.keyword.monitoringshort}} service supports the following authentication models:
+To get a security token, see:
 
-* [{{site.data.keyword.Bluemix_notm}} UAA authentication](/docs/services/cloud-monitoring/security/auth_uaa.html#auth_uaa)
-* [{{site.data.keyword.Bluemix_notm}} IAM Authentication](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam)
+* [Getting a UAA token](/docs/services/cloud-monitoring/security/auth_uaa.html#auth_uaa)
+* [Getting an IAM token](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam)
+
+To get an API Key, see [Generating an API Key](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key). If the API key is compromised, you can revoke it by deleting it. Then, you can recreate a new one. For more information, see [Revoking an API key by using the {{site.data.keyword.Bluemix_notm}} UI](/docs/services/cloud-monitoring/security/auth_api_key.html#revoke_ui). 
 
 A UAA token and an IAM token expire after a period of time. The API key does not expire. 
 
-If the API key is compromised, you can revoke it by deleting it. Then, you can recreate a new one. For more information, see [Revoking an API key by using the Bluemix UI](/docs/services/cloud-monitoring/security/auth_iam.html#revoke_ui). 
-
-The IAM authentication model offers UI, CLI, or API management capabilities. You can only use the CLI to manage UAA tokens.
-
-The following table lists the authentication models that are supported for each type of domain:
+The following table lists the security models that are supported for each type of domain:
 
 <table>
-  <caption>Table 1. Auth models supported for each domain</caption>
+  <caption>Table 1. Security models supported for each domain</caption>
   <tr>
     <th></th>
 	<th align="right">Account</th>
@@ -66,13 +64,13 @@ The {{site.data.keyword.monitoringshort}} service uses the IAM access control fe
 
 
 
-## Bluemix UAA roles
+## Cloud Foundry roles
 {: #bmx_roles}
 
-The following table lists the privileges of each {{site.data.keyword.Bluemix_notm}} role to work with the {{site.data.keyword.monitoringshort}} service:
+The following table lists the privileges of each Cloud Foundry role to work with the {{site.data.keyword.monitoringshort}} service:
 
 <table>
-  <caption>Table 2. {{site.data.keyword.Bluemix_notm}} roles and privileges to work with the {{site.data.keyword.monitoringshort}} service.</caption>
+  <caption>Table 2. Cloud Foundry roles and privileges to work with the {{site.data.keyword.monitoringshort}} service.</caption>
   <tr>
     <th>Role</th>
 	<th>Domain</th>
@@ -96,45 +94,60 @@ The following table lists the privileges of each {{site.data.keyword.Bluemix_not
 </table>
 
 
-## Bluemix IAM roles
+## IAM roles
 {: #iam_roles}
 
-The following table lists the relationship between the API, a service action, and an IAM role that is used by the {{site.data.keyword.monitoringshort}} Service.
+The following table lists the {{site.data.keyword.monitoringshort}} service actions when you work with metrics and the IAM roles that grant permissions to a user to execute these tasks:
 
 <table>
-  <caption>Table 3. Relationship between the API, a service action, and an IAM role. </caption>
+  <caption>Table 3. Working with metrics </caption>
   <tr>
-    <th>API</th>
 	<th>Action</th>
 	<th>IAM role</th>
-	<th>Description</th>
   </tr>
   <tr>
-    <td>POST /v1/metrics</td>
-    <td>domain.write</td>
+    <td>Send metrics to the domain</td>
 	<td>Administrator, Editor, Operator</td>
-	<td>Send metrics to the domain</td>
   </tr>
   <tr>
-    <td>GET /v1/metrics</td>
-    <td>domain.render</td>
+    <td>Retrieve/query metrics</td>
 	<td>Administrator, Editor, Viewer</td>
-	<td>Retrieve/query metrics</td>
   </tr>
   <tr>
-    <td>GET /v1/metrics/list</td>
-    <td>domain.find</td>
+    <td>Search for metrics in the domain</td>
 	<td>Administrator, Editor</td>
-	<td>Search for metrics in the domain</td>
   </tr>
 </table>
 
-## Getting the security token or API key
-{: #get_token}
+The following table lists the {{site.data.keyword.monitoringshort}} service actions when you work with alerts and the IAM roles that grant permissions to a user to execute these tasks:
 
-Use the {{site.data.keyword.Bluemix_notm}} UAA model to get an authentication token that you can use to access data that is stored in the {{site.data.keyword.monitoringshort}} service for a space in {{site.data.keyword.Bluemix_notm}}. You can obtain the authentication token by using the {{site.data.keyword.Bluemix_notm}} CLI or by using the `Login` REST API. For more information, see [Getting the UAA token by using the {{site.data.keyword.Bluemix_notm}} CLI](/docs/services/cloud-monitoring/security/auth_uaa.html#auth_cli) and [Getting the UAA token by using the API](/docs/services/cloud-monitoring/security/auth_uaa.html#auth_api).
-
-Use the {{site.data.keyword.Bluemix_notm}} IAM model to get an authentication token that you can use to access data that is stored in the {{site.data.keyword.monitoringshort}} service or to get an API key. The token has an expiration time. The API key does not expire. For more information, see [Getting the IAM token by using the {{site.data.keyword.Bluemix_notm}} CLI](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli), [Generating an IAM API key by using the {{site.data.keyword.Bluemix_notm}} CLI](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli), or [Generating an IAM API key by using the {{site.data.keyword.Bluemix_notm}} UI](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_ui).
+<table>
+  <caption>Table 4. Working with alerts. </caption>
+  <tr>
+	<th>Action</th>
+	<th>IAM role</th>
+  </tr>
+  <tr>
+    <td>Create, edit and delete alert rules</td>
+	<td>Administrator, Editor</td>
+  </tr>
+  <tr>
+    <td>View alerts</td>
+	<td>Administrator, Editor, Viewer</td>
+  </tr>
+  <tr>
+    <td>Create, edit and delete alert notifications</td>
+	<td>Administrator, Editor</td>
+  </tr>
+  <tr>
+    <td>View notifications</td>
+	<td>Administrator, Editor, Viewer</td>
+  </tr>
+  <tr>
+    <td>View triggered alert history records</td>
+	<td>Administrator, Editor, Viewer</td>
+  </tr>
+</table>
 
 
 

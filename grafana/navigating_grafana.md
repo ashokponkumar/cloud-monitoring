@@ -3,7 +3,7 @@
 copyright:
   years: 2017
 
-lastupdated: "2017-08-01"
+lastupdated: "2017-11-09"
 
 ---
 
@@ -16,14 +16,14 @@ lastupdated: "2017-08-01"
 # Navigating to the Grafana dashboard
 {:#navigating_grafana}
 
-In {{site.data.keyword.Bluemix}}, you can use Grafana, an open source analytics and visualization platform, to monitor, search, analyze, and visualize your metrics in a variety of graphs, for example charts and tables. Use Grafana to perform advanced analytical tasks.
+In the {{site.data.keyword.Bluemix}}, you can use Grafana, an open source analytics and visualization platform, to monitor, search, analyze, and visualize your metrics in a variety of graphs, for example charts and tables. Use Grafana to perform advanced analytical tasks.
 {:shortdesc}
 
 You can launch Grafana in any of the following ways:
 
-* From {{site.data.keyword.Bluemix_notm}}
+* From the {{site.data.keyword.Bluemix_notm}}
 
-    You can launch to your specific Docker container metrics in Grafana, in context to that specific container. This feature applies only to containers that are deployed in the {{site.data.keyword.Bluemix_notm}}-managed Cloud infrastructure. 
+    You can launch to your specific Docker container metrics in Grafana, in context to that specific container. This feature applies only to containers that are deployed in the {{site.data.keyword.Bluemix_notm}}-managed  infrastructure. 
     
     For more information, see [Navigating to the Grafana dashboard from the {{site.data.keyword.Bluemix_notm}} 
     dashboard](navigating_grafana.html#launch_grafana_from_bluemix).
@@ -37,16 +37,16 @@ You can launch Grafana in any of the following ways:
 For more information about Grafana, see the [Grafana User Guide ![External link icon](../../../icons/launch-glyph.svg "External link icon")](http://docs.grafana.org/guides/getting_started/){: new_window}.
 
 
-##  Navigating to the Grafana dashboard from the Bluemix dashboard
+##  Navigating to the Grafana dashboard from the IBM Cloud dashboard
 {: #launch_grafana_from_bluemix}
 
-**Note:** This feature applies only to containers that are deployed in the {{site.data.keyword.Bluemix_notm}}-managed Cloud infrastructure. 
+**Note:** This feature applies only to containers that are deployed in the {{site.data.keyword.Bluemix_notm}}-managed infrastructure. 
 
 The query that is used to filter the data that is displayed in Grafana retrieves data for the {{site.data.keyword.Bluemix_notm}} container from where you launch Kibana. 
 
 To see the metrics of a Docker container in Grafana, complete the following steps:
 
-1. Log in to {{site.data.keyword.Bluemix_notm}}, and then click the container from the {{site.data.keyword.Bluemix_notm}} dashboard. 
+1. Log in to the {{site.data.keyword.Bluemix_notm}}, and then click the container from the *Dashboard*. 
     
 2. In the navigation bar, click **Monitoring and logs**. The monitoring tab opens. 
     

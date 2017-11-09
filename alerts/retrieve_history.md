@@ -3,7 +3,7 @@
 copyright:
   years: 2017
 
-lastupdated: "2017-07-12"
+lastupdated: "2017-11-09"
 
 ---
 
@@ -15,30 +15,27 @@ lastupdated: "2017-07-12"
 
 
 
-# Retrieving the history of a rule
+# Retrieving the history of an alert
 {: #retrieve_history}
 
 
 To retrieve the history of an alert, complete the following steps:
 
-1. Log in to a {{site.data.keyword.Bluemix_notm}} region, organization, and space. Run the command:
+1. Log in to a region, organization, and space in the {{site.data.keyword.Bluemix_notm}}. 
 
-    For example, to log in to the US South region, run the following command:
+    For more information, see [How do I log in to the {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+2. Get the security token. You can use a UAA token, an IAM token, or an API key. Choose one of the following methods to obtain the security token:
 	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
+	* To get a UAA token, see [Getting the UAA token by using the {{site.data.keyword.Bluemix_notm}} CLI](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
+	
+	* To get an IAM token, see [Getting the IAM token by using the {{site.data.keyword.Bluemix_notm}} CLI](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* To get an API key, see [getting an API key](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
+	From the same terminal where you logged in to {{site.data.keyword.Bluemix_notm}}, set the Token variable for the token.
 
-    Follow the instructions. Enter your {{site.data.keyword.Bluemix_notm}} credentials, select an organization and a space.
-
-2. Get the authentication token or API key.
-
-    * For IAM authentication, see [Getting the IAM token by using the Bluemix CLI](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) or [Generating an IAM API key by using the Bluemix CLI](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
-	                                          
-	* For UAA authentication, see [Getting the UAA token by using the Bluemix CLI](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) or [Getting the UAA token by using the REST API](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
-	For example, to use the IAM token, run the following command:
+    For example, to use the IAM token, run the following command:
 
     ```
 	bx iam oauth-tokens
@@ -61,7 +58,6 @@ To retrieve the history of an alert, complete the following steps:
 	{: screen}
 	
 	**Note:** The token excludes *Bearer*.
-	
 	
 3. Get the space GUID. The GUID must be prefixed with *s-* to identify a space.
 
@@ -88,40 +84,59 @@ To retrieve the history of an alert, complete the following steps:
 	```
 	{: screen}
 	
-	Then, export the variable *Space*:
+	Then, export the variable *Space*. **Note:** The GUID must be prefixed with *s-* to identify a space.
+	
+	For example:
 	
 	```
 	export Space="s-667fadfc-jhtg-1234-9f0e-cf4123451095"
 	```
 	{: screen}
 	
-4. Run the following cURL command to get the history of an alert:
+4. Retrieve the history of a rule
 
-    ```
-	curl -XGET --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/history?rule=Rule_Name
-	```
-	{: codeblock}
+    * To retrieve the history of a rule by its name, see [Retrieving the history of a rule by using its name](/docs/services/cloud-monitoring/alerts/retrieve_history.html#by_name).
+	* To retrieve the history of a rule for a period of time, see [Retrieving the history of a rule for the last 48 hours](/docs/services/cloud-monitoring/alerts/retrieve_history.html#by_time).
+	* To retrieve a number of entries from the history of a rule, see [Retrieving the last 3 entries in the history of a rulee](/docs/services/cloud-monitoring/alerts/retrieve_history.html#number).
 	
-	where
 	
-	* The *X-Auth-User-Token* is a parameter that passes the {{site.data.keyword.Bluemix_notm}} UAA token, IAM token, or API key.
+## Retrieving the history of a rule by rule name
+{: #by_name}
 	
-	* *Auth_Type* is the prefix that defines the type of token or API key. The following list outlines the valid values: *apikey*, *iam* or *uaa*, where
+Run the following cURL command to get the history of an alert:
 
-        * *apikey* identifies that the token is an API key.
-		* *iam* identifies that the token specified is an IAM generated token.
-		* *uaa* identifies that the token specified is an UAA generated token.
+```
+curl -XGET --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/history?rule_name=RULE_NAME
+```
+{: codeblock}
 	
-	* *X-Auth-Scope-Id* is a parameter that passes the space GUID. The GUID must be prefixed with *s-* to identify a space. This header is required if you use an UAA token authentication. If you use an IAM authentication token, then this header is optional, and the domain information that is bound to the token is used.
+where
 	
-	* Token is the UAA or IAM authentication token, or the API key.
+* The *X-Auth-User-Token* is a parameter that passes the UAA token, IAM token, or API key.
 	
-	* Space is the GUID of the space. It is only required when you use a UAA token.
+* *Auth_Type* is the prefix that defines the type of token or API key. The following list outlines the valid values: *apikey*, *iam* or *uaa*, where
+
+    * *apikey* identifies that the token is an API key.
+	* *iam* identifies that the token specified is an IAM generated token.
+	* *uaa* identifies that the token specified is an UAA generated token.
 	
-	* Rule_Name is the name of the rule that is used to trigger the alert. The value is the one that is specified in the field *name*.
+* *X-Auth-Scope-Id* is a parameter that passes the space GUID. The GUID must be prefixed with *s-* to identify a space. This header is required if you use an UAA token authentication. If you use an IAM authentication token, then this header is optional, and the domain information that is bound to the token is used.
+	
+* *Token* is the UAA or IAM authentication token, or the API key.
+	
+* *Space* is the GUID of the space. 
+	
+* *RULE_NAME* is the name of the rule that is used to trigger the alert. The value is the one that is specified in the field *name*.
+	
+* *METRICS_ENDPOINT* represents the entry point to the service. Each region has a different URL. To get the list of endpoints per region, see [Endpoints](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
     
 For example, the history of rule `highNginxCPU` is the following:
+
+```
+curl -XGET --header "X-Auth-User-Token: iam ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/history?rule_name=highNginxCPU
+```
+{: screen}
 
 ```
 [
@@ -151,3 +166,64 @@ For example, the history of rule `highNginxCPU` is the following:
 {: screen}
 
 
+## Retrieving the history of a rule for the last 48 hours
+{: #by_time}
+
+Run the following cURL command to get the history of an alert for the last 48 hours:
+
+```
+curl -H "X-Auth-User-Token: iam $Token" -H "X-Auth-Scope-Id:$Space" METRICS_ENDPOINT/v1/alert/history?start=-48h
+```
+{: codeblock}
+
+where
+	
+* The *X-Auth-User-Token* is a parameter that passes the UAA token, IAM token, or API key.
+	
+* *Auth_Type* is the prefix that defines the type of token or API key. The following list outlines the valid values: *apikey*, *iam* or *uaa*, where
+
+    * *apikey* identifies that the token is an API key.
+	* *iam* identifies that the token specified is an IAM generated token.
+	* *uaa* identifies that the token specified is an UAA generated token.
+	
+* *X-Auth-Scope-Id* is a parameter that passes the space GUID. The GUID must be prefixed with *s-* to identify a space. This header is required if you use an UAA token authentication. If you use an IAM authentication token, then this header is optional, and the domain information that is bound to the token is used.
+	
+* *Token* is the UAA or IAM authentication token, or the API key.
+	
+* *Space* is the GUID of the space. 
+	
+* *RULE_NAME* is the name of the rule that is used to trigger the alert. The value is the one that is specified in the field *name*.
+	
+* *METRICS_ENDPOINT* represents the entry point to the service. Each region has a different URL. To get the list of endpoints per region, see [Endpoints](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
+	
+
+## Retrieving the last 3 entries in the history of a rule
+{: #number}
+
+Run the following cURL command to get the last 3 entries in the history of an alert:
+
+```
+curl -H "X-Auth-User-Token: iam $Token" -H "X-Auth-Scope-Id:$Space" METRICS_ENDPOINT/v1/alert/history?max_results=3
+```
+{: codeblock}
+
+where
+	
+* The *X-Auth-User-Token* is a parameter that passes the UAA token, IAM token, or API key.
+	
+* *Auth_Type* is the prefix that defines the type of token or API key. The following list outlines the valid values: *apikey*, *iam* or *uaa*, where
+
+    * *apikey* identifies that the token is an API key.
+	* *iam* identifies that the token specified is an IAM generated token.
+	* *uaa* identifies that the token specified is an UAA generated token.
+	
+* *X-Auth-Scope-Id* is a parameter that passes the space GUID. The GUID must be prefixed with *s-* to identify a space. This header is required if you use an UAA token authentication. If you use an IAM authentication token, then this header is optional, and the domain information that is bound to the token is used.
+	
+* *Token* is the UAA or IAM authentication token, or the API key.
+	
+* *Space* is the GUID of the space. 
+	
+* *RULE_NAME* is the name of the rule that is used to trigger the alert. The value is the one that is specified in the field *name*.
+	
+* *METRICS_ENDPOINT* represents the entry point to the service. Each region has a different URL. To get the list of endpoints per region, see [Endpoints](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
+	

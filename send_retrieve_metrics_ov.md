@@ -3,7 +3,7 @@
 copyright:
   years: 2017
 
-lastupdated: "2017-07-31"
+lastupdated: "2017-11-09"
 
 ---
 
@@ -18,60 +18,127 @@ lastupdated: "2017-07-31"
 # Sending and retrieving data
 {: #send_retrieve_metrics_ov}
 
-You can send and retrieve metrics from a {{site.data.keyword.Bluemix}} space into the {{site.data.keyword.monitoringshort}} service by using the Metrics API.
+You can send metrics to a space by using the Metrics API, or by configuring the {{site.data.keyword.monitoringshort}} plugin, which is a collectd plugin. You can retrieve metrics by using the Metrics API.
 {:shortdesc}
 
-The following figure shows a high level view of the different resources from where you can send metrics to the {{site.data.keyword.monitoringshort}} service:
 
-![High level view of resources that can send metrics to the {{site.data.keyword.monitoringlong}} service](images/monitoring_ov_f1.gif)
-
+		
 ## Sending metrics
 {: #send}
 
-For {{site.data.keyword.Bluemix_notm}} Docker containers, basic system metrics are automatically collected. For Cloud Foundry applications, and apps running in a Virtual Machine (VM), metrics must be sent directly from the app by using the Metrics API. 
+The following figure shows a high level view of the different data sources from where you can send metrics to the {{site.data.keyword.monitoringshort}} service:
+
+![High level view of resources that can send metrics to the {{site.data.keyword.monitoringlong}} service](images/monitoring_ov_f1.gif)
+
+For containers that run in a Kubernetes cluster in {{site.data.keyword.Bluemix_notm}}, and for selected services, basic system metrics are automatically collected. 
+You can also collect more metrics, or send metrics from ouside the {{site.data.keyword.IBM_notm}} Cloud, into the {{site.data.keyword.monitoringshort}} service. Different methods are available. The following tables list the methods by metrics source:
+
+<table>
+  <caption>Table 1. Methods to send metrics to the {{site.data.keyword.monitoringshort}} service for {{site.data.keyword.IBM_notm}} Cloud resources.</caption>
+  <tr>
+    <th>Metrics Source</th>
+	<th>Metrics API</th>
+    <th>{{site.data.keyword.monitoringshort}} Plugin (collectd)</th>	
+	<th>More info</th>
+  </tr>
+  <tr>
+    <td>Containers that run in a Kubernetes cluster in the {{site.data.keyword.Bluemix_notm}}</td>
+	<td>Yes</td>
+	<td>Yes</td>
+	<td>Basic system metrics are automatically collected automatically. You can install collectd explicitly and send advanced or custom metrics that are not provided by default.</td>
+  </tr>
+  <tr>
+    <td>Cloud Foundry Applications</td>
+	<td>Yes</td>
+	<td>No</td>
+	<td></td>
+  </tr>
+  <tr>
+    <td>Virtual Servers </td>
+	<td>Yes</td>
+	<td>Yes</td>
+	<td>**Note:** Not supported for Windows.</td>
+  </tr>
+</table>
+
+<table>
+  <caption>Table 2. Methods to send metrics to the {{site.data.keyword.monitoringshort}} service from outside the {{site.data.keyword.IBM_notm}} Cloud.</caption>
+  <tr>
+    <th>Metrics Source</th>
+	<th>Metrics API</th>
+    <th>{{site.data.keyword.monitoringshort}} Plugin (collectd)</th>	
+	<th>More info</th>
+  </tr>
+  <tr>
+    <td>Containers</td>
+	<td>Yes</td>
+	<td>Yes</td>
+	<td>You can use *supervisord* as container endpoint to run and manage both your app and collectd.</td>
+  </tr>
+  <tr>
+    <td>Applications</td>
+	<td>Yes</td>
+	<td>No</td>
+	<td></td>
+  </tr>
+  <tr>
+    <td>Services</td>
+	<td>Yes</td>
+	<td>No</td>
+	<td></td>
+  </tr>
+  <tr>
+    <td>Virtual Machines (VM)</td>
+	<td>Yes</td>
+	<td>Yes</td>
+	<td>**Note:** Not supported for Windows.</td>
+  </tr>
+</table>
+
 
 To send metrics into the {{site.data.keyword.monitoringshort}} service, consider the following information: 
 
-* You must set the {{site.data.keyword.Bluemix_notm}} space where you want to send the data.
+* You must specify the space where you want to send metrics.
 
 * You must provide a security token or API key to work with the {{site.data.keyword.monitoringshort}} service. 
 
-* You can use the API endpoint `https://metrics.ng.bluemix.net/v1/metrics`. For more information about the API, see [the Metrics API](https://console.bluemix.net/apidocs/927-ibm-cloud-monitoring-rest-api?&language=node#introduction){: new_window}.
+* The {{site.data.keyword.IBM_notm}}ID of the user that sends metrics must have an IAM policy assigned for the {{site.data.keyword.monitoringshort}} service. The following IAM roles allow a user to send metrics: *Administrator*, *Editor*, and *Operator*.
 
-Depending on the authentication model that you choose, choose one of the following options to send data into the {{site.data.keyword.monitoringshort}} service:
- 
-* To send metrics by using a UAA token, see [Sending metrics to a space by using UAA](/docs/services/cloud-monitoring/send-metrics/send_data_api.html#uaa).
+* You must specify the API endpoint where you are sending metrics. There is one endpoint per region. For example, for the US South region, the endpoint is the following: `https://metrics.ng.bluemix.net/v1/metrics`. For more information about the endpoints, see [URLs for the {{site.data.keyword.monitoringshort}} service](/docs/services/cloud-monitoring/monitoring_ov.html#region){: new_window}.
 
-* To send metrics by using an IAM token or an API key, see [Sending metrics to a space by using IAM or an API key](/docs/services/cloud-monitoring/send-metrics/send_data_api.html#iam).
 
+You can send metrics to the {{site.data.keyword.monitoringshort}} service by using any of the following methods:
+
+* *Method 1: Configure the {{site.data.keyword.monitoringshort}} plugin.*
+
+    For more information, see [Configuring the {{site.data.keyword.monitoringshort}} plugin](/docs/services/cloud-monitoring/send-metrics/conf_monitoring_plugin.html#conf_monitoring_plugin).
+
+    The following figure shows a high level view of how to use the {{site.data.keyword.monitoringshort}} plugin to send metrics into the {{site.data.keyword.monitoringshort}} service:
+
+    ![High level view on how to use the {{site.data.keyword.monitoringshort}} plugin](images/monitoring_plugin_ov.png "High level view on how to use the {{site.data.keyword.monitoringshort}} plugin")
+
+* *Method 2: Use the Metrics API.*
+
+    For more information, see [Sending metrics by using the Metrics API](/docs/services/cloud-monitoring/send-metrics/send_data_api.html#send_data_api).
 
 
 ## Retrieving metrics
 {: #retrieve}
 
+If you need to do further analysis outside of the {{site.data.keyword.monitoringshort}} service, or if your application wants to use metrics to make decisions, you can use the Metrics API to retrieve a maximum of five metrics per request. 
+
+* For more information on how to retrieve metrics, see [Retrieving metrics for a domain](/docs/services/cloud-monitoring/retrieve-metrics/retrieve_data_api.html#retrieve_data_api)
+* For more information about the Metrics API, see [Metrics API](https://console.bluemix.net/apidocs/927-ibm-cloud-monitoring-rest-api?&language=node#introduction){: new_window}.
+
 To retrieve metrics, consider the following information: 
 
-* You must set the {{site.data.keyword.Bluemix_notm}} space from where you want to retrieve the data.
-
+* You must set the space from where you want to retrieve the data. 
 * You must provide a security token or API key to work with the {{site.data.keyword.monitoringshort}} service. 
-
 * You must specify a path to 1 or more metrics. For more information, see [Defining the metrics](/docs/services/cloud-monitoring/retrieve-metrics/retrieve_data_api.html#metrics).
-
 * Optionally, you can specify a custom time period. By default, if you do not specify a time period, the data that you retrieve is the data that corresponds to the last 24 hours. For more information, see [Configuring a period of time](/docs/services/cloud-monitoring/retrieve-metrics/retrieve_data_api.html#time).
 
-* You can use the API endpoint `https://metrics.ng.bluemix.net/v1/metrics`. For more information about the API, see [the Metrics API](https://console.bluemix.net/apidocs/927-ibm-cloud-monitoring-rest-api?&language=node#introduction){: new_window}.
 
-**Note:** You can retrieve a maximum of 5 targets per request.
-
-Depending on the authentication model that you choose, choose one of the following options to retrieve data from the {{site.data.keyword.monitoringshort}} service:
- 
-* To retrieve metrics by using a UAA token, see [Retrieving metrics to a space by using UAA](/docs/services/cloud-monitoring/retrieve-metrics/retrieve_data_api.html#uaa).
-
-* To retrieve metrics by using an IAM token or an API key, see [Retrieving metrics to a space by using IAM or an API key](/docs/services/cloud-monitoring/retrieve-metrics/retrieve_data_api.html#iam).
-
-
-
-## Retrieving the list of metrics
+## Listing metrics
 {: #show_metrics}
 
 
@@ -83,13 +150,40 @@ To list the metrics, consider the following information:
 
 * You must provide a security token or API key to work with the {{site.data.keyword.monitoringshort}} service. 
 
-* You must specify a query that defines the path from where to list the metrics. For example, to list all the metrics in a space, you can set the query to: `query=SpaceGUID.*` where *SpaceGUID* is the GUID of the space.
+* You must specify a query that defines the path from where to list the metrics. For example, to list all the metrics in a space, you can set the query to: `query=*` 
 
     The default is `*` which specifies the start point at the root level for the space.
+	
+* You can use the API call `Endpoint/v1/metrics/list` where Endpoint represents the entry point to the service. 
 
-* You can use the API endpoint `https://metrics.ng.bluemix.net/v1/metrics/list`. For more information about the API, see [the Metrics API](https://console.bluemix.net/apidocs/927-ibm-cloud-monitoring-rest-api?&language=node#introduction){: new_window}.
+    Each region has a different URL. For example, for the US South region, you can use the API endpoint `https://metrics.ng.bluemix.net/v1/metrics/list` 
+
+    To get the list of endpoints per region, see [Endpoints](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
+
+    For more information about the API, see [the Metrics API](https://console.bluemix.net/apidocs/927-ibm-cloud-monitoring-rest-api?&language=node#introduction){: new_window}.
 
 
+
+## Endpoints to send metrics
+{: #endpoints}
+
+ The following table lists the endpoints by region:
+	
+<table>
+    <caption>List of endpoints</caption>
+	<tr>
+	  <th>Region</th>
+	  <th>URL</th>
+	</tr>
+	<tr>
+	  <td>US South</td>
+	  <td>[https://metrics.ng.bluemix.net](https://metrics.ng.bluemix.net)</td>
+	</tr>
+	<tr>
+	  <td>United Kingdom</td>
+	  <td>[https://metrics.eu-gb.bluemix.net](https://metrics.eu-gb.bluemix.net)</td>
+	</tr>
+</table>
 
 
 
