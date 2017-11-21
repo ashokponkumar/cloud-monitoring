@@ -15,7 +15,7 @@ lastupdated: "2017-11-09"
 {:pre: .pre}
 
 
-# Frequent questions and answers when using Grafana
+# FAQ using Grafana
 {: #grafana_qa}
 
 Here are the answers to common questions about using Grafana with the {{site.data.keyword.monitoringshort}} service. 

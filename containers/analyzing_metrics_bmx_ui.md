@@ -3,7 +3,7 @@
 copyright:
   years: 2017
 
-lastupdated: "2017-11-09"
+lastupdated: "2017-11-10"
 
 ---
 
@@ -14,14 +14,14 @@ lastupdated: "2017-11-09"
 {:screen: .screen}
 {:pre: .pre}
 
-# Analyzing container metrics from the IBM Cloud console
+# Analyzing container metrics from the IBM Cloud console (Deprecated)
 {: #analyzing_metrics_bmx_ui}
 
 In the {{site.data.keyword.Bluemix}}, you can view, and analyze metrics through the *Monitoring* tab that is available for Docker containers that are deployed in a {{site.data.keyword.Bluemix_notm}}-managed infrastructure.
 {:shortdesc}
 
 
-##  Navigating to the metrics of a Docker container that is managed in the IBM Cloud
+##  Navigating to the metrics of a Docker container that is managed in the IBM Cloud (Deprecated)
 {: #launch_metrics_tab_bmx_ui_containers}
 
 To see the metrics for a Docker container that is deployed in the {{site.data.keyword.Bluemix_notm}}-managed infrastructure, complete the following steps:

@@ -15,7 +15,7 @@ lastupdated: "2017-11-09"
 {:pre: .pre}
 
 
-# Frequent questions and answers using the IBM Cloud CLI
+# FAQ using the IBM Cloud CLI
 {: #cli_qa}
 
 Here are the answers to common questions about using the {{site.data.keyword.Bluemix}} CLI with the {{site.data.keyword.monitoringshort}} service. 

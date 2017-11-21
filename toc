@@ -39,6 +39,9 @@ IBM Cloud Monitoring
 
     {: .topicgroup}
     Docker containers
+        containers/config_cpu_containers.md
+        containers/config_cpu_worker.md
+        containers/config_mem_container.md
         containers/analyzing_metrics_bmx_ui.md
 
     {: .topicgroup}
@@ -63,15 +66,17 @@ IBM Cloud Monitoring
     monitoring_gettinghelp.md
 
     {: .topicgroup}
-    Frequently asked questions
+    FAQ
         qa/qa.md
         qa/cli_qa.md
         qa/grafana_qa.md
+        qa/qa_containers.md
     {: .navgroup-end}
 
     {: .navgroup id="reference"}
     [Metrics API](http://console.bluemix.net/apidocs/927-ibm-cloud-monitoring-rest-api)
     [Alerts API](http://console.bluemix.net/apidocs/940-ibm-cloud-monitoring-rest-api)
+    reference/metrics_format.md
 	
     {: .navgroup-end}
 
