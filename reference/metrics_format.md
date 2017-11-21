@@ -70,7 +70,7 @@ where
   <tr>
     <td>Functions</td>
     <td>Query functions that you can select to visualize a container metric in the panel. </td>
-    <td>[Functions ![(External link icon)](../../icons/launch-glyph.svg "External link icon")](http://graphite.readthedocs.io/en/latest/functions.html){: new_window}</td>
+    <td>[Functions ![(External link icon)](../../../icons/launch-glyph.svg "External link icon")](http://graphite.readthedocs.io/en/latest/functions.html){: new_window}</td>
    </tr>
 </table>
 
