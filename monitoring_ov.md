@@ -3,7 +3,7 @@
 copyright:
   years: 2017
 
-lastupdated: "2017-11-09"
+lastupdated: "2017-11-22"
 
 ---
 
@@ -147,8 +147,10 @@ Consider the following information about the {{site.data.keyword.monitoringshort
 
 The {{site.data.keyword.monitoringshort}} service is available in the following regions:
 
-* US South
+* Germany
+* Sydney
 * United Kingdom
+* US South
 
 
 
@@ -171,12 +173,20 @@ The following table lists the URLs per region:
 	<th>Endpoint</th>
   </tr>
   <tr>
-    <td>US South</td>
-	<td>[https://metrics.ng.bluemix.net/](https://metrics.ng.bluemix.net/)</td>
+    <td>Germany</td>
+	<td>[https://metrics.eu-de.bluemix.net](https://metrics.eu-de.bluemix.net)</td>
+  </tr>
+  <tr>
+    <td>Sydney</td>
+	<td>[https://metrics.au-syd.bluemix.net](https://metrics.au-syd.bluemix.net)</td>
   </tr>
   <tr>
     <td>United Kingdom</td>
 	<td>[https://metrics.eu-gb.bluemix.net](https://metrics.eu-gb.bluemix.net)</td>
+  </tr>
+  <tr>
+    <td>US South</td>
+	<td>[https://metrics.ng.bluemix.net/](https://metrics.ng.bluemix.net/)</td>
   </tr>
 </table>
 

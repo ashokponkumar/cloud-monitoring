@@ -15,7 +15,7 @@ lastupdated: "2017-11-21"
 {:pre: .pre}
 
 
-# Monitoring for the {{site.data.keyword.containershort_notm}} service
+# Monitoring for the {{site.data.keyword.containershort_notm}}
 {: #monitoring_bmx_containers_ov}
 
 In the {{site.data.keyword.Bluemix}}, container and worker metrics are collected automatically from outside of the container, without having to install and maintain agents inside of the container. You can use Grafana to visualize container metrics. 

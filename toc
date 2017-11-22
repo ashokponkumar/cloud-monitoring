@@ -16,7 +16,7 @@ IBM Cloud Monitoring
         analyze_metrics_ov.md
 
     {: .topicgroup}
-    Monitoring
+    Monitoring for cloud resources
         containers/monitoring_containers_ov.md
 
     {: .topicgroup}
