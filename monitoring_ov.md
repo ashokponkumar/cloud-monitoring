@@ -1,18 +1,21 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-11-22"
+lastupdated: "2018-02-07"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
+
 
 
 # About

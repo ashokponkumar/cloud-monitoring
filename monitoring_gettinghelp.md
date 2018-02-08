@@ -27,7 +27,7 @@ If you have problems or questions when using the monitoring capabilities in the 
 <!--Insert the appropriate Stack Overflow tag for your service for <service_keyword> in URL and text below:  -->
   * If you have technical questions about developing or deploying an app with {{site.data.keyword.monitoringshort}}, post your question on [Stack Overflow](http://stackoverflow.com/search?q=cloud-monitoring+ibm-bluemix){:new_window} and tag your question with "ibm-bluemix" and "cloud-monitoring".
 <!--Insert the appropriate dW Answers tag for your service for <service_keyword> in URL below:  -->
-  * For questions about the service and getting started instructions, use the [{{site.data.keyword.IBM_notm}} developerWorks dW Answers](https://developer.ibm.com/answers/topics/ibm-cloud-monitoring/?smartspace=bluemix){:new_window} forum. Include the  "ibm-cloud-monitoring" and "bluemix" tags.
+  * For questions about the service and getting started instructions, use the [{{site.data.keyword.IBM_notm}} developerWorks dW Answers](https://developer.ibm.com/answers/topics/ibm-cloud-monitoring/?smartspace=ibm-cloud){:new_window} forum. 
 
 See [Getting help](https://www.{DomainName}/docs/support/index.html#getting-help) for more details about using the forums.
 
