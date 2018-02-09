@@ -1,49 +1,106 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-11-21"
+lastupdated: "2018-02-07"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
-# Monitoring for the {{site.data.keyword.containershort_notm}}
+
+# {{site.data.keyword.containershort_notm}}
 {: #monitoring_bmx_containers_ov}
 
-In the {{site.data.keyword.Bluemix}}, container and worker metrics are collected automatically from outside of the container, without having to install and maintain agents inside of the container. You can use Grafana to visualize container metrics. 
+In the {{site.data.keyword.Bluemix}}, cluster metrics are collected automatically. You can use Grafana to monitor the performance of your cluster. 
 {:shortdesc}
 
 **Note:** Metrics are collected and available for monitoring through the {{site.data.keyword.monitoringshort}} service for containers running in standard clusters. For more information about the features supported by a standard cluster, see [Planning clusters and apps](/docs/containers/cs_planning.html#cs_planning_cluster_type).
 
-## Collecting metrics for resources in a Kubernetes cluster
-{: #metrics_containers_kube_ov}
 
-In {{site.data.keyword.Bluemix_notm}}, when you deploy applications in a Kubernetes cluster, consider the following information:
 
-* In an {{site.data.keyword.Bluemix_notm}} account, you can have 1 or more organizations.
-* Each organization can have 1 or more spaces.
-* You can have 1 or more Kubernetes clusters in an organization.
-* Collection of metrics is enabled automatically when you create a Kubernetes cluster.
-* A Kubernetes cluster is independent of {{site.data.keyword.Bluemix_notm}} spaces. However, the metrics collected for a cluster and its resources are associated with a space in the {{site.data.keyword.Bluemix_notm}}.
-* Metrics are collected for a container as soon as the pod is deployed.
-* You can view metrics in Grafana or in the Kubernetes UI.
-* To visualize metric data for a cluster, you must configure Grafana dashboards for the Cloud Public region where the cluster is created.
+## About monitoring in Public
+{: #public}
 
-Before you create a cluster, either through the {{site.data.keyword.Bluemix_notm}} UI or through the command line, you must log into a specific {{site.data.keyword.Bluemix_notm}} region, account, organization, and space. The space where you are logged in is the space where metric data for the cluster and its resources is collected.
+In the {{site.data.keyword.Bluemix_notm}}, you can use the {{site.data.keyword.monitoringshort}} service to store and analyze container metrics and Kubernetes cluster metrics that are collected automatically by the {{site.data.keyword.containershort}} in Public.
+
+You can have 1 or more Kubernetes clusters in an account. Metrics are collected automatically by the {{site.data.keyword.containershort}} as soon as the cluster is provisioned.  Container metrics are collected as soon as the pod is deployed. Metrics are automatically forwarded to the {{site.data.keyword.monitoringshort}} service:
+
+* When you create a cluster as an account resource, metrics are forwarded to the account domain in the {{site.data.keyword.monitoringshort}} service. For metrics to be forwarded to the account domain, the {{site.data.keyword.monitoringshort}} service key owner must have an IAM policy with **administrator** permisisons to work with the {{site.data.keyword.monitoringshort}} service.
+* When you create a cluster with a Cloud Foundry space associated to it, metrics are forwarded to the space domain in the {{site.data.keyword.monitoringshort}} service. For metrics to be forwarded to the space domain, the {{site.data.keyword.monitoringshort}} service key owner must have **manager** role on the organization, and **developer** role on the space.
 
 The following figure shows a high level view of monitoring for the {{site.data.keyword.containershort}}:
 
 ![High level component overview for containers deployed in a Kubernetes cluster](images/monitoring_kube.png "High level component overview for containers deployed in a Kubernetes cluster")
 
-The crawler is a process that is running in the host and performs agentless monitoring for metrics. The crawler constantly collects the following CPU and memory metrics from all of the containers by default.
+The crawler is a process that is running in the host and performs agentless monitoring for metrics. The crawler constantly collects CPU and memory metrics from all of the containers by default.
+
+
+To analyze metrics in Grafana for a cluster, consider the following information:
+
+* You must launch Grafana in the Public region where the {{site.data.keyword.monitoringshort}} instance that you use to view metrics is provisioned. 
+* You can use the default Grafana dashboard **ClusterMonitoringDashboard_v1** to monitor your cluster.
+* You can also configure custom Grafana dashboards to visualize metric data for a cluster in the Cloud Public region where the cluster is created.
+* Your user ID must have permissions to view metrics. 
+
+    To see metrics in the account domain, a user needs an IAM policy for the {{site.data.keyword.monitoringshort}} service. The user needs  **Viewer** permissions. 
+    
+    To see metrics in the space domain, the user needs a CF role. For more information, see [Roles that are required by a user to view metrics](/docs/services/cloud-monitoring/security_ov.html#bmx_roles).
+
+
+
+### High level view of monitoring for a cluster that forwards metrics to the account domain
+{: #acc}
+
+
+The following figure shows a high level view of monitoring in Public for the {{site.data.keyword.containershort}} when the cluster forwards metrics to the account domain:
+
+![High level component overview for containers deployed in a Kubernetes cluster](images/containers_kube_metrics_public_acc.png "High level component overview for containers deployed in a Kubernetes cluster")
+
+
+
+### High level view of monitoring for a cluster that forwards metrics to a space domain
+{: #space}
+
+The following figure shows a high level view of monitoring in Public for the {{site.data.keyword.containershort}} when the cluster forwards metrics to a space domain:
+
+![High level component overview for containers deployed in a Kubernetes cluster](images/containers_kube_metrics_public_space.png "High level component overview for containers deployed in a Kubernetes cluster")
+
+Clusters that forward metrics to a space must be created from the command line within the context of a Cloud Foundry organization and space. Before you create the cluster, run the `bx target` command to set the CF organization and space context.
+
+
+
+## About monitoring in Dedicated
+{: #dedicated}
+
+In the {{site.data.keyword.Bluemix_notm}}, you can use the {{site.data.keyword.monitoringshort}} service in Public to store and analyze container metrics and Kubernetes cluster metrics that are collected automatically by the {{site.data.keyword.containershort}} on Dedicated.
+
+You can have 1 or more Kubernetes clusters in an account. Metrics are collected automatically by the {{site.data.keyword.containershort}} as soon as the cluster is provisioned.  Container metrics are collected as soon as the pod is deployed. Metrics are automatically forwarded to the account domain of the {{site.data.keyword.monitoringshort}} service.
+
+**Note:** For metrics to be forwarded to the account domain, the {{site.data.keyword.monitoringshort}} service key owner must have an IAM policy with **administrator** permisisons to work with the {{site.data.keyword.monitoringshort}} service.
+
+To view and analyze metrics for a cluster in Grafana, consider the following information:
+
+* You must launch Grafana in the Cloud Public region where the cluster is available on Dedicated. For example, if a cluster is provisioned on Dedicated in US South, you must launch Grafana in the US South region on Public.
+* You can use the default Grafana dashboard **ClusterMonitoringDashboard_v1** to monitor your cluster.
+* You can also configure custom Grafana dashboards to visualize metric data for a cluster in the Cloud Public region where the cluster is created.
+* Your user ID must have an IAM policy to work with the {{site.data.keyword.monitoringshort}} service. You need to have **Viewer** permissions to see metrics in the account domain.  
+
+The following figure shows a high level view of monitoring in Dedicated for the {{site.data.keyword.containershort}}:
+
+![High level component overview for containers deployed in a Kubernetes cluster](images/containers_kube_metrics_dedicated.png "High level component overview for containers deployed in a Kubernetes cluster")
+
+
+
 
 ## CPU metrics for containers
 {: #cpu_metrics_containers}
@@ -128,7 +185,7 @@ The following table lists the memory metrics captured automatically:
 ## Defining queries to monitor resources in a Kubernetes cluster
 {: #monitoring_metrics_kube}
 
-To monitor the performace of containers and workers that are deployed in a Kubernetes cluster in the {{site.data.keyword.Bluemix_notm}}, use Grafana. 
+To monitor the performance of containers and workers that are deployed in a Kubernetes cluster in the {{site.data.keyword.Bluemix_notm}}, use Grafana. 
 
 The {{site.data.keyword.monitoringlong}} service uses Grafana, an open source analytics and visualization platform, that you can use to monitor, search, analyze, and visualize your metrics in a variety of graphs, for example charts and tables.
 
@@ -143,34 +200,42 @@ To monitor containers and workers that run in a Kubernetes cluster, you must def
 
 The format of the query is different per resource type and type of query:
 
-* For more information about the format of queries to monitor CPU for a container, see [CPU metric query format for a container](/docs/services/cloud-monitoring/reference/metrics_format.html#cpu_containers). 
-* For more information about the format of queries to monitor Load for a worker, see [Load metric query format for a worker](/docs/services/cloud-monitoring/reference/metrics_format.html#load_workers).
-* For more information about the format of queries to monitor memory for a container, see [Memory metric query format for a container](/docs/services/cloud-monitoring/reference/metrics_format.html#mem_containers).
+* For more information about the format of queries to monitor CPU for a container, see [CPU metric query format for a container](/docs/services/cloud-monitoring/reference/metrics_format_containers.html#cpu_containers). 
+* For more information about the format of queries to monitor Load for a worker, see [Load metric query format for a worker](/docs/services/cloud-monitoring/reference/metrics_format_containers.html#load_workers).
+* For more information about the format of queries to monitor memory for a container, see [Memory metric query format for a container](/docs/services/cloud-monitoring/reference/metrics_format_containers.html#mem_containers).
 
 
+## Configuring network traffic for custom firewall configurations in the {{site.data.keyword.Bluemix_notm}}
+{: #ports}
 
-## Collecting default metrics for a container managed in Bluemix (Deprecated)
-{: #metrics_containers_bmx_ov}
+When you have an additional firewall set up, or you have customized the firewall settings in your {{site.data.keyword.Bluemix_notm}} infrastructure (SoftLayer), you need to allow outgoing network traffic from the worker node to the {{site.data.keyword.monitoringshort}} service. 
 
-The following figure shows a high level view of monitoring for the {{site.data.keyword.containershort}}:
+You must open TCP port 443 and TCP port 9091 from each worker to the {{site.data.keyword.monitoringshort}} service for the following IP addresses in your customized firewall:
 
-![High level component overview for containers deployed in an {{site.data.keyword.Bluemix_notm}}-managed infrastructure](images/monitoring_bmx.gif "High level component overview for containers deployed in an {{site.data.keyword.Bluemix_notm}}-managed infrastructure")
-
-The crawler constantly collects the following metrics from all of the containers by default:
-
-* CPU
-* Memory
-* Network information
-
-## Monitoring metrics for a container managed in the IBM Cloud (Deprecated)
-{: #monitoring_metrics_bmx}
-
-Metrics are collected and displayed in both the {{site.data.keyword.Bluemix_notm}} UI and Grafana:
-
-* Use Grafana, an open source analytics and visualization platform, to monitor, search, analyze, and visualize your metrics in a variety of graphs, for example charts and tables.
-
-    You can launch Grafana from the {{site.data.keyword.Bluemix_notm}} UI or from a browser. For more information, see [Navigating to the Grafana dashboard](/docs/services/cloud-monitoring/grafana/navigating_grafana.html#navigating_grafana).
-
-* Use the {{site.data.keyword.Bluemix_notm}} UI to view the latest metrics.
-
-    To view the metrics in the {{site.data.keyword.Bluemix_notm}} UI, see [Analyzing metrics from the {{site.data.keyword.Bluemix_notm}} console](/docs/services/cloud-monitoring/containers/analyzing_metrics_bmx_ui.html#analyzing_metrics_bmx_ui).
+<table>
+  <tr>
+    <th>Region</th>
+    <th>Ingestion URL</th>
+	<th>Public IP addresses</th>
+  </tr>
+  <tr>
+    <td>Germany</td>
+	<td>ingest-eu-fra.logging.bluemix.net</td>
+	<td>158.177.88.43 <br>159.122.87.107</td>
+  </tr>
+  <tr>
+    <td>United Kingdom</td>
+	<td>ingest.logging.eu-gb.bluemix.net</td>
+	<td>169.50.115.113</td>
+  </tr>
+  <tr>
+    <td>US South</td>
+	<td>ingest.logging.ng.bluemix.net</td>
+	<td>169.48.79.236 <br>169.46.186.113</td>
+  </tr>
+  <tr>
+    <td>Sydney</td>
+	<td>ingest-au-syd.logging.bluemix.net</td>
+	<td>130.198.76.125 <br>168.1.209.20</td>
+  </tr>
+</table>

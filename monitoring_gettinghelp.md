@@ -1,18 +1,20 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-11-09"
+lastupdated: "2018-02-01"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
 # Getting help and support for monitoring
@@ -25,9 +27,9 @@ If you have problems or questions when using the monitoring capabilities in the 
 
 * You can review the forums to see whether other users ran into the same problem. When using the forums to ask a question, tag your question so that it is seen by the {{site.data.keyword.Bluemix_notm}} development teams.
 <!--Insert the appropriate Stack Overflow tag for your service for <service_keyword> in URL and text below:  -->
-  * If you have technical questions about developing or deploying an app with {{site.data.keyword.monitoringshort}}, post your question on [Stack Overflow](http://stackoverflow.com/search?q=cloud-monitoring+ibm-bluemix){:new_window} and tag your question with "ibm-bluemix" and "cloud-monitoring".
+  * If you have technical questions about developing or deploying an app with {{site.data.keyword.monitoringshort}}, post your question on [Stack Overflow](http://stackoverflow.com/search?q=ibm-cloud-monitoring+ibm-bluemix){:new_window} and tag your question with "ibm-cloud" and "ibm-cloud-monitoring".
 <!--Insert the appropriate dW Answers tag for your service for <service_keyword> in URL below:  -->
-  * For questions about the service and getting started instructions, use the [{{site.data.keyword.IBM_notm}} developerWorks dW Answers](https://developer.ibm.com/answers/topics/ibm-cloud-monitoring/?smartspace=ibm-cloud){:new_window} forum. 
+  * For questions about the service and getting started instructions, use the [{{site.data.keyword.IBM_notm}} developerWorks dW Answers](https://developer.ibm.com/answers/topics/ibm-cloud-monitoring/?smartspace=ibm-cloud){:new_window} forum.
 
 See [Getting help](https://www.{DomainName}/docs/support/index.html#getting-help) for more details about using the forums.
 

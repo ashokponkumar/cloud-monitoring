@@ -1,18 +1,21 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-11-09"
+lastupdated: "2018-02-01"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
+
 
 
 # Provisioning the Monitoring service
@@ -45,7 +48,7 @@ Complete the following steps to provision an instance of the {{site.data.keyword
 	
 	* By default, the **Lite** plan is set, which entitles you to the collection of platform metrics in the space where you are provisioning the service, and a 15 days retention period for those metrics. 
 
-    For more information about the service plans, see [Service plans](/docs/services/cloud-monitoring/monitoring_ov.html#plans).
+    For more information about the service plans, see [Service plans](/docs/services/cloud-monitoring/monitoring_ov.html#plan).
 	
 6. Click **Create** to provision the {{site.data.keyword.monitoringshort}} service in the {{site.data.keyword.Bluemix_notm}} space where you are logged in.
   

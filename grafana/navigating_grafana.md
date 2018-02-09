@@ -1,17 +1,21 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-11-09"
+lastupdated: "2018-02-07"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
+{:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
+
 
 # Navigating to the Grafana dashboard
 {:#navigating_grafana}
@@ -71,13 +75,22 @@ Complete the following steps to launch Grafana from a browser:
 	    <th>Endpoint</th>
       </tr>
       <tr>
-        <td>US South</td>
-    	<td>[https://metrics.ng.bluemix.net](https://metrics.ng.bluemix.net)</td>
+        <td>Germany</td>
+	    <td>[https://metrics.eu-de.bluemix.net](https://metrics.eu-de.bluemix.net)</td>
       </tr>
       <tr>
         <td>United Kingdom</td>
 	    <td>[https://metrics.eu-gb.bluemix.net](https://metrics.eu-gb.bluemix.net)</td>
       </tr>
+      <tr>
+        <td>US South</td>
+    	<td>[https://metrics.ng.bluemix.net](https://metrics.ng.bluemix.net)</td>
+      </tr>
+      <tr>
+        <td>United Kingdom</td>
+	    <td>[https://metrics.au-syd.bluemix.net](https://metrics.au-syd.bluemix.net)</td>
+      </tr>
+      
     </table>
 	
 2. Select **Grafana**.

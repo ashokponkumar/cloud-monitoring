@@ -1,18 +1,20 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-11-21"
+lastupdated: "2018-02-07"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
 # Configuring CPU metrics for a container in Grafana
@@ -41,7 +43,26 @@ Obtain the following information for the container that you want to monitor:
 	
 * **Container name** of the container that you want to monitor.
 
+Find out if metrics are forwarded to a space domain or to the account domain.
 
+To identify where your cluster forwards metrics, run the following command:
+
+```
+$ bx cs cluster-get ClusterName --json
+```
+{: codeblock}
+
+where *ClusterName* is the name of your cluster.
+
+In the output, the following fields provide the information about where metrics are forwarded:
+
+* **logOrg** defines the ID of a CF organization.
+* **logOrgName** defines the name of a CF organization.
+* **logSpace** defines the ID of a CF space.
+* **logSpaceName** defines the name of a CF space.
+
+If the fields are empty, then metrics are forwarded to the account domain.
+If the fields have a CF organization and a CF space set, then metrics are forwarded to the space domain that is associated with this space.
 
 ## Step 2: Launch Grafana
 {: #step2}
@@ -50,7 +71,22 @@ Launch Grafana from a browser. For more information, see [Navigating to the Graf
 
 Ensure that in Grafana you are logged in to the account where the cluster is running. 
 
-Check that the organization and space correspond to the space that is bound to the Kubernetes cluster. For information on how to get the space name and ID, see [How do I find the space ID and space name of a space that is associated with a cluster?](/docs/services/cloud-monitoring/qa/qa_containers.html#qa2).
+1. From a browser, launch Grafana. 
+
+    Enter the {{site.data.keyword.monitoringshort}} service URL for the region where you created the cluster. 
+    
+    To get the URLs per region, see [URLs for the Monitoring service](/docs/services/cloud-monitoring/monitoring_ov.html#region).
+
+    For example, for the US South region, launch: [https://metrics.ng.bluemix.net/](https://metrics.ng.bluemix.net/).
+
+2. Set the {{site.data.keyword.monitoringshort} domain where you can view the cluster metrics.
+
+    In Grafana, select your ID. Then, check that you are in the correct account, and choose a domain.
+
+    Clusters that have a CF space associated forward metrics to the space metrics domain. Select `Domain = space`, and the organization and space that is associated with your cluster.
+
+    CLusters that are created at account level forward metrics to the account metrics domain. Select `Domain = account`
+
 
 
 
@@ -61,7 +97,7 @@ Complete the following steps to create a Grafana dashboard and define a query to
 
 1. Create a new dashboard.
 
-    * Select the side menubar toggle ![Grafana sidemenu bar](images/grafana_settings.gif "Grafana sidemenu bar").
+    * Select the side menubar toggle ![Grafana side menu bar](images/grafana_settings.gif "Grafana side menu bar").
     * Select **Dashboards**.
     * Click **New**
 
@@ -79,7 +115,7 @@ Complete the following steps to create a Grafana dashboard and define a query to
 
     For information about the format of the query, see [Query format for CPU metrics collected for containers](/docs/services/cloud-monitoring/reference/metrics_format.html#cpu_containers).
 
-    In the *Metrics* tab, select **Add query**. <br>A query entry is added. Each query is labeled with a letter.
+    In the *Metrics* tab, select **Add query**. </br>A query entry is added. Each query is labeled with a letter.
 	
 	Complete the following steps to define the query:
 	
@@ -116,9 +152,13 @@ Complete the following steps to create a Grafana dashboard and define a query to
         3 Select **alias**.
         4. Enter a string, for example, `My sample metric`.
 
-4. Save the dashboard for later reuse.
 
-    1. Click the save dashboard image ![Save dashboard image](images/grafana_save_image.gif "Save dashboard image").
-    2. Enter the name of the dashboard.
-    3. Click **Save**.
+## Step 4: Save the dashboard for later reuse
+{: #step4}
+
+Complete the following steps:
+
+1. Click the save dashboard image ![Save dashboard image](images/grafana_save_image.gif "Save dashboard image").
+2. Enter the name of the dashboard.
+3. Click **Save**.
 

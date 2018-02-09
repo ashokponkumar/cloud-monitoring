@@ -1,20 +1,22 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-11-09"
+lastupdated: "2018-02-07"
 
 ---
 
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
-
-# Configuring an alert that sends an email
+# Configuring an email alert by using the {{site.data.keyword.monitoringshort}} API
 {: #configure_email_alert}
 
 To configure an email alert on a metric, define a rule and an email notification. Then, register the rule and the notification method with the {{site.data.keyword.monitoringshort}} service.

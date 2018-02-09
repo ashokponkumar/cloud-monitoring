@@ -1,25 +1,30 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-11-09"
+lastupdated: "2018-02-07"
 
 ---
 
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
-
-# Retrieving the history of an alert
+# Retrieving the history of an alert by using the Alerts API
 {: #retrieve_history}
 
+Use the Alerts API to retrieve the history of an alert. 
+{:shortdesc}
 
-To retrieve the history of an alert, complete the following steps:
+
+To retrieve the history of an alert by using the Alerts API, complete the following steps:
 
 1. Log in to a region, organization, and space in the {{site.data.keyword.Bluemix_notm}}. 
 

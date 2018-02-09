@@ -1,19 +1,20 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-11-09"
+lastupdated: "2018-02-01"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
-
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 # Retrieving metrics
 {: #retrieve_data_api}
@@ -118,7 +119,7 @@ To retrieve metrics from a space, complete the following steps:
 	
 	* *Space* represents the GUID of the space. 
 	
-	* *Start_Time* defines the relative or absolute time period that sets the start of the request. Defaults to 24h ago: `-24h`. *End_Time* defines the elative or absolute time period to set the end of the request. Defaults to current time now: `now`. For more information, see [Setting a period of time](/docs/services/cloud-monitoring/retrieve-metrics/retrieve_data_api.html#time).
+	* *Start_Time* defines the start of the request. This information is used to calculate the relative or absolute time period. *End_Time* defines the end of the request. This information is used to calculate the relative or absolute time period. For more information, see [Setting a period of time](/docs/services/cloud-monitoring/retrieve-metrics/retrieve_data_api.html#time).
 	
 	* *Path*  identifies one or several metrics. You can optionally apply functions to each metric. Paths also support wildcards, which allows you to identify more than one metric in a single path. For more information, see [Defining the metrics](/docs/services/cloud-monitoring/retrieve-metrics/retrieve_data_api.html#metrics).
 	
@@ -153,7 +154,7 @@ You can use wildcards to define a path. By using wildcards, you can identify mor
 
 * **Value list**: You can set comma-separated values within braces to define value lists. 
 
-    For example, to download metrics for the following paths: `servers.myserver.cpu.total.user` and `servers.myserver.cpu.total.system}`, you can set a single path for both types: `servers.myserver.cpu.total.{user,system}`
+    For example, to download metrics for the following paths: `servers.myserver.cpu.total.user` and `servers.myserver.cpu.total.system`, you can set a single path for both types: `servers.myserver.cpu.total.{user,system}`
 
 
 
@@ -195,10 +196,10 @@ You can use any of the following formats to define an **Absolute time**: `HH:MM_
 
 **Example**
 
-The following table shows different examples on how to set different time periods by seting the *from* and *until* parameters:
+The following table shows different examples on how to set different time periods by setting the *from* and *until* parameters:
 
 <table>
-  <caption>Table 1. Different examples that show how to set different time periods by seting the *from* and *until* parameters</caption>
+  <caption>Table 1. Different examples that show how to set different time periods by setting the *from* and *until* parameters</caption>
   <tr>
     <th>Example</th>
 	<th>Description</th>

@@ -17,7 +17,6 @@ lastupdated: "2018-02-07"
 {:download: .download}
 
 
-
 # About
 {: #monitoring_ov}
 
@@ -26,7 +25,7 @@ Use the {{site.data.keyword.monitoringlong}} service to expand your collection a
 
 The following figure shows a high level view of the different resources from where you can send metrics to the {{site.data.keyword.monitoringshort}} service for analysis:
 
-![High level component overview of the components in the {{site.data.keyword.monitoringlong}} service](images/cloud_monitoring_ov.gif)
+![High level component overview of the components in the {{site.data.keyword.monitoringlong}} service](images/cloud_monitoring_ov.png "High level component overview of the components in the {{site.data.keyword.monitoringlong}} service")
 
 The {{site.data.keyword.Bluemix}}, by default, collects and displays metrics for CPU usage, memory utilization, and network I/O for the {{site.data.keyword.containershort}}. You can use the {{site.data.keyword.monitoringshort}} service in the {{site.data.keyword.Bluemix_notm}} to automatically collect and measure key metrics from your environment and applications. No special instrumentation is required to collect metrics. For example, you can use information provided by performance metrics to monitor how a service is running in the cloud, detect resource bottlenecks, and keep an eye on the service level agreement (SLA). When you analyze performance data for a service, you can detect situations that can lead to a resource bottleneck and consequently affect your service SLA to your clients. By taking early action, you can prevent situations that can impact your business negatively.  
 
@@ -66,48 +65,45 @@ You can view and analyze metrics collected by the {{site.data.keyword.monitoring
     You may choose the Lite service plan or the Premium service plan to match your usage needs.  The Lite plan offers basic platform metric collection and complementary alerting.  Alternatively, you can select the Premium plan to enable greater metric consumption with a longer retention period, to increase the number of alerts that you can define, including alerts that report on multiple services and apps, and to gain access to the services APIs.
 
  
-## Service plan
+## Service plans
 {: #plan}
 
 The {{site.data.keyword.monitoringshort}} service provides multiple plans. Each plan has different metrics collection, retention, and alert definition capabilities. 
 
 You can change a plan through the {{site.data.keyword.Bluemix_notm}} UI or through the command line. You can upgrade or reduce your plan at any time. For more information about service plan upgrades in {{site.data.keyword.Bluemix_notm}}, see [Changing the plan](/docs/services/cloud-monitoring/plan/change_plan.html#change_plan). 
 
-The following table outlines the plans that are available:
+The following table outlines the plans that are available when you provision the {{site.data.keyword.monitoringshort}} service in a space:
 
 <table>
-    <caption>Table 1. Summary of plans for the {{site.data.keyword.monitoringshort}} service.</caption>
+    <caption>Table 1. Summary of plans for the {{site.data.keyword.monitoringshort}} service per space.</caption>
       <tr>
         <th>Plan</th>
         <th>Sending of metrics by using the API</th>
         <th>Metrics retention period</th>
         <th>Alerts</th>
-		<th>Notification methods</th>
+		    <th>Notification methods</th>
       </tr>
       <tr>
         <td>Lite (default)</td>
         <td>Not available</td>
         <td>15 days</td>
-        <td>You can define up to 10 single metric alerting rules or 1 rule that includes a wildcard.</td>
-		<td>Email</td>
+        <td>You can define up to 10 alerting rules with single metric queries, or 1 alerting rule that includes a wildcard.</td>
+		    <td>Email</td>
       </tr>
       <tr>
         <td>Premium</td>
         <td>Available</td>
         <td>45 days</td>
         <td>You can define alerting rules including rules with wildcards.</td>
-		<td>Email, webhook, PagerDuty</td>
+		    <td>Email, webhook, PagerDuty</td>
       </tr>
 </table>
 
-**Note:** 
+**Note:** The Lite plan offers the same features as the integrated monitoring capabilities in the {{site.data.keyword.Bluemix_notm}}. Account domain offers the same features as the Lite plan.
 
-* The Lite plan offers the same features as the integrated monitoring capabilities in the {{site.data.keyword.Bluemix_notm}}.
-* To see the metrics for a Kubernetes cluster, you must provision the {{site.data.keyword.monitoringshort}} service in the same space where the cluster was created, and select the Premium plan. 
 
 ## Metrics retention period
 {: #metrics_retention}
-
 
 The following table summarizes the retention period based on your service plan:
 
@@ -139,9 +135,9 @@ In the {{site.data.keyword.Bluemix_notm}} catalog, you can find the {{site.data.
 
 Consider the following information about the {{site.data.keyword.monitoringshort}} service:
 
-* To collect metrics for cloud resources running in a {{site.data.keyword.Bluemix_notm}} space, you must provision the service in the same space where the resources are running.
+* You can only provision one instance of the {{site.data.keyword.monitoringshort}} service per space.
+* To collect metrics for cloud resources running in a Cloud Foundry space, you must provision the service in the same space where the resources are running.
 
-* To send metrics into the {{site.data.keyword.monitoringshort}} service, you must provision an instance of the {{site.data.keyword.monitoringshort}} service in the {{site.data.keyword.Bluemix_notm}} space to where you want to send the metrics. 
 
 
 

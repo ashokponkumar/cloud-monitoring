@@ -1,18 +1,20 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-11-22"
+lastupdated: "2018-02-01"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
 # Sending and retrieving data
@@ -127,7 +129,7 @@ You can send metrics to the {{site.data.keyword.monitoringshort}} service by usi
 
 If you need to do further analysis outside of the {{site.data.keyword.monitoringshort}} service, or if your application wants to use metrics to make decisions, you can use the Metrics API to retrieve a maximum of five metrics per request. 
 
-* For more information on how to retrieve metrics, see [Retrieving metrics for a domain](/docs/services/cloud-monitoring/retrieve-metrics/retrieve_data_api.html#retrieve_data_api)
+* For more information on how to retrieve metrics, see [Retrieving metrics from a domain](/docs/services/cloud-monitoring/retrieve-metrics/retrieve_data_api.html#retrieve_data_api)
 * For more information about the Metrics API, see [Metrics API](https://console.bluemix.net/apidocs/927-ibm-cloud-monitoring-rest-api?&language=node#introduction){: new_window}.
 
 To retrieve metrics, consider the following information: 
@@ -197,7 +199,6 @@ To list the metrics, consider the following information:
 	  <td>9095</td>
 	</tr>
 </table>
-
 
 
 

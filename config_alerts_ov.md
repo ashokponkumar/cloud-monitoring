@@ -1,36 +1,105 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-11-09"
+lastupdated: "2018-02-09"
 
 ---
 
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
-
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 # Configuring alerts
 {: #config_alerts_ov}
 
-The {{site.data.keyword.monitoringshort}} service provides a query-based alerting system. You can use the Alerts API to set the rules and notification methods for each metric query that you want to monitor. You can notify by sending an email, trigering a webhook, or sending an alert to PagerDuty.
+The {{site.data.keyword.monitoringshort}} service provides a query-based alerting system. You can configure alerts by using the {{site.data.keyword.monitoringshort}} API or through Grafana. To configure an alert, you must set the rules and notification methods for each metric query that you want to monitor. You can notify by sending an email, trigering a webhook, or sending an alert to PagerDuty.
 {:shortdesc}
 
 You can define an alert to trigger a notification for a metric. An alert is defined by a rule that describes the metric query to be monitored, the threshold value, and the action to take when the threshold is crossed, and one or more notification methods.  
 
-You can define alerts for one a single instance or for multiple instances. When a query that you monitor through an alert rule includes a wildcard, the wildcard identifies multiple targets, that is, multiple services instances or applications instances. Every 5 minutes, the {{site.data.keyword.monitoringshort}} service runs the query that is configured in an alert rule, and checks the last datapoints that are returned for each instance or multiple instances. The {{site.data.keyword.monitoringshort}} service keeps track of the last state for each instance, and  generates new alert if the state of the alert changes. 
+The following table lists the different methods, and supported actions, that you can use to work with alerts:
+
+<table>
+  <caption>Methods to work with alerts</caption>
+	<tr>
+    <th>Method</th>
+		<th>Define an alert</th>
+		<th>Update an alert</th>
+		<th>Delete an alert</th>
+	</tr>
+	<tr>
+    <td>Alerts API</td>
+		<td>Yes</td>
+		<td>Yes</td>
+		<td>yes</td>
+	</tr>
+	<tr>
+    <td>Grafana</td>
+		<td>Yes</td>
+		<td>Yes</td>
+		<td>Yes</td>
+	</tr>
+</table>
+
+**Note:** Alerts that you define by using the Alerts API do not show in the Grafana dashboard.
+
 
 The following figure shows the different notification types that you can configure in the {{site.data.keyword.monitoringshort}} service to alert you:
 
 ![High level component overview of the notification types that are available in the {{site.data.keyword.monitoringlong}} service](images/alerts_ov_f1.gif)
 
-* To learn how to create an alert that sends an email, see [Configuring an alert that sends an email](/docs/services/cloud-monitoring/alerts/configure_email_alert.html#configure_email_alert).
-* To learn how to create an alert that sends a PagerDuty notification, see [Configuring an alert that sends a PagerDuty notification](/docs/services/cloud-monitoring/alerts/configure_pagerduty_alert.html#configure_pagerduty_alert).
-* To learn how to create an alert that sends a webhook notification, see [Configuring an alert that sends a PagerDuty notification](/docs/services/cloud-monitoring/alerts/configure_webhook_alert.html#configure_webhook_alert).
+You can define alerts for one a single instance or for multiple instances. When a query that you monitor through an alert rule includes a wildcard, the wildcard identifies multiple targets, that is, multiple services instances or applications instances. Every 5 minutes, the {{site.data.keyword.monitoringshort}} service runs the query that is configured in an alert rule, and checks the last datapoints that are returned for each instance or multiple instances. The {{site.data.keyword.monitoringshort}} service keeps track of the last state for each instance, and  generates new alert if the state of the alert changes. 
+
+
+
+## Working with alerts by using the Alerts API
+{: #api}
+
+You can define, update, or delete alerts by using the Alerts API.
+
+To define an alert on a metric query by using the Alerts API, you must:
+
+1. Define one or more metric queries on a Grafana dashboard. 
+
+    **Note:** You cannot define alerts on Grafana dashboards that use template variables.
+
+2. Configure an alert on a metric query that is defined on the Grafana dashboard.
+
+    * [Configuring an alert that sends an email](/docs/services/cloud-monitoring/alerts/configure_email_alert.html#configure_email_alert).
+    * [Configuring an alert that sends a PagerDuty notification](/docs/services/cloud-monitoring/alerts/configure_pagerduty_alert.html#configure_pagerduty_alert).
+    * [Configuring an alert that sends a Webhook notification](/docs/services/cloud-monitoring/alerts/configure_webhook_alert.html#configure_webhook_alert).
+
+    **Note:** You can only define email notifications for metric queries defined in the account metric domain.
+
+
+
+## Working with alerts by using Grafana
+{: #grafana}
+
+You can define and delete alerts directly on a Grafana dashboard. You can update rule definitions too. However, any notification channel changes must be done by using the Alerts API.
+
+Consider the following information when you work with alerts in Grafana:
+
+* To modify the notification channels assigned to a rule, you must use the Alerts API.
+* When you delete a notification channel in a space domain, rules that have that channel configured are not updated. You must use the Alerts API to modify the rule and remove that notification channel from it. 
+
+To define an alert on a metric query directly on a Grafana dashboard, you must:
+
+1. Define one or more metric queries on a Grafana dashboard. 
+
+    **Note:** You cannot define alerts on Grafana dashboards that use template variables.
+
+2. Configure an alert on a metric query that is defined on the Grafana dashboard.
+
+    For more information, see [Configuring alerts in Grafana](/docs/services/cloud-monitoring/alerts/config_alerts_grafana.html#config_alerts_grafana).
+
 
 ## Alert states
 {: #status}
@@ -66,6 +135,7 @@ For example, if a warning threshold is exceeded, then a history record is genera
 
 For more information, see [Retrieving the history of a rule](/docs/services/cloud-monitoring/alerts/retrieve_history.html#retrieve_history).
 
+
 ## Rules
 {: #rules}
 
@@ -87,7 +157,7 @@ A rule describes the metric query to be monitored, the threshold value, and the 
 
 * By default, a rule is created with the field *allow_no_data* set to `true`. When no datapoints are available, notifications are not sent unless the rule condition is triggered. If you want to receive a notification to inform that no data was found for rule X, you must set the field *allow_no_data* to `false`. 
 
-**Tip:** Verify the query that you monitor through an alert rule in Grafana. Check that it does not timeout, for example, as a result of configuring a long period of time or by using a query that includes a wildcard. Notice that when the query timesout in Grafana, an alert configured for that query is not triggered.
+**Tip:** Verify the query that you monitor through an alert rule in Grafana. Check that it does not timeout. For example, a query can timeout as the result of configuring a long period of time or if you define a query that includes a wildcard. Notice that when the query timesout in Grafana, an alert configured for that query is not triggered.
 
 The following fields are required to define a rule:
 
@@ -305,7 +375,6 @@ Where
 * The *Endpoint* defines the URL where the POST should be made. 
 * The *Pagerduty_APIkey*  defines a unique API key. This API key is generated by a PagerDuty account admin or owner.
 
-For more information, see [Creating a notification template](/docs/services/cloud-monitoring/alerts/notifications.html#template).
 
 
 ## Rules - JSON template
@@ -335,3 +404,6 @@ The following code is a template for a rule:
 }
 ```
 {: screen}
+
+
+

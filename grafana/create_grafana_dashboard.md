@@ -1,17 +1,21 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-11-09"
+lastupdated: "2018-02-01"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
+{:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
+
 
 # Creating a Grafana dashboard
 {:#create_grafana_dashboard}
@@ -90,7 +94,7 @@ To add a CPU idle graph that includes data from all of the containers in your sp
     
     * To give the graph a name, click the General tab, and in the Title field, enter a name for the graph, for example: CPU Idle
     * To give the vertical axis a label, click the Axes and grid tab, and in the Left Y Axis section, in the Label field, enter CPU.
-    * To change the background color of the graph, in the Grid threshholds section, for Level 2, click the Background color picker icon and change the background color to white or light gray.
+    * To change the background color of the graph, in the Grid thresholds section, for Level 2, click the Background color picker icon and change the background color to white or light gray.
     
     In the header, click **Back to dashboard**.
     
@@ -129,7 +133,7 @@ Complete the following steps to add a memory used visualization:
     * To give the graph a name, click the General tab, and in the Title field, enter a name for the graph, for example: Memory Used
     *  To change the format for the vertical axis values, click the Axes and grid tab, and in the Left Y Axis section, for the Format, select bytes.
     * To give the vertical axis a label, in the Label field, enter Memory.
-    * To change the background color of the graph, in the Grid threshholds section, for Level 2, click the Background color picker icon and change the background color to white or light gray.
+    * To change the background color of the graph, in the Grid thresholds section, for Level 2, click the Background color picker icon and change the background color to white or light gray.
     
     In the header, click **Back to dashboard**.
 

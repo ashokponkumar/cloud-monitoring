@@ -16,8 +16,16 @@ IBM Cloud Monitoring
         analyze_metrics_ov.md
 
     {: .topicgroup}
-    Monitoring for cloud resources
+    Monitoring cloud resources
+        cf/monitoring_cf_apps_ov.md
         containers/monitoring_containers_ov.md
+        containers/monitoring_managed_containers_ov.md
+
+    {: .topicgroup}
+    Tutorials
+        tutorials/cfapps_metrics.md
+        tutorials/container_service_metrics.md
+        tutorials/container_grafana_dashboard.md
 
     {: .topicgroup}
     Related links
@@ -32,13 +40,15 @@ IBM Cloud Monitoring
     Alerts
         alerts/rules.md
         alerts/notifications.md
+        alerts/config_alerts_grafana.md
         alerts/configure_email_alert.md
         alerts/configure_pagerduty_alert.md
         alerts/configure_webhook_alert.md
         alerts/retrieve_history.md
+        alerts/retrieve_history_grafana.md
 
     {: .topicgroup}
-    Docker containers
+    Containers
         containers/config_cpu_containers.md
         containers/config_cpu_worker.md
         containers/config_mem_container.md
@@ -47,12 +57,15 @@ IBM Cloud Monitoring
     {: .topicgroup}
     Grafana
         grafana/navigating_grafana.md
+        grafana/define_query.md
+        alerts/config_alerts_grafana.md
 
     {: .topicgroup}
     Sending metrics
         send-metrics/send_data_api.md
         send-metrics/conf_monitoring_plugin.md
-        retrieve-metrics/retrieve_data_api.md
+        
+    retrieve-metrics/retrieve_data_api.md
 
     {: .topicgroup}
     Security
@@ -76,7 +89,12 @@ IBM Cloud Monitoring
     {: .navgroup id="reference"}
     [Metrics API](http://console.bluemix.net/apidocs/927-ibm-cloud-monitoring-rest-api)
     [Alerts API](http://console.bluemix.net/apidocs/940-ibm-cloud-monitoring-rest-api)
-    reference/metrics_format.md
+    
+    {: .topicgroup}
+    Grafana query formats
+        reference/metrics_format.md
+        reference/cfapps_metrics_format.md
+        reference/metrics_format_containers.md
 	
     {: .navgroup-end}
 
