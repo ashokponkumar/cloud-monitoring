@@ -18,7 +18,7 @@ lastupdated: "2018-02-07"
 
 
 
-# Configuring CPU metrics for a worker in Grafana
+# Configuring load metrics for a worker in Grafana
 {: #config_load_worker}
 
 In the {{site.data.keyword.Bluemix}}, selected load metrics for a worker are collected automatically. To monitor them through the {{site.data.keyword.monitoringlong}}, you must define a Grafana query. 
