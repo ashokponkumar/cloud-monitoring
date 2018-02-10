@@ -49,9 +49,8 @@ IBM Cloud Monitoring
     {: .topicgroup}
     Containers
         containers/config_cpu_containers.md
-        containers/config_cpu_worker.md
+        containers/config_load_worker.md
         containers/config_mem_container.md
-        containers/analyzing_metrics_bmx_ui.md
 
     {: .topicgroup}
     Grafana
