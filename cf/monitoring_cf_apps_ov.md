@@ -20,7 +20,7 @@ lastupdated: "2018-02-08"
 # Cloud Foundry apps
  {:#monitoring_bluemix_apps}
 
-In the {{site.data.keyword.Bluemix}}, metrics are collected automatically for Cloud Foundry (CF) apps thar run in the Public region, and forwarded to the {{site.data.keyword.monitoringlong}} service for analysis. You can use Grafana to monitor the performance of your CF application. You can also use the Metrics API to query the CF app metrics and take action based on the data.
+In the {{site.data.keyword.Bluemix}}, metrics are collected automatically for Cloud Foundry (CF) apps that run in the Public region, and forwarded to the {{site.data.keyword.monitoringlong}} service. You can use Grafana  for analysis to monitor the performance of your CF application. You can also use the Metrics API to query the CF app metrics and take action based on the data.
 {:shortdesc}
 
 

@@ -19,7 +19,6 @@ IBM Cloud Monitoring
     Monitoring cloud resources
         cf/monitoring_cf_apps_ov.md
         containers/monitoring_containers_ov.md
-        containers/monitoring_managed_containers_ov.md
 
     {: .topicgroup}
     Tutorials
