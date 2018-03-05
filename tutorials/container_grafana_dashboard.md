@@ -3,7 +3,7 @@
 copyright:
   years: 2017, 2018
 
-lastupdated: "2018-02-07"
+lastupdated: "2018-03-05"
 
 ---
 
@@ -30,7 +30,7 @@ Use this tutorial to learn how to create a Grafana dashboard in the {{site.data.
 
 Learn how to search and analyze container metrics for an app that is deployed in a Kubernetes cluster:
 
-1. Launch Grafana and set the {{site.data.keyword.monitoringshort} domain where you can view the cluster metrics.
+1. Launch Grafana and set the {{site.data.keyword.monitoringshort}} domain where you can view the cluster metrics.
 2. Create a Grafana dashboard and define a metric that monitors the CPU usage of a container.
 
 
@@ -40,7 +40,7 @@ Learn how to search and analyze container metrics for an app that is deployed in
 The tutorial assumes:
 
 * A cluster is available in the US South region. 
-* The cluster forwards metrics to the account domain, that is, the cluster does not have a CF organization and space associated to it.
+* Your user ID has an IAM policy for the {{site.data.keyword.monitoringshort}} service with **viewer** permissions.
 
 To complete this tutorial, you must complete the tutorial [Analyze metrics in Grafana for an app that is deployed in a Kubernetes cluster](/docs/services/cloud-monitoring/container_service_metrics.html#container_service_metrics) or have a cluster provisoned with at least 1 application deployed.
 

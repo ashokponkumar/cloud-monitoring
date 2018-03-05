@@ -3,7 +3,7 @@
 copyright:
   years: 2017, 2018
 
-lastupdated: "2018-02-07"
+lastupdated: "2018-03-05"
 
 ---
 
@@ -35,8 +35,11 @@ In the {{site.data.keyword.Bluemix_notm}}, you can use the {{site.data.keyword.m
 
 You can have 1 or more Kubernetes clusters in an account. Metrics are collected automatically by the {{site.data.keyword.containershort}} as soon as the cluster is provisioned.  Container metrics are collected as soon as the pod is deployed. Metrics are automatically forwarded to the {{site.data.keyword.monitoringshort}} service:
 
-* When you create a cluster as an account resource, metrics are forwarded to the account domain in the {{site.data.keyword.monitoringshort}} service. For metrics to be forwarded to the account domain, the {{site.data.keyword.monitoringshort}} service key owner must have an IAM policy with **administrator** permisisons to work with the {{site.data.keyword.monitoringshort}} service.
-* When you create a cluster with a Cloud Foundry space associated to it, metrics are forwarded to the space domain in the {{site.data.keyword.monitoringshort}} service. For metrics to be forwarded to the space domain, the {{site.data.keyword.monitoringshort}} service key owner must have **manager** role on the organization, and **developer** role on the space.
+When you create a cluster, metrics are forwarded to the account domain in the {{site.data.keyword.monitoringshort}} service. For metrics to be forwarded to the account domain, the {{site.data.keyword.containershort}} key owner must have the following IAM policies:
+
+* IAM policy with **editor** permisisons for the {{site.data.keyword.monitoringshort}} service.
+* IAM policy with **administrator** permisisons for the {{site.data.keyword.containershort}}.
+
 
 The following figure shows a high level view of monitoring for the {{site.data.keyword.containershort}}:
 
@@ -53,30 +56,10 @@ To analyze metrics in Grafana for a cluster, consider the following information:
 * Your user ID must have permissions to view metrics. 
 
     To see metrics in the account domain, a user needs an IAM policy for the {{site.data.keyword.monitoringshort}} service. The user needs  **Viewer** permissions. 
-    
-    To see metrics in the space domain, the user needs a CF role. For more information, see [Roles that are required by a user to view metrics](/docs/services/cloud-monitoring/security_ov.html#bmx_roles).
 
-
-
-### High level view of monitoring for a cluster that forwards metrics to the account domain
-{: #acc}
-
-
-The following figure shows a high level view of monitoring in Public for the {{site.data.keyword.containershort}} when the cluster forwards metrics to the account domain:
+The following figure shows a high level view of monitoring in Public for the {{site.data.keyword.containershort}}. The cluster forwards metrics to the account domain:
 
 ![High level component overview for containers deployed in a Kubernetes cluster](images/containers_kube_metrics_public_acc.png "High level component overview for containers deployed in a Kubernetes cluster")
-
-
-
-### High level view of monitoring for a cluster that forwards metrics to a space domain
-{: #space}
-
-The following figure shows a high level view of monitoring in Public for the {{site.data.keyword.containershort}} when the cluster forwards metrics to a space domain:
-
-![High level component overview for containers deployed in a Kubernetes cluster](images/containers_kube_metrics_public_space.png "High level component overview for containers deployed in a Kubernetes cluster")
-
-Clusters that forward metrics to a space must be created from the command line within the context of a Cloud Foundry organization and space. Before you create the cluster, run the `bx target` command to set the CF organization and space context.
-
 
 
 ## About monitoring in Dedicated
@@ -86,7 +69,12 @@ In the {{site.data.keyword.Bluemix_notm}}, you can use the {{site.data.keyword.m
 
 You can have 1 or more Kubernetes clusters in an account. Metrics are collected automatically by the {{site.data.keyword.containershort}} as soon as the cluster is provisioned.  Container metrics are collected as soon as the pod is deployed. Metrics are automatically forwarded to the account domain of the {{site.data.keyword.monitoringshort}} service.
 
-**Note:** For metrics to be forwarded to the account domain, the {{site.data.keyword.monitoringshort}} service key owner must have an IAM policy with **administrator** permisisons to work with the {{site.data.keyword.monitoringshort}} service.
+When you create a cluster, metrics are forwarded to the account domain in the {{site.data.keyword.monitoringshort}} service. For metrics to be forwarded to the account domain, the {{site.data.keyword.containershort}} key owner must have the following IAM policies:
+
+* IAM policy with **editor** permisisons for the {{site.data.keyword.monitoringshort}} service.
+* IAM policy with **administrator** permisisons for the {{site.data.keyword.containershort}}.
+
+
 
 To view and analyze metrics for a cluster in Grafana, consider the following information:
 
@@ -239,3 +227,11 @@ You must open TCP port 443 and TCP port 9091 from each worker to the {{site.data
 	<td>130.198.76.125 <br>168.1.209.20</td>
   </tr>
 </table>
+
+
+## Tutorials
+{: #tutorial}
+
+To learn how to use the {{site.data.keyword.monitoringshort}} service to monitor the performance of your container, see [Analyze metrics in Grafana for an app that is deployed in a Kubernetes cluster](/docs/services/cloud-monitoring/tutorials/container_service_metrics.html#container_service_metrics).
+
+To learn how to create a Grafana dashboard in the {{site.data.keyword.monitoringshort}} service to monitor the performance of your cluster, see [Create a Grafana dashboard to monitor a Kubernetes cluster](/docs/services/cloud-monitoring/tutorials/container_grafana_dashboard.html#container_grafana_dashboard).
