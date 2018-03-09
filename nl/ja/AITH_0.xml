@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with AI Text Handler 1.0.0 -->
+<ExtractedAITHs>
+<ExtractedAITH file="/cf/images/cfapp_metrics_ov.ai">
+<text>Cloud Foundry アプリケーション</text>
+<text>Grafana</text>
+<text>IBM Cloud - Public</text>
+<text>アカウント・ドメイン</text>
+<text>組織</text>
+<text>IBM CLOUD - Public</text>
+<text>メトリック・シリーズ</text>
+<text></text>
+<text>スペース</text>
+<text>IBM Cloud Monitoring</text>
+<text>スペース</text>
+</ExtractedAITH>
+<ExtractedAITH file="/containers/images/containers_kube_metrics_dedicated.ai">
+<text>IBM Cloud
+Container サービス</text>
+<text>Grafana</text>
+<text>IBM Cloud - Public</text>
+<text>アカウント・ドメイン</text>
+<text>IBM Cloud - Dedicated</text>
+<text>IBM CLOUD - PUBLIC</text>
+<text>メトリック・シリーズ</text>
+<text></text>
+<text>クローラー</text>
+<text>IBM Cloud Monitoring</text>
+<text>スペース</text>
+<text>Kubernetes クラスター</text>
+<text>メトリック・データ
+の転送</text>
+</ExtractedAITH>
+<ExtractedAITH file="/containers/images/containers_kube_metrics_public_acc.ai">
+<text>IBM Cloud
+Container サービス</text>
+<text>Grafana</text>
+<text>IBM Cloud - Public</text>
+<text>アカウント・ドメイン</text>
+<text>Kubernetes クラスター</text>
+<text>IBM CLOUD - PUBLIC</text>
+<text>メトリック・シリーズ</text>
+<text></text>
+<text>クローラー</text>
+<text>IBM Cloud Monitoring</text>
+<text>スペース</text>
+<text>メトリックの
+転送</text>
+</ExtractedAITH>
+<ExtractedAITH file="/containers/images/containers_kube_metrics_public_space.ai">
+<text>IBM Cloud
+Container サービス</text>
+<text>Grafana</text>
+<text>IBM Cloud - Public</text>
+<text>アカウント・ドメイン</text>
+<text>Kubernetes クラスター</text>
+<text>IBM CLOUD - PUBLIC</text>
+<text>メトリック・シリーズ</text>
+<text></text>
+<text>クローラー</text>
+<text>IBM Cloud Monitoring</text>
+<text>スペース</text>
+<text>メトリックの
+転送</text>
+</ExtractedAITH>
+<ExtractedAITH file="/containers/images/monitoring_bmx.ai">
+<text>Grafana</text>
+<text>メトリックを収集および転送するエージェント</text>
+<text>IBM CLOUD</text>
+<text>IBM Bluemix
+Container Service</text>
+<text>メトリック</text>
+<text>クローラー</text>
+<text>着信
+データの処理</text>
+<text>組織</text>
+<text>メトリック・ストレージ</text>
+<text></text>
+<text>メトリックの保管</text>
+<text>Bluemix UI</text>
+<text>スペース</text>
+<text>統合
+モニタリング
+機能</text>
+</ExtractedAITH>
+<ExtractedAITH file="/containers/images/monitoring_kube.ai">
+<text>Grafana</text>
+<text>
+ワーカー・メトリックのモニター
+
+</text>
+<text>
+コンテナー・メトリックのモニター
+
+</text>
+<text>IBM Cloud
+Container サービス</text>
+<text>IBM Cloud Monitoring サービス</text>
+<text>IBM Cloud</text>
+<text>メトリック・ストレージ</text>
+<text></text>
+<text>メトリックを収集および転送するエージェント</text>
+<text>メトリック</text>
+<text>クローラー</text>
+</ExtractedAITH>
+<ExtractedAITH file="/images/alerts_ov_f1.ai">
+<text>PagerDuty</text>
+<text>アラート API</text>
+<text>IAM</text>
+<text>IBM Cloud Monitoring サービス</text>
+<text>UAA</text>
+<text>メトリック・ストレージ</text>
+<text>Web フック</text>
+<text>E メール</text>
+<text>IBM CLOUD</text>
+</ExtractedAITH>
+<ExtractedAITH file="/images/cloud_monitoring_gs_ov.ai">
+<text>IBM Cloud Monitoring サービス</text>
+<text>IBM Cloud Monitoring サービス</text>
+<text>IBM Cloud</text>
+<text>組織</text>
+<text>IBM Cloud Monitoring サービス</text>
+<text>Grafana</text>
+<text></text>
+<text>IBM Cloud Monitoring サービス</text>
+<text>メトリック・ストレージ</text>
+<text>スペース</text>
+</ExtractedAITH>
+<ExtractedAITH file="/images/cloud_monitoring_ov.ai">
+<text>IBM CLOUD</text>
+<text>クラウド・
+サービス</text>
+<text>IBM Cloud 外部のデータ・ソース </text>
+<text>IBM Cloud Monitoring サービス</text>
+<text>コンテナー</text>
+<text>メトリック・ストレージ</text>
+<text>仮想
+サーバー</text>
+<text>IAM</text>
+<text>Grafana</text>
+<text>UAA</text>
+<text>CF アプリ</text>
+<text>メトリック API</text>
+<text>アラート API</text>
+<text>E メール</text>
+<text>PagerDuty</text>
+<text>Web フック</text>
+<text>アプリ</text>
+<text>ダッシュボード API</text>
+<text>VM</text>
+<text>コンテナー</text>
+<text>IBM Cloud</text>
+<text></text>
+</ExtractedAITH>
+<ExtractedAITH file="/images/grafana_ov_f1.ai">
+<text>IBM CLOUD</text>
+<text>IBM Cloud Monitoring サービス</text>
+<text>照会エディター</text>
+<text>メトリック・ストレージ</text>
+<text>Grafana</text>
+<text>ダッシュボードのタイム・ピッカー</text>
+<text>テキスト</text>
+<text>行</text>
+<text>パネル</text>
+<text>パネル</text>
+<text>テーブル</text>
+<text>(タイム・ピッカー)</text>
+<text>(タイム・ピッカー)</text>
+<text>(タイム・ピッカー)</text>
+<text>グラフ</text>
+<text>Singlestat</text>
+</ExtractedAITH>
+<ExtractedAITH file="/images/monitoring_ov_f1.ai">
+<text>Grafana</text>
+<text>CF アプリ</text>
+<text>メトリックの送信</text>
+<text>IBM Cloud Monitoring サービス</text>
+<text>コンテナー</text>
+<text>アプリ</text>
+<text>仮想
+サーバー</text>
+<text>仮想
+マシン</text>
+<text>IBM CLOUD</text>
+<text>コンテナー</text>
+<text>クラウド・
+サービス</text>
+<text>メトリックの送信</text>
+</ExtractedAITH>
+</ExtractedAITHs>

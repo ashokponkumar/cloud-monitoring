@@ -1,174 +1,27 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-07-18"
+lastupdated: "2018-02-01"
 
 ---
 
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
-# Utilisation de notification à l'aide de l'API Alerts
+# Notifications CRUD
 {: #notifications}
 
-Utilisez l'API Alerts pour créer, supprimer et mettre à jour une notification, afficher les détails d'une notification, et répertorier les notifications qui sont définies dans votre espace {{site.data.keyword.Bluemix_notm}}.
+Utilisez l'API Alerts pour créer, supprimer et mettre à jour une notification, afficher les détails d'une notification, et répertorier les notifications qui sont définies dans un espace.
 {:shortdesc}
-
-## Création d'un modèle de notification
-{: #template}
-
-Une notification est un fichier JSON. 
-
-Vous pouvez créer autant de modèles de notification que vous le souhaitez, puis les réutiliser afin de créer des notifications du type en question dans votre organisation. 
-
-Vous pouvez définir les types de notification suivants :
-
-* Email : définissez une notification de type *Email* pour envoyer un courrier électronique à une adresse électronique valide. 
-* Webhook : définissez une notification de type *Webhook* pour les noeuds finaux https seulement. Ajoutez un paramètre au noeud final pour réduire la probabilité que quelqu'un d'autre appelle votre noeud final.
-* Pagerduty : définissez une notification de type *PagerDuty* afin d'envoyer les données d'alerte pour une métrique à votre système de gestion des incidents PagerDuty. 
-
-Le tableau suivant présente des exemples de modèle de notification :
-
-<table>
-  <caption></caption>
-  <tr>
-    <th>Type</th>
-	<th>Modèle</th>
-	<th>Exemple</th>
-  </tr>
-  <tr>
-    <td>Email</td>
-	<td>
-	```
-	{
-	"name": "Template_Name",
-	"type": "Email",
-	"description" : "Description",
-	"detail": "EmailAddress"
-	}
-	```
-	{: codeblock}
-	</td>
-	<td>
-	```
-	{
-	"name": "my-email",
-	"type": "Email",
-	"description" : "Send email notification when there is an infrastructure problem.",
-	"detail": "xxx@yyy.com"}
-	```
-	{: screen}
-	</td>
-  </tr>
-  <tr>
-    <td>Webhook</td>
-	<td>
-	```
-	{
-	"name": "Template_Name",
-	"type": "Webhook",
-	"description" : "Description",
-	"detail": "Endpoint"
-	}
-	```
-	{: codeblock}
-	</td>
-	<td>
-	```
-	{
-	"name": "my-webhook",
-	"type": "Webhook",
-	"description" : "Fire a webhook when there is an infrastructure problem..",
-	"detail": "https://myendpoint.bluemix.net?key=abcd1234"
-	}
-	```
-	{: screen}
-	</td>
-  </tr>
-  <tr>
-    <td>Pagerduty</td>
-	<td>
-	```
-	{
-	"name": "Template_Name",
-	"type": "PagerDuty",
-	"description" : "Description",
-	"detail": "Pagerduty_APIkey"
-	}
-	```
-	{: codeblock}
-	</td>
-	<td>
-	```
-	{
-	"name": "my-pagerduty",
-	"type": "PagerDuty",
-	"description" : "Fire a PagerDuty alert when there is an infrastructure problem..",
-	"detail": "abcd1234"
-	}
-	```
-	{: screen}
-	</td>
-  </tr>
-</table>
-
-Où
-
-* *Template_Name* correspond au nom du modèle de notification.
-* *Description* indique à quel moment ce type de notification est utilisé.
-* *EmailAddress* définit l'adresse électronique du destinataire de la notification.
-* *Endpoint* définit l'adresse URL à laquelle la demande POST doit être émise. Il s'agit d'une adresse URL admettant les demandes POST. 
-* *Pagerduty_APIkey* définit une clé d'API unique. Celle-ci est générée par un administrateur ou un propriétaire de compte PagerDuty.
-
-
-Procédez comme suit pour créer un modèle de notification :
-
-1. Créez un répertoire pour stocker les ressources du service {{site.data.keyword.monitoringshort}}, par exemple *cloud-monitoring*.
-
-    Par exemple, sur un système Ubuntu, exécutez la commande suivante :
-	
-	```
-	mkdir ~/cloud-monitoring
-	```
-	{: codeblock}
-	
-2. Créez un répertoire pour stocker vos modèles de notification, par exemple *notification-templates*.
-
-    Par exemple, sur un système Ubuntu, exécutez la commande suivante :
-	
-	```
-	mkdir ~/cloud-monitoring/notification-templates
-	```
-	{: codeblock}
-	
-	Placez-vous dans ce répertoire :
-	
-	```
-	cd ~/cloud-monitoring/notification-templates
-	```
-	{: codeblock}
-	
-3. Créez un modèle de notification dans un répertoire local sur votre système.
-
-    Ainsi, créez le fichier **email-template.json** pour un modèle de notification par courrier électronique, en utilisant par exemple l'éditeur vi : 
-	
-	```
-	{
-    "name": "email_template",
-    "type": "Email",
-    "description" : "Send email to manager of department X when ....",
-    "detail": "xxx@yyy"
-    }
-	```
-	{: codeblock}
-	
-
 
 ## Création d'une notification
 {: #create}
@@ -177,7 +30,7 @@ Pour créer une notification, procédez comme suit :
 
 1. Créez un fichier de notification.
 
-    1. Utilisez un modèle de notification pour créer le fichier. Pour plus d'informations, voir [Création d'un modèle de notification](#template).
+    1. Utilisez un modèle de notification pour créer un fichier de notification. Pour plus d'informations, voir [Modèles de notification](/docs/services/cloud-monitoring/config_alerts_ov.html#notification_template).
 	
 	2. Mettez à jour le fichier :
 	
@@ -185,27 +38,29 @@ Pour créer une notification, procédez comme suit :
 		* Entrez une description.
 		* Entrez une adresse électronique, un noeud final d'URL ou une clé PagerDuty valide.
 		
-	3. Sauvegardez le fichier. Par exemple, utilisez un préfixe tel que *s-* pour les notifications que vous définissez pour les requêtes s'exécutant dans un espace {{site.data.keyword.Bluemix_notm}}.
+	3. Sauvegardez le fichier. Par exemple, utilisez un préfixe, tel que *s-* pour les notifications que vous définissez pour les requêtes qui s'exécutent dans un espace. 
 	
 	    **Astuce :** créez votre fichier de notification dans le répertoire *~/cloud-monitoring/notifications/* afin de regrouper les ressources du service {{site.data.keyword.monitoringshort_notm}}. 
 	
-2. Connectez-vous à une région, une organisation et un espace {{site.data.keyword.Bluemix_notm}}. Exécutez la commande :
-
-    Par exemple, pour vous connecter à la région du sud des États-Unis, exécutez la commande suivante :
+	4. Exportez la variable *NOTIFICATION_FILE*:
 	
 	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    Suivez les instructions. Entrez vos données d'identification {{site.data.keyword.Bluemix_notm}} et sélectionnez une organisation et un espace.
-
-3. Obtenez le jeton d'authentification ou la clé d'API.
-
-    * Pour l'authentification IAM, voir [Obtention du jeton IAM à l'aide de l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) ou [Génération d'une clé d'API IAM à l'aide de l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	export NOTIFICATION_FILE="mynotificationfile.json"
+	```
+	{: screen}
 	
-	* Pour l'authentification UAA, voir [Obtention du jeton UAA via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) ou [Obtention du jeton UAA via l'API REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
+2. Connectez-vous à une région, une organisation et un espace dans {{site.data.keyword.Bluemix_notm}}. 
 
+    Pour plus d'informations, voir [Comment se connecter à {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+3. Obtenez le jeton de sécurité. Vous pouvez utiliser un jeton UAA, un jeton IAM ou une clé d'API. Choisissez l'une des méthodes suivantes pour obtenir le jeton de sécurité :
+	
+	* Pour obtenir un jeton, voir [Obtention du jeton UAA via l'interface de ligne de commande {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
+	
+	* Pour obtenir un jeton IAM, voir [Obtention du jeton IAM via l'interface de ligne de commande {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* Pour obtenir une clé d'API, voir [Obtention d'une clé d'API](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
 	Par exemple, pour utiliser le jeton IAM, exécutez la commande suivante :
 
     ```
@@ -229,7 +84,7 @@ Pour créer une notification, procédez comme suit :
 	{: screen}
 	
 	**Remarque :** le jeton exclut *Bearer*.
-		
+	
 4. Obtenez l'identificateur global unique de l'espace. Un identificateur global unique identifiant un espace doit avoir le préfixe *s-*.
 
     Exécutez la commande suivante :
@@ -262,16 +117,16 @@ Pour créer une notification, procédez comme suit :
 	```
 	{: screen}
 	
-5. Exécutez la commande cURL suivante pour créer une notification :
+5. Enregistrez une notification dans le service {{site.data.keyword.monitoringshort}}.
 
     ```
-	curl -XPOST -d @Notification_File --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/notification
+	curl -XPOST -d @$NOTIFICATION_FILE --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/notification
 	```
 	{: codeblock}
 	
 	où
 	
-	* Notification_File est le fichier JSON qui définit votre notification.
+	* NOTIFICATION_FILE est le fichier JSON qui définit votre notification.
 	
 	* *X-Auth-User-Token* est un paramètre qui transmet le jeton {{site.data.keyword.Bluemix_notm}} UAA, le jeton IAM ou la clé d'API.
 	
@@ -285,12 +140,14 @@ Pour créer une notification, procédez comme suit :
 	
 	* Token est le jeton UAA, le jeton IAM ou la clé d'API.
 	
-	* Space est l'identificateur global unique de l'espace. Il n'est requis que si vous utilisez un jeton UAA.
+	* Space est l'identificateur global unique de l'espace. 
+	
+	* METRICS_ENDPOINT représente le point d'entrée du service. Chaque région a une adresse URL différente. Pour la liste des noeuds finaux par région, voir [Noeuds finaux](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
     Par exemple 	
 	
 	```
-	curl -XPOST -d @s-email-dep-A.json --header "X-Auth-User-Token:iam ${Token}" https://metrics.{DomainName}/v1/alert/notification
+	curl -XPOST -d @$NOTIFICATION_FILE  --header "X-Auth-User-Token: iam ${Token}" https://metrics.ng.bluemix.net/v1/alert/notification
 	```
 	{: screen}
 
@@ -299,22 +156,18 @@ Pour créer une notification, procédez comme suit :
 
 Pour supprimer une notification, procédez comme suit :
 
-1. Connectez-vous à une région, une organisation et un espace {{site.data.keyword.Bluemix_notm}}. Exécutez la commande :
+1. Connectez-vous à une région, une organisation et un espace dans {{site.data.keyword.Bluemix_notm}}. 
 
-    Par exemple, pour vous connecter à la région du sud des États-Unis, exécutez la commande suivante :
+    Pour plus d'informations, voir [Comment se connecter à {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
 
-```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    Suivez les instructions. Entrez vos données d'identification {{site.data.keyword.Bluemix_notm}} et sélectionnez une organisation et un espace.
-
-2. Obtenez le jeton d'authentification ou la clé d'API.
-
-    * Pour l'authentification IAM, voir [Obtention du jeton IAM via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) ou [Génération d'une clé d'API IAM via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+2. Obtenez le jeton de sécurité. Vous pouvez utiliser un jeton UAA, un jeton IAM ou une clé d'API. Choisissez l'une des méthodes suivantes pour obtenir le jeton de sécurité :
 	
-	* Pour l'authentification UAA, voir [Obtention du jeton UAA via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) ou [Obtention du jeton UAA via l'API REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
+	* Pour obtenir un jeton UAA, voir [Obtention du jeton UAA via l'interface de ligne de commande {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
+	
+	* Pour obtenir un jeton IAM, voir [Obtention du jeton IAM via l'interface de ligne de commande {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* Pour obtenir une clé d'API, voir [Obtention d'une clé d'API](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
 	Par exemple, pour utiliser le jeton IAM, exécutez la commande suivante :
 
     ```
@@ -374,11 +227,13 @@ Pour supprimer une notification, procédez comme suit :
 4. Exécutez la commande cURL suivante pour supprimer une notification :
 
     ```
-	curl -XDELETE --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/notification/Notification_Name
+	curl -XDELETE --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/notification/Notification_Name
 	```
 	{: codeblock}
 	
 	où
+	
+	* *X-Auth-User-Token* est un paramètre qui transmet le jeton UAA, le jeton IAM ou la clé d'API.
 	
 	* *Auth_Type* est le préfixe qui définit le type de jeton ou de clé d'API. La liste ci-dessous répertorie les valeurs valides : *apikey*, *iam* et *uaa*, où
 
@@ -394,9 +249,11 @@ Pour supprimer une notification, procédez comme suit :
 		
 	* Token est le jeton UAA, le jeton IAM ou la clé d'API.
 	
-	* Space est l'identificateur global unique de l'espace. Il n'est requis que si vous utilisez un jeton UAA.
+	* Space est l'identificateur global unique de l'espace. 
 	
 	* Notification_Name est le nom de la notification, c'est-à-dire la valeur de la zone *name* lorsque vous répertoriez les propriétés d'une notification.
+	
+	* METRICS_ENDPOINT représente le point d'entrée du service. Chaque région a une adresse URL différente. Pour la liste des noeuds finaux par région, voir [Noeuds finaux](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
 
 
@@ -405,22 +262,18 @@ Pour supprimer une notification, procédez comme suit :
 
 Pour répertorier toutes les notifications, procédez comme suit :
 
-1. Connectez-vous à une région, une organisation et un espace {{site.data.keyword.Bluemix_notm}}. Exécutez la commande :
+1. Connectez-vous à une région, une organisation et un espace dans {{site.data.keyword.Bluemix_notm}}. 
 
-    Par exemple, pour vous connecter à la région du sud des États-Unis, exécutez la commande suivante :
+    Pour plus d'informations, voir [Comment se connecter à {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
 
-```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    Suivez les instructions. Entrez vos données d'identification {{site.data.keyword.Bluemix_notm}} et sélectionnez une organisation et un espace.
-
-2. Obtenez le jeton d'authentification ou la clé d'API.
-
-    * Pour l'authentification IAM, voir [Obtention du jeton IAM via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) ou [Génération d'une clé d'API IAM via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+2. Obtenez le jeton de sécurité. Vous pouvez utiliser un jeton UAA, un jeton IAM ou une clé d'API. Choisissez l'une des méthodes suivantes pour obtenir le jeton de sécurité :
 	
-	* Pour l'authentification UAA, voir [Obtention du jeton UAA via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) ou [Obtention du jeton UAA via l'API REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
+	* Pour obtenir un jeton UAA, voir [Obtention du jeton UAA via l'interface de ligne de commande {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
+	
+	* Pour obtenir un jeton IAM, voir [Obtention du jeton IAM via l'interface de ligne de commande {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* Pour obtenir une clé d'API, voir [Obtention d'une clé d'API](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
 	Par exemple, pour utiliser le jeton IAM, exécutez la commande suivante :
 
     ```
@@ -480,11 +333,13 @@ Pour répertorier toutes les notifications, procédez comme suit :
 4. Exécutez la commande cURL suivante pour répertorier toutes les notifications :
 
     ```
-	curl -XGET --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/notifications
+	curl -XGET --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/notifications
 	```
 	{: codeblock}
 	
 	où
+	
+	* *X-Auth-User-Token* est un paramètre qui transmet le jeton {{site.data.keyword.Bluemix_notm}} UAA, le jeton IAM ou la clé d'API.
 	
 	* *Auth_Type* est le préfixe qui définit le type de jeton ou de clé d'API. La liste ci-dessous répertorie les valeurs valides : *apikey*, *iam* et *uaa*, où
 
@@ -500,8 +355,9 @@ Pour répertorier toutes les notifications, procédez comme suit :
 		
 	* Token est le jeton UAA, le jeton IAM ou la clé d'API.
 	
-	* Space est l'identificateur global unique de l'espace. Il n'est requis que si vous utilisez un jeton UAA.
-
+	* Space est l'identificateur global unique de l'espace. 
+	
+	* METRICS_ENDPOINT représente le point d'entrée du service. Chaque région a une adresse URL différente. Pour la liste des noeuds finaux par région, voir [Noeuds finaux](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 
 			
 
@@ -511,22 +367,18 @@ Pour répertorier toutes les notifications, procédez comme suit :
 
 Pour afficher les informations sur une notification, procédez comme suit :
 
-1. Connectez-vous à une région, une organisation et un espace {{site.data.keyword.Bluemix_notm}}. Exécutez la commande :
+1. Connectez-vous à une région, une organisation et un espace dans {{site.data.keyword.Bluemix_notm}}. 
 
-    Par exemple, pour vous connecter à la région du sud des États-Unis, exécutez la commande suivante :
+    Pour plus d'informations, voir [Comment se connecter à {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
 
-```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    Suivez les instructions. Entrez vos données d'identification {{site.data.keyword.Bluemix_notm}} et sélectionnez une organisation et un espace.
-
-2. Obtenez le jeton d'authentification ou la clé d'API.
-
-    * Pour l'authentification IAM, voir [Obtention du jeton IAM via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) ou [Génération d'une clé d'API IAM via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+2. Obtenez le jeton de sécurité. Vous pouvez utiliser un jeton UAA, un jeton IAM ou une clé d'API. Choisissez l'une des méthodes suivantes pour obtenir le jeton de sécurité :
 	
-	* Pour l'authentification UAA, voir [Obtention du jeton UAA via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) ou [Obtention du jeton UAA via l'API REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
+	* Pour obtenir un jeton UAA, voir [Obtention du jeton UAA via l'interface de ligne de commande {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
+	
+	* Pour obtenir un jeton IAM, voir [Obtention du jeton IAM via l'interface de ligne de commande {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* Pour obtenir une clé d'API, voir [Obtention d'une clé d'API](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
 	Par exemple, pour utiliser le jeton IAM, exécutez la commande suivante :
 
     ```
@@ -586,13 +438,15 @@ Pour afficher les informations sur une notification, procédez comme suit :
 4. Exécutez la commande cURL suivante pour afficher les détails d'une notification :
 
     ```
-	curl -XGET --header "X-Auth-User-Token:uaa ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/notification/Notification_Name
+	curl -XGET --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/notification/NOTIFICATION_NAME
 	```
 	{: codeblock}
 	
 	où
 	
-	* *X-Auth-User-Token* est un paramètre qui transmet le jeton {{site.data.keyword.Bluemix_notm}} UAA, le jeton IAM ou la clé d'API. Le jeton ou la clé d'API doit avoir pour préfixe l'une des valeurs suivantes : *apikey*, *iam* ou *uaa*, où
+	* *X-Auth-User-Token* est un paramètre qui transmet le jeton {{site.data.keyword.Bluemix_notm}} UAA, le jeton IAM ou la clé d'API.
+	
+	* *Auth_Type* est le préfixe qui définit le type de jeton ou de clé d'API. La liste ci-dessous répertorie les valeurs valides : *apikey*, *iam* et *uaa*, où
 
         * *apikey* indique que le jeton est une clé d'API.
 		* *iam* indique que le jeton spécifié est un jeton généré par IAM.
@@ -600,9 +454,11 @@ Pour afficher les informations sur une notification, procédez comme suit :
 		
 	* Token est le jeton UAA, le jeton IAM ou la clé d'API.
 	
-	* Space est l'identificateur global unique de l'espace. Il n'est requis que si vous utilisez un jeton UAA.
+	* Space est l'identificateur global unique de l'espace. 
 	
-	* Notification_Name est le nom de la notification, c'est-à-dire la valeur de la zone *name* lorsque vous répertoriez les propriétés d'une notification.
+	* NOTIFICATION_NAME est le nom de la notification, c'est-à-dire la valeur de la zone *name* lorsque vous répertoriez les propriétés d'une notification.
+	
+	* METRICS_ENDPOINT représente le point d'entrée du service. Chaque région a une adresse URL différente. Pour la liste des noeuds finaux par région, voir [Noeuds finaux](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
      
 		
@@ -613,22 +469,18 @@ Pour afficher les informations sur une notification, procédez comme suit :
 			
 Pour tester une notification, procédez comme suit :
 
-1. Connectez-vous à une région, une organisation et un espace {{site.data.keyword.Bluemix_notm}}. Exécutez la commande :
+1. Connectez-vous à une région, une organisation et un espace dans {{site.data.keyword.Bluemix_notm}}. 
 
-    Par exemple, pour vous connecter à la région du sud des États-Unis, exécutez la commande suivante :
+    Pour plus d'informations, voir [Comment se connecter à {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
 
-```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    Suivez les instructions. Entrez vos données d'identification {{site.data.keyword.Bluemix_notm}} et sélectionnez une organisation et un espace.
-
-2. Obtenez le jeton d'authentification ou la clé d'API.
-
-    * Pour l'authentification IAM, voir [Obtention du jeton IAM via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) ou [Génération d'une clé d'API IAM via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+2. Obtenez le jeton de sécurité. Vous pouvez utiliser un jeton UAA, un jeton IAM ou une clé d'API. Choisissez l'une des méthodes suivantes pour obtenir le jeton de sécurité :
 	
-	* Pour l'authentification UAA, voir [Obtention du jeton UAA via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) ou [Obtention du jeton UAA via l'API REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
+	* Pour obtenir un jeton UAA, voir [Obtention du jeton UAA via l'interface de ligne de commande {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
+	
+	* Pour obtenir un jeton IAM, voir [Obtention du jeton IAM via l'interface de ligne de commande {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* Pour obtenir une clé d'API, voir [Obtention d'une clé d'API](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
 	Par exemple, pour utiliser le jeton IAM, exécutez la commande suivante :
 
     ```
@@ -652,7 +504,7 @@ Pour tester une notification, procédez comme suit :
 	{: screen}
 	
 	**Remarque :** le jeton exclut *Bearer*.
-
+	
 3. Obtenez l'identificateur global unique de l'espace. Un identificateur global unique identifiant un espace doit avoir le préfixe *s-*.
 
     Exécutez la commande suivante :
@@ -688,11 +540,13 @@ Pour tester une notification, procédez comme suit :
 4. Exécutez la commande cURL suivante pour tester une notification :
 
     ```
-	curl -XPOST --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/notification/test/Notification_Name
+	curl -XPOST --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/notification/test/NOTIFICATION_NAME
 	```
 	{: codeblock}
 	
 	où
+	
+	* *X-Auth-User-Token* est un paramètre qui transmet le jeton {{site.data.keyword.Bluemix_notm}} UAA, le jeton IAM ou la clé d'API.
 	
 	* *Auth_Type* est le préfixe qui définit le type de jeton ou de clé d'API. La liste ci-dessous répertorie les valeurs valides : *apikey*, *iam* et *uaa*, où
 
@@ -708,9 +562,11 @@ Pour tester une notification, procédez comme suit :
 		
 	* Token est le jeton UAA, le jeton IAM ou la clé d'API.
 	
-	* Space est l'identificateur global unique de l'espace. Il n'est requis que si vous utilisez un jeton UAA.
+	* Space est l'identificateur global unique de l'espace. 
 	
-	* Notification_Name est le nom de la notification, c'est-à-dire la valeur de la zone *name* lorsque vous répertoriez les propriétés d'une notification.
+	* NOTIFICATION_NAME est le nom de la notification, c'est-à-dire la valeur de la zone *name* lorsque vous répertoriez les propriétés d'une notification.
+	
+	* METRICS_ENDPOINT représente le point d'entrée du service. Chaque région a une adresse URL différente. Pour la liste des noeuds finaux par région, voir [Noeuds finaux](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
 
 
@@ -719,22 +575,18 @@ Pour tester une notification, procédez comme suit :
 
 Pour mettre à jour une notification, procédez comme suit :
 
-1. Connectez-vous à une région, une organisation et un espace {{site.data.keyword.Bluemix_notm}}. Exécutez la commande :
+1. Connectez-vous à une région, une organisation et un espace dans {{site.data.keyword.Bluemix_notm}}. 
 
-    Par exemple, pour vous connecter à la région du sud des États-Unis, exécutez la commande suivante :
+    Pour plus d'informations, voir [Comment se connecter à {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
 
-```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    Suivez les instructions. Entrez vos données d'identification {{site.data.keyword.Bluemix_notm}} et sélectionnez une organisation et un espace.
-
-2. Obtenez le jeton d'authentification ou la clé d'API.
-
-    * Pour l'authentification IAM, voir [Obtention du jeton IAM via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) ou [Génération d'une clé d'API IAM via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+2. Obtenez le jeton de sécurité. Vous pouvez utiliser un jeton UAA, un jeton IAM ou une clé d'API. Choisissez l'une des méthodes suivantes pour obtenir le jeton de sécurité :
 	
-	* Pour l'authentification UAA, voir [Obtention du jeton UAA via l'interface de ligne de commande Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) ou [Obtention du jeton UAA via l'API REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
+	* Pour obtenir un jeton UAA, voir [Obtention du jeton UAA via l'interface de ligne de commande {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
+	
+	* Pour obtenir un jeton IAM, voir [Obtention du jeton IAM via l'interface de ligne de commande {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* Pour obtenir une clé d'API, voir [Obtention d'une clé d'API](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
 	Par exemple, pour utiliser le jeton IAM, exécutez la commande suivante :
 
     ```
@@ -794,13 +646,13 @@ Pour mettre à jour une notification, procédez comme suit :
 4. Exécutez la commande cURL suivante pour mettre à jour une notification :
 
     ```
-	curl -XPUT -d @Notification_File --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/notification
+	curl -XPUT -d @$NOTIFICATION_FILE --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/notification
 	```
 	{: codeblock}
 	
 	où
 	
-	* Notification_File est le fichier JSON qui définit votre notification.
+	* NOTIFICATION_FILE est le fichier JSON qui définit votre notification.
 	
 	* *Auth_Type* est le préfixe qui définit le type de jeton ou de clé d'API. La liste ci-dessous répertorie les valeurs valides : *apikey*, *iam* et *uaa*, où
 
@@ -816,8 +668,9 @@ Pour mettre à jour une notification, procédez comme suit :
 		
 	* Token est le jeton UAA, le jeton IAM ou la clé d'API.
 	
-	* Space est l'identificateur global unique de l'espace. Il n'est requis que si vous utilisez un jeton UAA.
+	* Space est l'identificateur global unique de l'espace. 
 
+	* METRICS_ENDPOINT représente le point d'entrée du service. Chaque région a une adresse URL différente. Pour la liste des noeuds finaux par région, voir [Noeuds finaux](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
         
 

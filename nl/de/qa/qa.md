@@ -1,18 +1,21 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-07-14"
+lastupdated: "2018-02-01"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
+
 
 
 # Häufige Fragen und Antworten
@@ -27,7 +30,7 @@ Hier sind die Antworten auf häufig gestellte Fragen zum {{site.data.keyword.mon
 ## Warum kann ich meine alten Daten für eine Metrik nicht sehen, an die ich kürzlich keine Metrikwerte gesendet habe?
 {: #qa3}
 
-{{site.data.keyword.monitoringshort}} löscht alle Daten für einen Metrikpfad, der transient zu sein scheint, indem Metriken identifiziert werden, in die in den letzten 7 Tagen nicht geschrieben wurde.  
+{{site.data.keyword.monitoringshort}} löscht alle Daten für einen Metrikpfad, der transient zu sein scheint, indem Metriken identifiziert werden, in die in den letzten 7 Tagen nicht geschrieben wurde. 
 
 Beispiel:
 

@@ -1,44 +1,46 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-07-12"
+lastupdated: "2018-02-07"
 
 ---
 
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
-
-# Recuperación del historial de una regla
+# Recuperación del historial de una alerta mediante la API de alertas
 {: #retrieve_history}
 
+Utilice la API de alertas para recuperar el historial de una alerta. 
+{:shortdesc}
 
-Para recuperar el historial de una alerta, siga estos pasos:
 
-1. Inicie la sesión en una región, organización y espacio de {{site.data.keyword.Bluemix_notm}}. Ejecute el mandato:
+Para recuperar el historial de una alerta mediante la API de alertas, siga estos pasos:
 
-    Por ejemplo, para iniciar sesión en la región EE. UU. sur, ejecute el siguiente mandato:
+1. Inicie la sesión en una región, organización y espacio en {{site.data.keyword.Bluemix_notm}}. 
+
+    Para obtener más información, consulte [Cómo iniciar la sesión en {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+2. Obtenga la señal de seguridad. Puede utilizar una señal de UAA, una señal de IAM o una clave de API. Elija uno de los métodos siguientes para obtener la señal de seguridad:
 	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
+	* Para obtener una señal UAA, consulte [Obtención de la señal de UAA mediante la CLI de {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
+	
+	* Para obtener una señal de IAM, consulte [Obtención de la señal de IAM mediante la CLI de {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* Para obtener una clave de API, consulte [Obtención de una clave de API](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
+	En el mismo terminal en el que ha iniciado sesión en {{site.data.keyword.Bluemix_notm}}, establezca la variable Token para la señal.
 
-    Siga las instrucciones. Escriba sus credenciales de {{site.data.keyword.Bluemix_notm}}, seleccione una organización y un espacio.
-
-2. Obtenga la señal de autenticación o la clave de API.
-
-    * Para la autenticación de IAM, consulte [Obtención de la señal de IAM utilizando la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) u [Obtención de la clave de API de IAM utilizando la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
-	                                          
-	* Para la autenticación de UAA, consulte [Obtención de la señal de UAA mediante la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) o bien [Obtención de la señal de UAA mediante la API REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
-	Por ejemplo, para utilizar la señal de IAM, ejecute el siguiente mandato:
+    Por ejemplo, para utilizar la señal de IAM, ejecute el siguiente mandato:
 
     ```
 	bx iam oauth-tokens
@@ -61,7 +63,6 @@ Para recuperar el historial de una alerta, siga estos pasos:
 	{: screen}
 	
 	**Nota:** La señal excluye *Bearer*.
-	
 	
 3. Obtenga el GUID del espacio. El GUID debe tener el prefijo *s-* para identificar un espacio.
 
@@ -88,40 +89,59 @@ Para recuperar el historial de una alerta, siga estos pasos:
 	```
 	{: screen}
 	
-	A continuación, exporte la variable *Space*:
+	A continuación, exporte la variable *Space*. **Nota:** El GUID debe tener el prefijo *s-* para identificar un espacio.
+	
+	Por ejemplo:
 	
 	```
 	export Space="s-667fadfc-jhtg-1234-9f0e-cf4123451095"
 	```
 	{: screen}
 	
-4. Ejecute el siguiente mandato cURL para obtener el historial de una alerta:
+4. Recuperar el historial de una regla
 
-    ```
-	curl -XGET --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/history?rule=Rule_Name
-	```
-	{: codeblock}
+    * Para recuperar el historial de una regla por su nombre, consulte [Recuperación del historial de una regla utilizando su nombre](/docs/services/cloud-monitoring/alerts/retrieve_history.html#by_name).
+	* Para recuperar el historial de una regla durante un periodo de tiempo, consulte [Recuperación del historial de una regla las últimas 48 horas](/docs/services/cloud-monitoring/alerts/retrieve_history.html#by_time).
+	* Para recuperar un número de entrada del historial de una regla, consulte [Recuperación de las últimas 3 entradas en el historial de una regla](/docs/services/cloud-monitoring/alerts/retrieve_history.html#number).
 	
-	donde
 	
-	* El valor *X-Auth-User-Token* es un parámetro que pasa la señal UAA {{site.data.keyword.Bluemix_notm}}, señal IAM o clave de API.
+## Recuperación del historial de una regla por nombre de regla
+{: #by_name}
 	
-	* El valor *Auth_Type* es el prefijo que define el tipo de señal o de clave de API. En la lista siguiente se muestran los valores válidos: *apikey*, *iam* o *uaa*, donde
+Ejecute el mandato cURL siguiente para obtener el historial de una alerta:
+
+```
+curl -XGET --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/history?rule_name=RULE_NAME
+```
+{: codeblock}
+	
+donde
+	
+* *X-Auth-User-Token* es un parámetro que pasa la señal de UAA, la señal de IAM o la clave de API.
+	
+* El valor *Auth_Type* es el prefijo que define el tipo de señal o de clave de API. En la lista siguiente se muestran los valores válidos: *apikey*, *iam* o *uaa*, donde
 
   * *apikey* identifica que la señal es una clave de API.
-		* *iam* identifica que la señal especificada es una señal generada por IAM.
-		* *uaa* identifica que la señal especificada es una señal generada por UAA.
+	* *iam* identifica que la señal especificada es una señal generada por IAM.
+	* *uaa* identifica que la señal especificada es una señal generada por UAA.
 	
-	* *X-Auth-Scope-Id* es un parámetro que pasa el GUID de espacio. El GUID debe tener el prefijo *s-* para identificar un espacio. Esta cabecera es necesaria si utiliza una autenticación de señal de UAA. Si utiliza una señal de autenticación de IAM, esta cabecera es opcional y se utiliza la información de dominio enlazada con la señal.
+* *X-Auth-Scope-Id* es un parámetro que pasa el GUID de espacio. El GUID debe tener el prefijo *s-* para identificar un espacio. Esta cabecera es necesaria si utiliza una autenticación de señal de UAA. Si utiliza una señal de autenticación de IAM, esta cabecera es opcional y se utiliza la información de dominio enlazada con la señal.
 	
-	* La señal es la señal de autenticación de UAA o IAM, o la clave de API.
+* *Token* es la señal de autenticación de IAM o UAA o la clave de API.
 	
-	* Space es el GUID del espacio. Solo es necesario cuando se utiliza una señal de UAA.
+* *Space* es el GUID del espacio. 
 	
-	* Rule_Name es el nombre de la regla utilizada para desencadenar la alerta. El valor es el especificado en el campo *name*.
+* *RULE_NAME* es el nombre de la regla que se utiliza para desencadenar la alerta. El valor es el especificado en el campo *name*.
+	
+* *METRICS_ENDPOINT* representa el punto de entrada al servicio. Cada región tiene un URL diferente. Para obtener una lista de los puntos finales por región, consulte[Puntos finales](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
     
 Por ejemplo, el historial de la regla `highNginxCPU` es el siguiente:
+
+```
+curl -XGET --header "X-Auth-User-Token: iam ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/history?rule_name=highNginxCPU
+```
+{: screen}
 
 ```
 [
@@ -151,3 +171,64 @@ Por ejemplo, el historial de la regla `highNginxCPU` es el siguiente:
 {: screen}
 
 
+## Recuperación del historial de una regla de las últimas 48 horas
+{: #by_time}
+
+Ejecute el mandato cURL siguiente para obtener el historial de una alerta de las últimas 48 horas:
+
+```
+curl -H "X-Auth-User-Token: iam $Token" -H "X-Auth-Scope-Id:$Space" METRICS_ENDPOINT/v1/alert/history?start=-48h
+```
+{: codeblock}
+
+	donde
+	
+* *X-Auth-User-Token* es un parámetro que pasa la señal de UAA, la señal de IAM o la clave de API.
+	
+* El valor *Auth_Type* es el prefijo que define el tipo de señal o de clave de API. En la lista siguiente se muestran los valores válidos: *apikey*, *iam* o *uaa*, donde
+
+  * *apikey* identifica que la señal es una clave de API.
+	* *iam* identifica que la señal especificada es una señal generada por IAM.
+	* *uaa* identifica que la señal especificada es una señal generada por UAA.
+	
+* *X-Auth-Scope-Id* es un parámetro que pasa el GUID de espacio. El GUID debe tener el prefijo *s-* para identificar un espacio. Esta cabecera es necesaria si utiliza una autenticación de señal de UAA. Si utiliza una señal de autenticación de IAM, esta cabecera es opcional y se utiliza la información de dominio enlazada con la señal.
+	
+* *Token* es la señal de autenticación de IAM o UAA o la clave de API.
+	
+* *Space* es el GUID del espacio. 
+	
+* *RULE_NAME* es el nombre de la regla que se utiliza para desencadenar la alerta. El valor es el especificado en el campo *name*.
+	
+* *METRICS_ENDPOINT* representa el punto de entrada al servicio. Cada región tiene un URL diferente. Para obtener una lista de los puntos finales por región, consulte[Puntos finales](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
+	
+
+## Recuperación de las últimas 3 entrada en el historial de una regla
+{: #number}
+
+Ejecute el mandato cURL siguiente para obtener las últimas 3 entrada en el historial de una alerta:
+
+```
+curl -H "X-Auth-User-Token: iam $Token" -H "X-Auth-Scope-Id:$Space" METRICS_ENDPOINT/v1/alert/history?max_results=3
+```
+{: codeblock}
+
+	donde
+	
+* *X-Auth-User-Token* es un parámetro que pasa la señal de UAA, la señal de IAM o la clave de API.
+	
+* El valor *Auth_Type* es el prefijo que define el tipo de señal o de clave de API. En la lista siguiente se muestran los valores válidos: *apikey*, *iam* o *uaa*, donde
+
+  * *apikey* identifica que la señal es una clave de API.
+	* *iam* identifica que la señal especificada es una señal generada por IAM.
+	* *uaa* identifica que la señal especificada es una señal generada por UAA.
+	
+* *X-Auth-Scope-Id* es un parámetro que pasa el GUID de espacio. El GUID debe tener el prefijo *s-* para identificar un espacio. Esta cabecera es necesaria si utiliza una autenticación de señal de UAA. Si utiliza una señal de autenticación de IAM, esta cabecera es opcional y se utiliza la información de dominio enlazada con la señal.
+	
+* *Token* es la señal de autenticación de IAM o UAA o la clave de API.
+	
+* *Space* es el GUID del espacio. 
+	
+* *RULE_NAME* es el nombre de la regla que se utiliza para desencadenar la alerta. El valor es el especificado en el campo *name*.
+	
+* *METRICS_ENDPOINT* representa el punto de entrada al servicio. Cada región tiene un URL diferente. Para obtener una lista de los puntos finales por región, consulte[Puntos finales](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
+	

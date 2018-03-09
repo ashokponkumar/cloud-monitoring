@@ -1,47 +1,47 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-07-12"
+lastupdated: "2018-02-01"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
 # Sicherheit
 {: #security_ov}
 
-Sie können verschiedene Authentifizierungsmethoden verwenden, um Metriken an den {{site.data.keyword.monitoringshort}}-Service zu senden. Berechtigungen für den Zugriff auf die Metriken sowie zum Ändern und Löschen von Metriken werden durch die Verwendung von Rollen gesteuert.
+Um zu steuern, welche {{site.data.keyword.monitoringshort}}-Serviceaktionen ein Benutzer ausführen darf, können Sie dem Benutzer eine oder mehrere Rollen zuweisen. Zur Authentifizierung eines Benutzers für die Arbeit mit Metriken und Alerts können Sie ein UAA-Token, ein IAM-Token oder einen API-Schlüssel verwenden. 
 {:shortdesc}
 
    
 ## Authentifizierungsmodelle
 {: #auth}
 
-Für den Zugriff auf die Metriken, die im {{site.data.keyword.monitoringshort}}-Service für einen {{site.data.keyword.Bluemix_notm}}-Bereich gespeichert sind, benötigen Sie ein Authentifizierungstoken oder einen API-Schlüssel. 
+Für die Arbeit mit Metriken, die im {{site.data.keyword.monitoringshort}}-Service für einen Bereich gespeichert sind, benötigen Sie ein Authentifizierungstoken oder einen API-Schlüssel. 
 
-Der {{site.data.keyword.monitoringshort}}-Service unterstützt die folgenden Authentifizierungsmodelle:
+Informationen zum Abrufen eines Sicherheitstoken finden Sie unter:
 
-* [{{site.data.keyword.Bluemix_notm}}-UAA-Authentifizierung](/docs/services/cloud-monitoring/security/auth_uaa.html#auth_uaa)
-* [{{site.data.keyword.Bluemix_notm}}-IAM-Authentifizierung](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam)
+* [Ein UAA-Token abrufen](/docs/services/cloud-monitoring/security/auth_uaa.html#auth_uaa)
+* [Ein IAM-Token abrufen](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam)
+
+Informationen zum Abrufen eines API-Schlüssels finden Sie unter [API-Schlüssel generieren](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key). Wenn die Sicherheit des API-Schlüssels beeinträchtigt ist, können Sie ihn widerrufen, indem Sie ihn löschen. Anschließend können Sie einen neuen erstellen. Weitere Informationen finden Sie in [API-Schlüssel über die {{site.data.keyword.Bluemix_notm}}-Benuzterschnittstelle widerrufen](/docs/services/cloud-monitoring/security/auth_api_key.html#revoke_ui). 
 
 Ein UAA-Token und ein IAM-Token laufen nach einem bestimmten Zeitraum ab. Der API-Schlüssel läuft nicht ab. 
 
-Wenn die Sicherheit des API-Schlüssels beeinträchtigt ist, können Sie ihn widerrufen, indem Sie ihn löschen. Anschließend können Sie einen neuen erstellen. Weitere Informationen finden Sie in [API-Schlüssel über die Bluemix-Benuzterschnittstelle widerrufen](/docs/services/cloud-monitoring/security/auth_iam.html#revoke_ui). 
-
-Das IAM-Authentifizierungsmodell bietet Benutzerschnittstellen-, Befehlszeilenschnittstellen- und API-Verwaltungsfunktionen. Sie können nur die Befehlszeilenschnittstelle zum Verwalten von UAA-Token verwenden.
-
-In der folgenden Tabelle werden die Authentifizierungsmodelle aufgelistet, die für den jeweiligen Typ von Domäne unterstützt werden:
+In der folgenden Tabelle sind die Sicherheitsmodelle aufgelistet, die für die einzelnen Domänentypen unterstützt werden:
 
 <table>
-  <caption>Tabelle 1. Authentifizierungsmodelle, die für die jeweilige Domäne unterstützt werden</caption>
+  <caption>Tabelle 1. Für die einzelnen Domänen unterstützte Sicherheitsmodelle</caption>
   <tr>
     <th></th>
 	<th align="right">Konto</th>
@@ -66,13 +66,13 @@ Der {{site.data.keyword.monitoringshort}}-Service verwendet die IAM-Zugriffssteu
 
 
 
-## Bluemix-UAA-Rollen
+## Cloud Foundry-Rollen
 {: #bmx_roles}
 
-In der folgenden Tabelle sind die Zugriffsrechte für jede {{site.data.keyword.Bluemix_notm}}-Rolle für die Arbeit mit dem {{site.data.keyword.monitoringshort}}-Service aufgelistet:
+In der folgenden Tabelle sind die Zugriffsrechte für jede Cloud Foundry-Rolle für die Arbeit mit dem {{site.data.keyword.monitoringshort}}-Service aufgelistet:
 
 <table>
-  <caption>Tabelle 2. {{site.data.keyword.Bluemix_notm}}-Rollen und Zugriffsrechte für die Arbeit mit dem {{site.data.keyword.monitoringshort}}-Service.</caption>
+  <caption>Tabelle 2. Cloud Foundry-Rollen und Zugriffsrechte für die Arbeit mit dem {{site.data.keyword.monitoringshort}}-Service.</caption>
   <tr>
     <th>Rolle</th>
 	<th>Domäne</th>
@@ -96,45 +96,60 @@ In der folgenden Tabelle sind die Zugriffsrechte für jede {{site.data.keyword.B
 </table>
 
 
-## Bluemix-IAM-Rollen
+## IAM-Rollen
 {: #iam_roles}
 
-In der folgenden Tabelle wird die Beziehung zwischen der API, einer Serviceaktion und einer IAM-Rolle aufgelistet, die vom {{site.data.keyword.monitoringshort}}-Service verwendet wird.
+In der folgenden Tabelle sind die {{site.data.keyword.monitoringshort}}-Serviceaktionen für die Arbeit mit Metriken sowie die IAM-Rollen aufgelistet, die einem Benutzer die Berechtigung zum Ausführen dieser Tasks erteilen:
 
 <table>
-  <caption>Tabelle 3. Beziehung zwischen der API, einer Serviceaktion und einer IAM-Rolle. </caption>
+  <caption>Tabelle 3. Mit Metriken arbeiten </caption>
   <tr>
-    <th>API</th>
 	<th>Aktion</th>
 	<th>IAM-Rolle</th>
-	<th>Beschreibung</th>
   </tr>
   <tr>
-    <td>POST /v1/metrics</td>
-    <td>domain.write</td>
+    <td>Metriken an die Domäne senden</td>
 	<td>Administrator, Editor, Operator</td>
-	<td>Metriken an die Domäne senden</td>
   </tr>
   <tr>
-    <td>GET /v1/metrics</td>
-    <td>domain.render</td>
+    <td>Metriken abrufen/abfragen</td>
 	<td>Administrator, Editor, Viewer</td>
-	<td>Metriken abrufen/abfragen</td>
   </tr>
   <tr>
-    <td>GET /v1/metrics/list</td>
-    <td>domain.find</td>
+    <td>In der Domäne nach Metriken suchen</td>
 	<td>Administrator, Editor</td>
-	<td>In der Domäne nach Metriken suchen</td>
   </tr>
 </table>
 
-## Sicherheitstoken oder API-Schlüssel abrufen
-{: #get_token}
+In der folgenden Tabelle sind die {{site.data.keyword.monitoringshort}}-Serviceaktionen für die Arbeit mit Alerts sowie die IAM-Rollen aufgelistet, die einem Benutzer die Berechtigung zum Ausführen dieser Tasks erteilen:
 
-Verwenden Sie das {{site.data.keyword.Bluemix_notm}}-UAA-Modell, um ein Authentifizierungstoken abzurufen, das Sie für den Zugriff auf Daten verwenden können, die im {{site.data.keyword.monitoringshort}}-Service für einen Bereich in {{site.data.keyword.Bluemix_notm}} gespeichert sind. Sie können das Authentifizierungstoken mithilfe der {{site.data.keyword.Bluemix_notm}}-Befehlszeilenschnittstelle oder der `Anmelde-REST-API` abrufen. Weitere Informationen finden Sie in [UAA-Token über die {{site.data.keyword.Bluemix_notm}}-Befehlszeilenschnittstelle abrufen](/docs/services/cloud-monitoring/security/auth_uaa.html#auth_cli) und [UAA-Token über die API abrufen](/docs/services/cloud-monitoring/security/auth_uaa.html#auth_api).
-
-Verwenden Sie das {{site.data.keyword.Bluemix_notm}}-IAM-Modell, um ein Authentifizierungstoken abzurufen, das Sie für den Zugriff auf Daten verwenden können, die im {{site.data.keyword.monitoringshort}}-Service gespeichert sind. Oder verwenden Sie das Modell, um einen API-Schlüssel abzurufen. Das Token hat eine Ablaufzeit. Der API-Schlüssel läuft nicht ab. Weitere Informationen finden Sie in [IAM-Token über die {{site.data.keyword.Bluemix_notm}}-Befehlszeilenschnittstelle abrufen](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli), [IAM-API-Schlüssel über die {{site.data.keyword.Bluemix_notm}}-Befehlszeilenschnittstelle generieren](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli) oder [IAM-API-Schlüssel über die {{site.data.keyword.Bluemix_notm}}-Benutzerschnittstelle generieren](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_ui).
+<table>
+  <caption>Tabelle 4. Mit Alerts arbeiten. </caption>
+  <tr>
+	<th>Aktion</th>
+	<th>IAM-Rolle</th>
+  </tr>
+  <tr>
+    <td>Alertregeln erstellen, bearbeiten und löschen</td>
+	<td>Administrator, Editor</td>
+  </tr>
+  <tr>
+    <td>Alerts anzeigen</td>
+	<td>Administrator, Editor, Viewer</td>
+  </tr>
+  <tr>
+    <td>Alertbenachrichtigungen erstellen, bearbeiten und löschen</td>
+	<td>Administrator, Editor</td>
+  </tr>
+  <tr>
+    <td>Benachrichtigungen anzeigen</td>
+	<td>Administrator, Editor, Viewer</td>
+  </tr>
+  <tr>
+    <td>Ausgelöste Alertprotokollsätze anzeigen</td>
+	<td>Administrator, Editor, Viewer</td>
+  </tr>
+</table>
 
 
 

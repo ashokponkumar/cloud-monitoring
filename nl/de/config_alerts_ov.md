@@ -1,32 +1,105 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-07-12"
+lastupdated: "2018-02-09"
 
 ---
 
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
-
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 # Alerts konfigurieren
 {: #config_alerts_ov}
 
-Der {{site.data.keyword.monitoringshort}}-Service stellt ein abfragebasiertes Alertausgabesystem zur Verfügung. Sie können die Alert-API verwenden, um die Regeln und Benachrichtigungsmethoden für jede Metrikabfrage festzulegen, die Sie überwachen möchten. Sie können durch Senden einer E-Mail, durch Auslösen eines Webhooks oder durch Senden eines Alerts an PagerDuty benachrichtigt werden.
+Der {{site.data.keyword.monitoringshort}}-Service stellt ein abfragebasiertes Alertausgabesystem zur Verfügung. Sie können Alerts mithilfe der {{site.data.keyword.monitoringshort}}-API oder über Grafana konfigurieren. Zur Konfiguration eines Alerts müssen Sie Regeln und Benachrichtigungsmethoden für jede Metrikabfrage festlegen, die Sie überwachen möchten. Sie können durch Senden einer E-Mail, durch Auslösen eines Webhooks oder durch Senden eines Alerts an PagerDuty benachrichtigt werden.
 {:shortdesc}
 
 Sie können einen Alert definieren, um eine Benachrichtigung für eine Metrik auszulösen. Ein Alert wird durch eine Regel, die die zu überwachende Metrikabfrage, den Schwellenwert und die beim Überschreiten des Schwellenwerts auszuführende Aktion beschreibt, sowie durch eine oder mehrere Benachrichtigungsmethoden definiert.  
 
-Sie können Alerts für eine einzelne Instanz oder für mehrere Instanzen definieren. Wenn eine Abfrage, die Sie mithilfe einer Alertregel überwachen, einen Platzhalter enthält, gibt der Platzhalter mehrere Ziele, d. h., mehrere Serviceinstanzen oder Anwendungsinstanzen, an. Alle 5 Minuten führt der {{site.data.keyword.monitoringshort}}-Service die in einer Alertregel konfigurierte Abfrage aus und überprüft die letzten Datenpunkte, die für die einzelnen Instanzen zurückgegeben werden. Der {{site.data.keyword.monitoringshort}}-Service protokolliert den letzten Status der einzelnen Instanzen und generiert einen neuen Alert, wenn sich der Status des Alerts ändert.  
+In der folgenden Tabelle sind die verschiedenen Methoden und unterstützten Aktionen aufgeführt, die Sie bei der Arbeit mit Alerts verwenden können:
+
+<table>
+  <caption>Methoden für die Arbeit mit Alerts</caption>
+	<tr>
+    <th>Methode</th>
+		<th>Alert definieren</th>
+		<th>Alert aktualisieren</th>
+		<th>Alert löschen</th>
+	</tr>
+	<tr>
+    <td>Alert-API</td>
+		<td>Ja</td>
+		<td>Ja</td>
+		<td>Ja</td>
+	</tr>
+	<tr>
+    <td>Grafana</td>
+		<td>Ja</td>
+		<td>Ja</td>
+		<td>Ja</td>
+	</tr>
+</table>
+
+**Hinweis:** Alerts, die Sie mithilfe der Alert-API definieren, werden nicht im Grafana-Dashboard angezeigt.
+
 
 In der folgenden Abbildung sind die verschiedenen Benachrichtigungstypen dargestellt, die Sie im {{site.data.keyword.monitoringshort}}-Service konfigurieren können, um Alerts zu erhalten:
 
 ![Allgemeine Komponentenübersicht über die Benachrichtigungstypen, die im {{site.data.keyword.monitoringlong}}-Service verfügbar sind](images/alerts_ov_f1.gif)
+
+Sie können Alerts für eine einzelne Instanz oder für mehrere Instanzen definieren. Wenn eine Abfrage, die Sie mithilfe einer Alertregel überwachen, einen Platzhalter enthält, gibt der Platzhalter mehrere Ziele, d. h., mehrere Serviceinstanzen oder Anwendungsinstanzen, an. Alle 5 Minuten führt der {{site.data.keyword.monitoringshort}}-Service die in einer Alertregel konfigurierte Abfrage aus und überprüft die letzten Datenpunkte, die für die einzelnen Instanzen zurückgegeben werden. Der {{site.data.keyword.monitoringshort}}-Service protokolliert den letzten Status der einzelnen Instanzen und generiert einen neuen Alert, wenn sich der Status des Alerts ändert. 
+
+
+
+## Mit Alerts mithilfe der Alert-API arbeiten
+{: #api}
+
+Sie können Alerts mithilfe der Alert-API definieren, aktualisieren oder löschen.
+
+Um einen Alert für eine Metrikabfrage mithilfe der Alert-API zu definieren, müssen Sie die folgenden Aktionen ausführen:
+
+1. Definieren Sie mindestens eine Metrikabfrage in einem Grafana-Dashboard. 
+
+    **Hinweis:** Sie können keine Alerts in Grafana-Dashboards definieren, die Vorlagenvariablen verwenden.
+
+2. Konfigurieren Sie einen Alert für eine Metrikabfrage, die im Grafana-Dashboard definiert ist.
+
+    * [Alert konfigurieren, der eine E-Mail sendet](/docs/services/cloud-monitoring/alerts/configure_email_alert.html#configure_email_alert).
+    * [Alert konfigurieren, der eine PagerDuty-Benachrichtigung sendet](/docs/services/cloud-monitoring/alerts/configure_pagerduty_alert.html#configure_pagerduty_alert).
+    * [Alert konfigurieren, der eine Webhook-Benachrichtigung sendet](/docs/services/cloud-monitoring/alerts/configure_webhook_alert.html#configure_webhook_alert).
+
+    **Hinweis:** Sie können nur E-Mail-Benachrichtigungen für Metrikabfragen definieren, die in der Kontometrikdomäne angegeben sind.
+
+
+
+## Mit Alerts in Grafana arbeiten
+{: #grafana}
+
+Sie können Alerts direkt in einem Grafana-Dashboard definieren und löschen. Zudem können Sie Regeldefinitionen aktualisieren. Änderungen am Benachrichtigungskanal müssen jedoch über die Alert-API vorgenommen werden.
+
+Berücksichtigen Sie bei der Arbeit mit Alerts in Grafana die folgenden Informationen:
+
+* Um die einer Regel zugewiesenen Benachrichtigungskanäle zu ändern, müssen Sie die Alert-API verwenden.
+* Wenn Sie einen Benachrichtigungskanal in einer Bereichsdomäne löschen, werden Regeln, für die dieser Kanal konfiguriert ist, nicht aktualisiert. Um die Regel zu ändern und den Benachrichtigungskanal aus dieser Regel zu entfernen, müssen Sie die Alert-API verwenden. 
+
+Um einen Alert für eine Metrikabfrage direkt in einem Grafana-Dashboard zu definieren, müssen Sie die folgenden Aktionen ausführen:
+
+1. Definieren Sie mindestens eine Metrikabfrage in einem Grafana-Dashboard. 
+
+    **Hinweis:** Sie können keine Alerts in Grafana-Dashboards definieren, die Vorlagenvariablen verwenden.
+
+2. Konfigurieren Sie einen Alert für eine Metrikabfrage, die im Grafana-Dashboard definiert ist.
+
+    Weitere Informationen finden Sie unter [Alerts in Grafana konfigurieren](/docs/services/cloud-monitoring/alerts/config_alerts_grafana.html#config_alerts_grafana).
+
 
 ## Alertstatus
 {: #status}
@@ -60,6 +133,8 @@ Der Status eines Alerts wird verwendet, um den Status in einem der folgenden Sze
 
 Wenn zum Beispiel ein Warnungsschwellenwert überschritten wird, wird ein Protokollsatz generiert, der den Übergang von *OK* zu *WARNING* aufzeichnet. Ebenso wird ein Protokollsatz generiert, wenn der Wert wieder unter den Schwellenwert sinkt. Dieser Protokollsatz zeichnet dann den Übergang von *WARNING* zu *OK* auf.
 
+Weitere Informationen finden Sie unter [Verlaufsprotokoll einer Regel abrufen](/docs/services/cloud-monitoring/alerts/retrieve_history.html#retrieve_history).
+
 
 ## Regeln
 {: #rules}
@@ -68,15 +143,21 @@ Eine Regel beschreibt die zu überwachende Metrikabfrage, den Schwellenwert und 
 
 * Sie können mithilfe der Alert-API eine Regel erstellen, löschen, aktualisieren, Details für eine Regel anzeigen und alle Regeln auflisten. [Mit Regeln arbeiten](/docs/services/cloud-monitoring/alerts/rules.html#rules).
 
+    * Informationen zum Erstellen einer Regel finden Sie unter [Eine Regel erstellen](/docs/services/cloud-monitoring/alerts/rules.html#create).
+	* Informationen zum Löschen einer Regel finden Sie unter [Eine Regel löschen](/docs/services/cloud-monitoring/alerts/rules.html#delete).
+	* Informationen zum Aktualisieren einer Regel finden Sie unter [Eine Regel aktualisieren](/docs/services/cloud-monitoring/alerts/rules.html#update).
+	* Informationen zum Auflisten aller Regeln finden Sie unter [Alle Regeln auflisten](/docs/services/cloud-monitoring/alerts/rules.html#list).
+	* Informationen zum Anzeigen von Informationen zu einer Regel finden Sie unter [Details einer Regel anzeigen](/docs/services/cloud-monitoring/alerts/rules.html#showing-the-details-of-a-rule).
+
 * Das Alertsystem überprüft alle 5 Minuten die Regeln, die im Bereich aktiviert sind.
 
 * Standardmäßig wird eine Regel aktiviert, wenn Sie sie erstellen. Sie können die Regel jedoch definieren und inaktivieren, indem Sie für das Feld *enable* die Einstellung `false` konfigurieren.
 
-* Wenn für den Regelparameter *comparison* die Einstellung 'below' festgelegt wird, muss der Wert für 'error_level' niedriger sein als der Warnungsschwellenwert. Wenn für den Regelparameter *comparison* die Einstellung 'above' festgelegt wird, muss der Wert für 'error_level' höher sein als der Warnungsschwellenwert. 
+* Wenn für den Regelparameter *comparison* die Einstellung 'below' festgelegt wird, muss der Wert für 'error_level' niedriger sein als der Warnungsschwellenwert. Wenn für den Regelparameter *comparison* die Einstellung 'above' festgelegt wird, muss der Wert für 'error_level' höher sein als der Warnungsschwellenwert.
 
 * Standardmäßig ist beim Erstellen einer Regel für das Feld *allow_no_data* die Einstellung `true` festgelegt. Wenn keine Datenpunkte verfügbar sind, werden nur dann Benachrichtigungen gesendet, wenn die Regelbedingung ausgelöst wird. Wenn Sie eine Benachrichtigung erhalten möchten, in der Sie darüber informiert werden, dass keine Daten für Regel X gefunden wurden, müssen Sie für das Feld *allow_no_data* die Einstellung `false` festlegen. 
 
-**Tipp:** Überprüfen Sie die Abfrage, die Sie mithilfe einer Alertregel überwachen, in Grafana. Stellen Sie sicher, dass keine Zeitlimitüberschreitung auftritt, z. B. weil ein langer Zeitraum konfiguriert ist oder die Abfrage ein Platzhalterzeichen enthält. Beachten Sie, dass ein für eine Abfrage konfigurierter Alert nicht ausgelöst wird, wenn für die betreffende Abfrage eine Zeitlimitüberschreitung in Grafana auftritt. 
+**Tipp:** Überprüfen Sie die Abfrage, die Sie mithilfe einer Alertregel überwachen, in Grafana. Stellen Sie sicher, dass es zu keiner Zeitlimitüberschreitung kommt. Eine Zeitlimitüberschreitung kann auftreten, weil ein langer Zeitraum konfiguriert ist oder die definierte Abfrage ein Platzhalterzeichen enthält. Beachten Sie, dass ein für eine Abfrage konfigurierter Alert nicht ausgelöst wird, wenn für die betreffende Abfrage eine Zeitlimitüberschreitung in Grafana auftritt.
 
 Die folgenden Felder sind erforderlich, um eine Regel zu definieren:
 
@@ -136,7 +217,7 @@ Die folgenden Felder sind erforderlich, um eine Regel zu definieren:
   </tr>
     <tr>
     <td>allow_no_data</td>
-	<td>Definiert die Bedingung für das Senden einer Benachrichtigung, wenn keine Datenpunkte verfügbar sind. <br>Standardmäßig ist hierfür `true` festgelegt.<br>Legen Sie `false` fest, wenn Sie benachrichtigt werden möchten, dass keine Daten für Regel X gefunden wurden.</td>
+	<td>Definiert die Bedingung für das Senden einer Benachrichtigung, wenn keine Datenpunkte verfügbar sind. <br>Standardmäßig ist hierfür `true` festgelegt. <br>Legen Sie `false` fest, wenn Sie benachrichtigt werden möchten, dass keine Daten für Regel X gefunden wurden.</td>
   </tr>
   <tr>
     <td>notifications</td>
@@ -173,7 +254,7 @@ mple-topic.BytesInPerSec.15MinuteRate,\"5min\")",
 ## Benachrichtigungen
 {: #notifications}
 
-Eine Benachrichtigung beschreibt die Methode und die Details, die für die Benachrichtigung verwendet werden, wenn ein Alert ausgelöst wird. Um zum Beispiel eine Warnbenachrichtigung und eine Fehlerbenachrichtigung für eine Metrik zu erhalten, definieren Sie eine Regel, die den Schwellenwert für Warnung überwacht, und eine andere Regel, die den Fehlerschwellenwert überwacht.  
+Eine Benachrichtigung beschreibt die Methode und die Details, die für die Benachrichtigung verwendet werden, wenn ein Alert ausgelöst wird. Um zum Beispiel eine Warnbenachrichtigung und eine Fehlerbenachrichtigung für eine Metrik zu erhalten, definieren Sie eine Regel, die den Schwellenwert für Warnung überwacht, und eine andere Regel, die den Fehlerschwellenwert überwacht. 
 
 * Eine Benachrichtigung wird nur dann gesendet, wenn sich der Status des Alerts ändert, z. B., wenn sich der Status eines Alerts für eine Metrik von "OK" in "ERROR" oder von "ERROR" in "WARNING" ändert. 
 
@@ -185,48 +266,26 @@ Eine Benachrichtigung beschreibt die Methode und die Details, die für die Benac
 
 * Sie können die [Alerts-REST-API](https://console.bluemix.net/apidocs/940-ibm-cloud-monitoring-alerts-api?&language=node#introduction){: new_window} verwenden, um eine Benachrichtigung zu erstellen, zu löschen oder zu aktualisieren, um die Details einer Benachrichtigung anzuzeigen und um die Benachrichtigungen aufzulisten, die in einem Bereich definiert sind.
 
+    * Informationen zum Erstellen einer Benachrichtigung finden Sie unter [Eine Benachrichtigung erstellen ](/docs/services/cloud-monitoring/alerts/notifications.html#create).
+	* Informationen zum Löschen einer Benachrichtigung finden Sie unter [Eine Benachrichtigung löschen](/docs/services/cloud-monitoring/alerts/notifications.html#delete).
+	* Informationen zum Aktualisieren einer Benachrichtigung finden Sie unter [Eine Benachrichtigung aktualisieren](/docs/services/cloud-monitoring/alerts/notifications.html#update).
+	* Informationen zum Auflisten aller Benachrichtigungen finden Sie unter [Alle Benachrichtigungen auflisten](/docs/services/cloud-monitoring/alerts/notifications.html#list).
+	* Informationen zum Anzeigen von Informationen zu einer Benachrichtigung finden Sie unter [Details einer Benachrichtigung anzeigen](/docs/services/cloud-monitoring/alerts/notifications.html#show).
 
-Die folgenden Benachrichtigungsmethoden werden unterstützt:
-
-<table>
- <caption>Tabelle 2. Liste der Benachrichtigungsmethoden</caption>
- <tr>
-    <th>Methode</th>
-	<th>Weitere Informationen</th>
- </tr>
- <tr>
-    <td>E-Mail</td>
-	<td>[Eine E-Mail-Benachrichtigung konfigurieren](/docs/services/cloud-monitoring/alerts/configure_alerts.html#send_email)</td>
-  </tr>
-  <tr>
-    <td>PagerDuty</td>
-	<td>[Eine PagerDuty-Benachrichtigung konfigurieren](/docs/services/cloud-monitoring/alerts/configure_alerts.html#config_alert_pagerduty)</td>
-  </tr>
-  <tr>
-    <td>Webhook</td>
-	<td>[Eine Webhook-Benachrichtigung konfigurieren](/docs/services/cloud-monitoring/alerts/configure_alerts.html#config_webhook)</td>
-  </tr>
-</table>
+* Sie können eine E-Mail-Benachrichtigung, eine PagerDuty-Konfiguration und eine Webhook-Benachrichtigung konfigurieren. 
 
 **Hinweis:** Sie definieren Alertbenachrichtigungen unabhängig von Regeln, sodass Sie die Benachrichtigungen in mehreren Regeln wiederverwenden können.
+
 	
-## Benachrichtigungsvorlagen
+## Benachrichtigung - JSON-Vorlagen
 {: #notification_template}
 	
 Eine Benachrichtigung ist eine JSON-Datei. 
 
-Sie können eine beliebige Anzahl an Benachrichtigungsvorlagen erstellen und diese dann verwenden, um Benachrichtigungen dieses Typs in Ihrer Organisation zu erstellen. 
-
-Sie können einen beliebigen der folgenden Typen von Benachrichtigungen definieren:
-
-* Email: Definieren Sie eine Benachrichtigung vom Typ *Email*, um eine E-Mail an eine gültige E-Mail-Adresse zu senden. 
-* Webhook: Definieren Sie eine Benachrichtigung vom Typ *Webhook* nur für HTTPS-Endpunkte. Fügen Sie einen Parameter zum Endpunkt hinzu, um die Wahrscheinlichkeit zu verringern, dass ein anderer Benutzer Ihren Endpunkt aufzurufen versucht.
-* Pagerduty: Definieren Sie eine Benachrichtigung vom Typ *PagerDuty*, um die Alertdaten für eine Metrik an Ihr PagerDuty Incident Management System zu senden. 
-
-Die folgende Tabelle enthält Beispiele für Benachrichtigungsvorlagen:
+Die folgende Tabelle enthält eine Benachrichtigungsvorlage für den Typ der Benachrichtigungsmethode:
 
 <table>
-  <caption>Tabelle 3. Beispiele für Benachrichtigungsvorlagen</caption>
+  <caption>Tabelle 3. Benachrichtigungsvorlagen</caption>
   <tr>
     <th>Typ</th>
 	<th>Vorlage</th>
@@ -316,6 +375,35 @@ Dabei gilt:
 * *Endpoint* definiert die URL, bei der der POST vorgenommen werden soll. 
 * *Pagerduty_APIkey* definiert einen eindeutigen API-Schlüssel. Dieser API-Schlüssel wird vom Administrator oder Eigner eines PagerDuty-Kontos generiert.
 
-Weitere Informationen finden Sie in [Benachrichtigungsvorlage erstellen](/docs/services/cloud-monitoring/alerts/notifications.html#template).
+
+
+## Regeln - JSON-Vorlage
+{: #rules_template}
+
+Eine Regel wird unter Verwendung einer JSON-Datei beschrieben. 
+
+Der folgende Code ist eine Vorlage für eine Regel:
+
+```
+{
+"name": "Enter rule name",
+"description": "Desccribe rule",
+"expression": "Add metric query",
+"enabled": true,
+"from": "-5min",
+"until": "now",
+"comparison": "below",
+"comparison_scope": "last",
+"error_level" : xxxx,
+"warning_level" : xxxx,
+"frequency": "1min",
+"dashboard_url": "https://metrics.ng.bluemix.net",
+"notifications": [
+ "Liste der Benachrichtigungen nach Namen. Alle Benachrichtigungsmethoden für diese Regel werden durch Kommas getrennt."
+ ]
+}
+```
+{: screen}
+
 
 

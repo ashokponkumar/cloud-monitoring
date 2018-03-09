@@ -1,37 +1,39 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-07-12"
+lastupdated: "2018-02-07"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
-# A propos d'
+# A propos de
 {: #monitoring_ov}
 
 Utilisez le service {{site.data.keyword.monitoringlong}} pour étendre vos capacités de collecte et de conservation lorsque vous utilisez des métriques, et pour pouvoir définir des règles et des alertes afin de recevoir des notifications relatives aux conditions nécessitant votre attention. Donnez plus de moyens à votre équipe DevOps avec des fonctions qui permettent de savoir quelles sont les performances des applications et quelle est la consommation des ressources. Identifiez rapidement les tendances et détectez et diagnostiquez les problèmes, le tout associé à une rentabilisation immédiate et un faible coût total de possession. Utilisez Grafana pour surveiller votre environnement. 
 {:shortdesc}
 
-Par défaut, {{site.data.keyword.Bluemix}} collecte et affiche des métriques de performance relatives à l'utilisation de l'unité centrale, à l'utilisation de la mémoire et aux entrées-sorties de réseau pour le service {{site.data.keyword.containershort}}. Vous pouvez utiliser le service {{site.data.keyword.monitoringshort}} dans {{site.data.keyword.Bluemix_notm}} pour collecter et mesurer automatiquement des métriques clés à partir de votre environnement et de vos applications. Aucune instrumentation spéciale n'est requise pour collecter les métriques. Par exemple, vous pouvez utiliser les informations fournies par les métriques de performance pour surveiller le fonctionnement d'un service dans le cloud, détecter des goulots d'étranglement de ressources et garder un oeil sur l'accord sur les niveaux de licence. Lorsque vous analysez les données de performance d'un service, vous pouvez détecter des situations susceptibles de générer un goulot d'étranglement des ressources et d'affecter votre accord sur les niveaux de licence fournis à vos clients. En agissant suffisamment tôt, vous pouvez empêcher que des situations pouvant avoir un effet négatif sur votre activité ne se développent.  
-
-Vous pouvez envoyer des métriques pour vos applications et machines virtuelles Cloud Foundry (CF) dans le service {{site.data.keyword.monitoringshort}}.   
-
 La figure suivante est une vue générale des différentes ressources à partir desquelles vous pouvez envoyer des métriques au service {{site.data.keyword.monitoringshort}} en vue de leur analyse :
 
-![Présentation générale des composants dans le service {{site.data.keyword.monitoringlong}}](images/cloud_monitoring_ov.gif)
+![High level component overview of the components in the {{site.data.keyword.monitoringlong}} service](images/cloud_monitoring_ov.png "Présentation générale des composants du service {{site.data.keyword.monitoringlong}}")
 
-Pour plus d'informations sur l'envoi des métriques, voir[Envoi de métriques au service {{site.data.keyword.monitoringshort}}](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#send_retrieve_metrics_ov).
+Par défaut, {{site.data.keyword.Bluemix}} collecte et affiche des métriques de performance relatives à l'utilisation de l'unité centrale, à l'utilisation de la mémoire et aux entrées-sorties de réseau pour le service {{site.data.keyword.containershort}}. Vous pouvez utiliser le service {{site.data.keyword.monitoringshort}} dans {{site.data.keyword.Bluemix_notm}} pour collecter et mesurer automatiquement des métriques clés à partir de votre environnement et de vos applications. Aucune instrumentation spéciale n'est requise pour collecter les métriques. Par exemple, vous pouvez utiliser les informations fournies par les métriques de performance pour surveiller le fonctionnement d'un service dans le cloud, détecter des goulots d'étranglement de ressources et garder un oeil sur l'accord sur les niveaux de licence. Lorsque vous analysez les données de performance d'un service, vous pouvez détecter des situations susceptibles de générer un goulot d'étranglement des ressources et d'affecter votre accord sur les niveaux de licence fournis à vos clients. En agissant suffisamment tôt, vous pouvez empêcher que des situations pouvant avoir un effet négatif sur votre activité ne se développent.  
 
-Vous pouvez accéder au service {{site.data.keyword.monitoringlong}} via la catalogue {{site.data.keyword.Bluemix_notm}}. Pour le service {{site.data.keyword.containershort}} avec des conteneurs uniques et des conteneurs de groupes, vous pouvez également accéder au service à partir de l'interface utilisateur {{site.data.keyword.Bluemix_notm}}. 
+Vous pouvez envoyer des métriques pour vos applications et machines virtuelles Cloud Foundry (CF) dans le service {{site.data.keyword.monitoringshort}}. Pour plus d'informations sur l'envoi des métriques, voir[Envoi de métriques au service {{site.data.keyword.monitoringshort}}](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#send_retrieve_metrics_ov).
+
+Vous pouvez mettre à disposition le service {{site.data.keyword.monitoringshort}} via le catalogue {{site.data.keyword.Bluemix_notm}}.   
+
+Vous pouvez visualiser et analyser des métriques collectées par le service {{site.data.keyword.monitoringshort}} via le tableau de bord {{site.data.keyword.Bluemix_notm}}.   
 
 ## Pourquoi utiliser le service Monitoring ?
 {: #value}
@@ -40,11 +42,11 @@ Vous pouvez accéder au service {{site.data.keyword.monitoringlong}} via la cata
 
     Le service {{site.data.keyword.monitoringlong_notm}} collecte automatiquement des données de métrique depuis des services {{site.data.keyword.IBM_notm}} et évite ainsi d'avoir recours à des agents. Les API facilitent l'ajout de métriques personnalisées et l'interrogation des données de surveillance. 
 	
-	Le service {{site.data.keyword.monitoringlong_notm}} offre une collecte de métriques par minute. Le plan Lite conserve des métriques à résolution intégrale pendant 15 jours. Le plan Premium conserve des métriques à résolution intégrale pendant 45 jours. 
+	Le service {{site.data.keyword.monitoringlong_notm}} offre une collecte de métriques par minute.  Le plan Lite conserve des métriques à résolution intégrale pendant 15 jours.  Le plan Premium conserve des métriques à résolution intégrale pendant 45 jours.
 
 2. **Etendez facilement la surveillance dans votre application à l'aide d'API**
 
-    Intégrez vos données de surveillance à vos applications et opérations à l'aide des API du service {{site.data.keyword.monitoringshort}}. Utilisez les API pour ajouter des métriques métier et applicatives à vos données de surveillance de cloud. Vous pouvez également utiliser les API pour envoyer des données de métrique depuis l'extérieur du cloud {{site.data.keyword.IBM_notm}} dans le service {{site.data.keyword.monitoringshort}}. 
+    Intégrez vos données de surveillance à vos applications et opérations à l'aide des API du service {{site.data.keyword.monitoringshort}}. Utilisez les API pour ajouter des métriques métier et applicatives à vos données de surveillance de cloud. Vous pouvez également utiliser les API pour envoyer des données de métrique depuis l'extérieur du cloud {{site.data.keyword.IBM_notm}} dans le service {{site.data.keyword.monitoringshort}}.
 
 3. **Examinez votre environnement afin de détecter, de diagnostiquer et d'identifier rapidement les problèmes**
 
@@ -52,63 +54,64 @@ Vous pouvez accéder au service {{site.data.keyword.monitoringlong}} via la cata
 	
 4. **Créez des tableaux de bord réutilisables et rendez-les interactifs**
 
-    La plateforme Grafana hébergée par le service {{site.data.keyword.monitoringlong_notm}} fournit la prise en charge permettant de générer des tableaux de bord personnalisés avec une large palette d'options de visualisation. Rendez vos tableaux de bord dynamiques grâce à la modélisation en utilisant des requêtes de métrique avec des variables. 
+    La plateforme Grafana hébergée par le service {{site.data.keyword.monitoringlong_notm}} fournit la prise en charge permettant de générer des tableaux de bord personnalisés avec une large palette d'options de visualisation.  Rendez vos tableaux de bord dynamiques grâce à la modélisation en utilisant des requêtes de métrique avec des variables.
 
 5. **Recevez des alertes**
 
-    Définissez des règles pour la notification des conditions nécessitant votre attention. Le service {{site.data.keyword.monitoringlong_notm}} offre une API que vous pouvez utiliser pour définir des seuils de performance et pour être averti lorsque ces seuils sont atteints. Définissez des règles d'alerte pour une instance de service ou une instance d'application, ainsi que des règles d'alerte qui génèrent des rapports sur un ensemble d'instances. Lorsqu'une alerte est déclenchée, obtenez une notification via un courrier électronique, un événement PagerDuty, une notification webhook ou une combinaison de ces trois éléments. 
+    Définissez des règles pour la notification des conditions nécessitant votre attention. Le service {{site.data.keyword.monitoringlong_notm}} offre une API que vous pouvez utiliser pour définir des seuils de performance et pour être averti lorsque ces seuils sont atteints. Définissez des règles d'alerte pour une instance de service ou une instance d'application, ainsi que des règles d'alerte qui génèrent des rapports sur un ensemble d'instances. Lorsqu'une alerte est déclenchée, obtenez une notification via un courrier électronique, un événement PagerDuty, une notification webhook ou une combinaison de ces trois éléments.
 
 6. **Choisissez le plan de service qui correspond à vos besoins** 
 
-    Vous pouvez choisir le plan de service Lite ou le plan de service Premium selon vos besoins en matière d'utilisation. Le plan Lite offre une fonction de collecte de métrique de plateforme de base et une fonction d'alerte supplémentaire. Vous pouvez aussi sélectionner le plan Premium qui permet d'activer une plus grande consommation de métrique avec une période de conservation plus longue, d'augmenter le nombre d'alertes que pouvez définir, y compris les alertes qui génèrent des rapports sur plusieurs services et applications, et d'accéder aux API des services. 
+    Vous pouvez choisir le plan de service Lite ou le plan de service Premium selon vos besoins en matière d'utilisation.  Le plan Lite offre une fonction de collecte de métrique de plateforme de base et une fonction d'alerte supplémentaire.  Vous pouvez aussi sélectionner le plan Premium qui permet d'activer une plus grande consommation de métrique avec une période de conservation plus longue, d'augmenter le nombre d'alertes que pouvez définir, y compris les alertes qui génèrent des rapports sur plusieurs services et applications, et d'accéder aux API des services.
 
  
-## Plan de service
+## Plans de service
 {: #plan}
 
 Le service {{site.data.keyword.monitoringshort}} met à disposition plusieurs plans. Chaque plan propose des fonctions différentes de collecte et de conservation des métriques, et de définition d'alerte. 
 
-Vous pouvez changer de plan dans l'interface utilisateur {{site.data.keyword.Bluemix_notm}} ou via la ligne de commande. Vous pouvez mettre à niveau ou rétrograder votre plan à tout moment. Pour plus d'informations sur les mises à niveau des plans de service dans {{site.data.keyword.Bluemix_notm}},
-voir [Modification du plan](/docs/services/cloud-monitoring/plan/change_plan.html#change_plan). 
+Vous pouvez changer de plan dans l'interface utilisateur {{site.data.keyword.Bluemix_notm}} ou via la ligne de commande. Vous pouvez mettre à niveau ou rétrograder votre plan à tout moment. Pour plus d'informations sur les mises à niveau des plans de service dans {{site.data.keyword.Bluemix_notm}}, voir [Modification du plan](/docs/services/cloud-monitoring/plan/change_plan.html#change_plan). 
 
-Le tableau suivant présente les plans disponibles :
+Le tableau suivant présente les plans disponibles lorsque vous mettez à disposition le service {{site.data.keyword.monitoringshort}} dans un espace :
 
 <table>
-    <caption>Tableau 1. Récapitulatif des plans pour le service {{site.data.keyword.monitoringshort}}. </caption>
+    <caption>Tableau 1. Récapitulatif des plans pour le service {{site.data.keyword.monitoringshort}} par espace</caption>
       <tr>
         <th>Plan</th>
         <th>Envoi de métriques à l'aide de l'API</th>
         <th>Durée de conservation des métriques</th>
         <th>Alertes</th>
+		    <th>Méthodes de notification</th>
       </tr>
       <tr>
         <td>Lite (par défaut)</td>
         <td>Non disponibles</td>
         <td>15 jours</td>
-        <td>Vous pouvez définir jusqu'à 10 règles d'alerte pour une métrique ou 1 règle qui inclut un caractère générique. </td>
+        <td>Vous pouvez définir jusqu'à 10 règles d'alerte avec des requêtes de métrique uniques ou 1 règle d'alerte qui inclut un caractère générique.</td>
+		    <td>Email</td>
       </tr>
       <tr>
         <td>Premium</td>
         <td>Disponible</td>
         <td>45 jours</td>
-        <td>Vous pouvez définir des règles d'alerte, y compris des règles avec des caractères génériques. </td>
+        <td>Vous pouvez définir des règles d'alerte, y compris des règles avec des caractères génériques.</td>
+		    <td>Courrier électronique, webhook, PagerDuty</td>
       </tr>
 </table>
 
-**Remarque :** le plan Lite propose les mêmes fonctions que les capacités de surveillance intégrées dans {{site.data.keyword.Bluemix_notm}}.
+**Remarque :** le plan Lite propose les mêmes fonctionnalités que les fonctions de surveillance intégrées dans {{site.data.keyword.Bluemix_notm}}. Le domaine de compte propose les mêmes fonctionnalités que le plan Lite. 
 
 
 ## Durée de conservation des métriques
 {: #metrics_retention}
 
-
 Le tableau suivant récapitule les durées de conservation en fonction du plan de service utilisé :
 
 <table>
-    <caption>Tableau 2. Récapitulatif des durées de conservation pour le service {{site.data.keyword.monitoringshort}}. </caption>
+    <caption>Tableau 2. Récapitulatif des durées de conservation pour le service {{site.data.keyword.monitoringshort}}.</caption>
       <tr>
         <th>Plan</th>
-        <th>Durée de conservation </th>
+        <th>Durée de conservation</th>
       </tr>
       <tr>
         <td>Lite (par défaut)</td>
@@ -132,18 +135,21 @@ Vous trouverez le service {{site.data.keyword.monitoringshort}} dans la section 
 
 Prenez en compte les informations suivantes pour le service {{site.data.keyword.monitoringshort}} :
 
-* Afin de collecter des métriques pour les ressources de cloud s'exécutant dans un espace {{site.data.keyword.Bluemix_notm}}, vous devez mettre à disposition le service dans ce même espace.
+* Vous ne pouvez mettre à disposition qu'une seule instance du service {{site.data.keyword.monitoringshort}} par espace. 
+* Afin de collecter des métriques pour les ressources de cloud qui s'exécutent dans un espace Cloud Foundry, vous devez mettre à disposition le service dans ce même espace.
 
-* Afin d'envoyer des métriques au service {{site.data.keyword.monitoringshort}}, vous devez mettre à disposition une instance du service {{site.data.keyword.monitoringshort}} dans l'espace {{site.data.keyword.Bluemix_notm}} auquel vous souhaitez envoyer les métriques.  
 
 
 
 ## Régions
 {: #regions}
 
-Le service {{site.data.keyword.monitoringshort}} est disponible dans la région suivante :
+Le service {{site.data.keyword.monitoringshort}} est disponible dans les régions suivantes :
 
-* Sud des États-Unis
+* Allemagne
+* Sydney
+* Royaume-Uni
+* Sud des Etats-Unis
 
 
 
@@ -151,23 +157,35 @@ Le service {{site.data.keyword.monitoringshort}} est disponible dans la région 
 ## Adresses URL du service Monitoring
 {: #region}
 
-Le service {{site.data.keyword.monitoringshort}} est à la disposition de toute personne disposant d'un ID utilisateur {{site.data.keyword.Bluemix_notm}} et de l'accès à un espace dans une organisation {{site.data.keyword.Bluemix_notm}}. 
+Le service {{site.data.keyword.monitoringshort}} est à la disposition de toute personne dotée d'un ID utilisateur {{site.data.keyword.Bluemix_notm}} et des droits nécessaires pour gérer le service dans {{site.data.keyword.Bluemix_notm}}.
 
 * Pour chaque région dans laquelle le service {{site.data.keyword.monitoringshort}} est disponible, il existe un ensemble différent de noeuds finaux. 
-* Une adresse URL unique est partagée par les noeuds finaux d'ingestion et d'interface utilisateur Web/d'API. 
+* Une adresse URL unique est partagée par les noeuds finaux d'ingestion et d'interface utilisateur Web/d'API.
 * Le port 443 est un port TLS utilisé pour accéder aux métriques via l'API et l'interface utilisateur Web (Grafana).
 
-Le tableau suivant répertorie l'adresse URL de l'environnement de cloud public qui est prise en charge : 
+Le tableau suivant répertorie les adresses URL par région :
 
 <table>
-  <caption>Tableau 3. Liste des noeuds finaux permettant d'utiliser le service {{site.data.keyword.monitoringshort}}. </caption>
+  <caption>Tableau 3. Liste des noeuds finaux permettant d'utiliser le service {{site.data.keyword.monitoringshort}}</caption>
   <tr>
     <th>Région</th>
 	<th>Noeud final</th>
   </tr>
   <tr>
-    <td>Sud des États-Unis</td>
-	<td>metrics.ng.bluemix.net</td>
+    <td>Allemagne</td>
+	<td>[https://metrics.eu-de.bluemix.net](https://metrics.eu-de.bluemix.net)</td>
+  </tr>
+  <tr>
+    <td>Sydney</td>
+	<td>[https://metrics.au-syd.bluemix.net](https://metrics.au-syd.bluemix.net)</td>
+  </tr>
+  <tr>
+    <td>Royaume-Uni</td>
+	<td>[https://metrics.eu-gb.bluemix.net](https://metrics.eu-gb.bluemix.net)</td>
+  </tr>
+  <tr>
+    <td>Sud des Etats-Unis</td>
+	<td>[https://metrics.ng.bluemix.net/](https://metrics.ng.bluemix.net/)</td>
   </tr>
 </table>
 

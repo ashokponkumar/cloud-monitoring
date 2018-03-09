@@ -1,31 +1,39 @@
 ---
 
-Copyright: years: 2017
+copyright:
+  years: 2017, 2018
 
-lastupdated: "2017-07-14"
+lastupdated: "2018-02-01"
 
 ---
 
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
 # Analisando métricas
 {: #analyze_metrics_ov}
 
-No {{site.data.keyword.Bluemix}}, é possível usar o Grafana, uma plataforma de visualização e monitoramento de software livre, para monitorar, procurar, analisar e visualizar as suas métricas em uma variedade de gráficos, por exemplo, gráficos e tabelas.
+No {{site.data.keyword.Bluemix}}, é possível usar o Grafana, uma plataforma de
+software livre de visualização e monitoramento para monitorar, procurar, analisar e visualizar suas métricas em uma
+variedade de gráficos, por exemplo, diagramas e tabelas.
 {:shortdesc}
 
 
 ## Visão Geral de Componentes
 {: #overview}
 
-O serviço do {{site.data.keyword.monitoringshort}} armazena uma série de dados no banco de dados de armazenamento do Metrics. É possível consultar esses dados por meio do Editor de consulta. Para obter mais informações sobre as consultas que são suportadas, veja [Funções do Graphite](http://graphite.readthedocs.io/en/latest/functions.html).
+O serviço do {{site.data.keyword.monitoringshort}} armazena uma série de dados no banco de dados de armazenamento do Metrics. É possível consultar esses dados por meio do Editor de consulta. Para obter mais informações sobre as consultas que são suportadas, veja [Funções do Graphite ![External link icon](../../icons/launch-glyph.svg "External link icon")](http://graphite.readthedocs.io/en/0.9.13-pre1/functions.html).
 
-No Grafana, para acessar os dados que estão disponíveis no banco de dados de armazenamento do Metrics, deve-se efetuar login em um espaço, uma organização e uma região do {{site.data.keyword.Bluemix_notm}} com o ID do usuário e a senha que você usa para efetuar login no {{site.data.keyword.Bluemix_notm}}. 
+No Grafana, para acessar os dados que estão disponíveis no banco de dados de armazenamento do Metrics,
+deve-se efetuar login em um espaço, organização e região com o ID do usuário e a senha que você usa para
+efetuar login no {{site.data.keyword.Bluemix_notm}}. 
 
 Para visualizar os dados, você configura um painel que pode incluir uma ou mais linhas. Em cada linha, é possível definir múltiplos painéis. 
 
@@ -33,7 +41,7 @@ Para visualizar os dados, você configura um painel que pode incluir uma ou mais
 * Um painel é o recurso de visualização básica para monitorar as métricas 
 * Um painel pode ser identificado e incluir anotações com dados que você pode usar para correlacionar dados ao longo de painéis.
 
-É possível definir os tipos de painéis a seguir: texto, gráfico, tabela, singlestat. Cada painel oferece estilos diferentes e opções de formatação que podem ser customizados. Os painéis podem ser estáticos ou dinâmicos.
+É possível definir os tipos de painéis a seguir: texto, gráfico, tabela, singlestat. Cada painel oferece estilos diferentes e opções de formatação que podem ser customizados. 
 
 A quantia de dados exibida em um painel é determinada pela consulta e pelo intervalo de tempo que é configurado. É possível configurar um intervalo de tempo comum para todos os painéis no nível de painel ou intervalos de tempo individuais por painel.
 

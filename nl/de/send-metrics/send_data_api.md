@@ -1,89 +1,75 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-07-12"
+lastupdated: "2018-02-01"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
-
-# Daten an den Überwachungsservice senden
+# Daten mithilfe der Metrik-API senden
 {: #send_data_api}
 
-Sie können Metriken an den {{site.data.keyword.monitoringshort}}-Service senden, indem Sie die Metrik-API verwenden. Sie können Metriken an einen Bereich von {{site.data.keyword.Bluemix_notm}} senden.
+Sie können Metriken an den {{site.data.keyword.monitoringshort}}-Service senden, indem Sie die Metrik-API verwenden. 
 {:shortdesc}
 
 
-Bei {{site.data.keyword.Bluemix_notm}} Docker-Containern werden die Systemmetriken automatisch erfasst. Bei Cloud Foundry-Anwendungen und Apps, die auf einer virtuellen Maschine ausgeführt werden, müssen Metriken direkt von der App über die [Metrik-API](https://console.bluemix.net/apidocs/927-ibm-cloud-monitoring-rest-api?&language=node#introduction){: new_window} gesendet werden. 
+Bei den {{site.data.keyword.Bluemix_notm}} Docker-Containern werden die Systemmetriken automatisch erfasst. Bei Cloud Foundry-Anwendungen und Apps, die auf einer virtuellen Maschine ausgeführt werden, müssen Metriken direkt von der App über die [Metrik-API](https://console.bluemix.net/apidocs/927-ibm-cloud-monitoring-rest-api?&language=node#introduction){: new_window} gesendet werden. 
 
 
 
-## Metriken mithilfe der UAA an einen Bereich senden
-{: #uaa}
+## Metriken an eine Bereichsdomäne senden
+{: #space_uaa}
 
-Führen Sie die folgenden Schritte aus, um Metriken an einen {{site.data.keyword.Bluemix_notm}}-Bereich zu senden:
+Führen Sie die folgenden Schritte aus, um Metriken mithilfe von cURL an einen Bereich zu senden:
 
-1. Melden Sie sich bei einer Region, einer Organisation und einem Bereich von {{site.data.keyword.Bluemix_notm}} an. Führen Sie den folgenden Befehl aus:
+1. Melden Sie sich bei einer Region, einer Organisation und einem Bereich in {{site.data.keyword.Bluemix_notm}} an. 
 
-    Führen Sie zum Beispiel den folgenden Befehl aus, um sich beim Bereich 'US South' anzumelden: 
+    Weitere Informationen finden Sie unter [Wie melde ich mich bei {{site.data.keyword.Bluemix_notm}} an?](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+2. Rufen Sie das Sicherheitstoken ab. Sie können ein UAA-Token, ein IAM-Token oder einen API-Schlüssel verwenden.
+
+    Wählen Sie eine der folgenden Methoden aus, um das Sicherheitstoken abzurufen, das Sie zum Senden von Metriken benötigen:
 	
-	```
-    cf login -a https://api.ng.bluemix.net
+	* Informationen zum Abrufen eines UAA-Tokens finden Sie unter [UAA-Token über die {{site.data.keyword.Bluemix_notm}}-CLI abrufen](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
+	
+	* Informationen zum Abrufen eines IAM-Tokens finden Sie unter [IAM-Token über die {{site.data.keyword.Bluemix_notm}}-CLI abrufen](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* Informationen zum Abrufen eines API-Schlüssels finden Sie unter [API-Schlüssel abrufen](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
+	Legen Sie auf demselben Terminal, von dem aus Sie sich bei {{site.data.keyword.Bluemix_notm}} angemeldet haben, die *Token*-Variable für das Token fest.
+
+    Legen Sie beispielsweise ein UAA-Token fest und entfernen Sie den Teil *Bearer* (Träger) aus dem Tokenwert:
+
     ```
-    {: codeblock}
-
-    Befolgen Sie die Anweisungen. Geben Sie Ihre {{site.data.keyword.Bluemix_notm}}-Berechtigungsnachweise ein, wählen Sie eine Organisation und einen Bereich aus.
-
-2. Rufen Sie das Authentifizierungstoken ab.
-
-    Weitere Informationen zur UAA-Authentifizierung finden Sie in [UAA-Token mithilfe der Bluemix-CLI abrufen](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) oder [UAA-Token mithilfe der REST-API abrufen](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
-	Führen Sie zum Beispiel den folgenden Befehl aus, um das UAA-Token zu verwenden:
-
+    export Token="kjshdgf.....ldkdjdj"
     ```
-	cf oauth-token
-	```
-	{: codeblock}
-	
-	Das Ergebnis dieses Befehls lautet wie folgt:
-	
-	```
-	bearer eyJhbGciOiJI....cGFzc3dvcmQiLCJjZiIsInVhYSIsIm9wZW5pZCJdfQ.JaoaVudG4jqjeXz6q3JQL_SJJfoIFvY8m-rGlxryWS8
-	```
-	{: screen}
-	
-	Exportieren Sie dann die Variable *Token*. Beispiel:
-	
-	```
-	export Token="eyJhbGciOiJI....cGlxryWS8"
-	```
-	{: screen}
-	
-	**Hinweis:** Das Token schließt *Bearer* (Träger) aus
+    {: screen}
 		
-2. Rufen Sie die Bereichs-GUID ab. Die GUID muss das Präfix *s-* aufweisen, um einen Bereich zu kennzeichnen.
+3. Rufen Sie die Bereichs-GUID ab. Die GUID muss das Präfix *s-* aufweisen, um einen Bereich zu kennzeichnen.
 
-    Führen Sie den folgenden Befehl aus:
+    Führen Sie folgenden Befehl aus:
 	
 	```
-	cf space SpaceName --guid
+	bx iam space SpaceName --guid
 	```
 	{: codeblock}
 	
 	Dabei ist *SpaceName* der Name des Bereichs, in dem Sie eine Benachrichtigung definieren werden.
 	
-	Beispiel: Führen Sie folgenden Befehl aus, um die GUID eines Bereichs mit dem Namen *dev* abzurufen:
+	Um beispielsweise die GUID eines Bereichs mit dem Namen *dev* abzurufen, führen Sie den folgenden Befehl aus:
 	
 	```
-	cf space dev --guid
+	bx iam space dev --guid
 	```
 	{: screen}
 	
@@ -94,7 +80,9 @@ Führen Sie die folgenden Schritte aus, um Metriken an einen {{site.data.keyword
 	```
 	{: screen}
 	
-	Exportieren Sie dann die Variable *Space*. Beispiel:
+	Anschließend exportieren Sie die Variable *Space*. **Hinweis:** Die GUID muss das Präfix *s-* aufweisen, um einen Bereich zu kennzeichnen.
+	
+	Beispiel:
 	
 	```
 	export Space="s-667fadfc-jhtg-1234-9f0e-cf4123451095"
@@ -104,7 +92,7 @@ Führen Sie die folgenden Schritte aus, um Metriken an einen {{site.data.keyword
 5. Führen Sie den folgenden cURL-Befehl aus, um Metriken zu senden:
 
     ```
-	curl -XPOST -d @Metric_File --header "X-Auth-User-Token:uaa ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/metrics
+	curl -XPOST -d @Metric_File --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" Endpoint/v1/metrics
 	```
 	{: codeblock}
 	
@@ -112,20 +100,22 @@ Führen Sie die folgenden Schritte aus, um Metriken an einen {{site.data.keyword
 	
 	* Metrics_File stellt die JSON-Datei dar, die die Definition der Metriken enthält, die an den {{site.data.keyword.monitoringshort}}-Service gesendet wurden.
 	
-	* *X-Auth-User-Token* ist ein Parameter, der das UAA-Token von {{site.data.keyword.Bluemix_notm}} übergibt.
+	* *X-Auth-User-Token* ist ein Parameter, der das Sicherheitstoken übergibt.
 	
-	* *Auth_Type* ist das Präfix, das den Typ des Tokens definiert. *uaa* gibt an, dass das angegebene Token ein generiertes UAA-Token ist.
+	* *Auth_Type* ist das Präfix, das den Typ des Tokens definiert. Gültige Werte sind: *uaa* für ein UAA-Token, *iam* für ein IAM-Token und *api* für einen API-Schlüssel.
 	
 	* *X-Auth-Scope-Id* ist ein Parameter, der die Bereichs-GUID übergibt. Die GUID muss das Präfix *s-* aufweisen, um einen Bereich zu kennzeichnen.
 	
-	* Token stellt das UAA-Token dar.
+	* Token stellt das Sicherheitstoken oder den API-Schlüssel dar.
 	
 	* Space (Bereich) stellt die GUID des Bereichs dar. 
+	
+	* Endpoint (Endpunkt) stellt den Eingangspunkt zum Service dar. Jede Region verfügt über eine andere URL. Informationen zum Abrufen der Liste der Endpunkte nach Region finden Sie unter [Endpunkte](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
 	Sie können zum Beispiel den folgenden Befehl verwenden, um die beiden Metriken `myhost.cpu.idle` und `myapp.login.attempts` an den {{site.data.keyword.monitoringshort}}-Service zu senden:
 	
 	```
-	curl -XPOST @metric.json --header "X-Auth-User-Token:uaa ${Token}" https://metrics.ng.bluemix.net/v1/metrics
+	curl -XPOST @metric.json --header "X-Auth-User-Token: uaa ${Token}" https://metrics.ng.bluemix.net/v1/metrics
 	```
 	{: screen}
 	
@@ -146,137 +136,6 @@ Führen Sie die folgenden Schritte aus, um Metriken an einen {{site.data.keyword
 	{: screen}
 
  
-## Metriken mithilfe von IAM oder eines API-Schlüssels an einen Bereich senden.
-{: #iam}
-
-Führen Sie die folgenden Schritte aus, um Metriken an einen {{site.data.keyword.Bluemix_notm}}-Bereich zu senden:
-
-1. Melden Sie sich bei einer Region, einer Organisation und einem Bereich von {{site.data.keyword.Bluemix_notm}} an. Führen Sie den folgenden Befehl aus:
-
-    Führen Sie zum Beispiel den folgenden Befehl aus, um sich beim Bereich 'US South' anzumelden:
-	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    Befolgen Sie die Anweisungen. Geben Sie Ihre {{site.data.keyword.Bluemix_notm}}-Berechtigungsnachweise ein, wählen Sie eine Organisation und einen Bereich aus.
-
-2. Rufen Sie das Authentifizierungstoken oder den API-Schlüssel ab.
-
-    Weitere Informationen zur IAM-Authentifizierung finden Sie in [IAM-Token mithilfe der Bluemix-CLI abrufen](/docs/services/cloud-monitoring/security/auth_iam.html#iam_cli) oder [Einen IAM API-Schlüssel mithilfe der Bluemix-UI generieren.](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
-
-	Führen Sie zum Beispiel den folgenden Befehl aus, um das IAM-Token zu verwenden:
-
-    ```
-	bx iam oauth-tokens
-	```
-	{: codeblock}
-	
-	Das Ergebnis dieses Befehls lautet wie folgt:
-	
-	```
-	IAM token:  Bearer djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ
-    UAA token:  Bearer eyJhbGciOiJIUz..Ky6vagp3k_QcIcKJ-td83qXhO5Uze43KcplG6PzcGs8
-	```
-	{: screen}
-	
-	Exportieren Sie dann die Variable *Token*. Beispiel:
-	
-	```
-	export Token="djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ"
-	```
-	{: screen}
-	
-	**Hinweis:** Das Token schließt *Bearer* (Träger) aus
-		
-3. Rufen Sie die Bereichs-GUID ab.
-
-    Um die Bereichs-GUID abzurufen, siehe [Wie erhalte ich die GUID eines Bereichs?](/docs/service/cloud-monitoring/qa/cli_qa.html#space_guid). Die GUID muss das Präfix *s-* aufweisen, um einen Bereich zu kennzeichnen.
-    
-    Führen Sie zum Beispiel den folgenden Befehl aus:
-	
-	```
-	bx iam space NAME --guid
-	```
-	{: codeblock}
-	
-	Dabei ist *SpaceName* der Name des Bereichs, in dem Sie eine Benachrichtigung definieren werden.
-	
-	Beispiel: Führen Sie folgenden Befehl aus, um die GUID eines Bereichs mit dem Namen *dev* abzurufen:
-	
-	```
-	bx iam space dev --guid
-	```
-	{: screen}
-	
-	Das Ergebnis dieses Befehls lautet wie folgt:
-	
-	```
-	667fadfc-jhtg-1234-9f0e-cf4123451095
-	```
-	{: screen}
-	
-	Exportieren Sie dann die Variable *Space*. Beispiel:
-	
-	```
-	export Space="s-667fadfc-jhtg-1234-9f0e-cf4123451095"
-	```
-	{: screen}
-	
-5. Führen Sie einen cURL-Befehl aus, um Metriken zu senden.
-
-    ```
-	curl -XPOST -d @Metric_File --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/metrics
-	```
-	{: codeblock}
-	
-	dabei gilt:
-	
-	* Metrics_File stellt die JSON-Datei dar, die die Definition der Metriken enthält, die an den {{site.data.keyword.monitoringshort}}-Service gesendet wurden.
-	
-	* *X-Auth-User-Token* ist ein Parameter, der das {{site.data.keyword.Bluemix_notm}} IAM-Token oder den API-Schlüssel übergibt.
-	
-	* *Auth_Type* ist das Präfix, das den Typ des Tokens oder den API-Schlüssel definiert. Die folgende Liste enthält die gültigen Werte: *apikey*, *iam* oder *uaa*, wobei
-  * *apikey* angibt, dass das Token ein API-Schlüssel ist.
-		* *iam* angibt, dass das Token ein IAM-generiertes Token ist.
-	
-	* *X-Auth-Scope-Id* ist ein Parameter, der die Bereichs-GUID übergibt. Die GUID muss das Präfix *s-* aufweisen, um einen Bereich zu kennzeichnen. 
-	
-	* Token stellt das IAM-Token oder den API-Schlüssel dar.
-	
-	* Space (Bereich) stellt die GUID des Bereichs dar. 
-
-	
-Sie können zum Beispiel den folgenden Befehl ausführen, um zwei Metriken, `myhost.cpu.idle` und `myapp.login.retries`, an einen Bereich im {{site.data.keyword.monitoringshort}}-Service zu senden:
-	
-```
-curl -XPOST @metric.json --header "X-Auth-User-Token:iam ${Token}" https://metrics.ng.bluemix.net/v1/metrics
-```
-{: screen}
-	
-Die Beispieldatei *metric.json* ist wie folgt definiert:
-
-```
-[
-  {
-    "name" : "myhost.cpu.idle",
-    "value" : 22.37
-  },
-  {
-    "name": "myapp.login.retries",
-    "value": 4
-  }
-]
-```
-{: screen}
-
-
-
-
-
-
-
 
 
 

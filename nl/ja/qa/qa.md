@@ -1,33 +1,36 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-07-14"
+lastupdated: "2018-02-01"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
+
 
 
 # よくある質問と回答
 {: #qa}
 
-{{site.data.keyword.monitoringshort}} サービスに関する一般的な質問の回答を以下に示します。
+{{site.data.keyword.monitoringshort}} サービスに関する一般的な質問の回答を以下に示します。 
 {:shortdesc}
 
 * [最近メトリック値を送信していないメトリックの古いデータを表示できないのはなぜですか?](#qa3)
 
 
-## 最近メトリック値を送信していないメトリックの古いデータを表示できないのはなぜですか? 
+## 最近メトリック値を送信していないメトリックの古いデータを表示できないのはなぜですか?
 {: #qa3}
 
-{{site.data.keyword.monitoringshort}} は、過去 7 日間書き込まれていないメトリックを識別することにより、本来一時的と思われるメトリック・パスの全データを削除します。 
+{{site.data.keyword.monitoringshort}} は、過去 7 日間書き込まれていないメトリックを識別することにより、事実上一時的と思われるメトリック・パスの全データを削除します。 
 
 以下に例を示します。
 

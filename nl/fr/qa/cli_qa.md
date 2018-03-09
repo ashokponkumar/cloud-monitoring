@@ -1,101 +1,143 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-06-19"
+lastupdated: "2018-02-01"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
-# Questions fréquentes sur l'utilisation de l'interface de ligne de commande Bluemix et réponses
+
+# Foire aux questions liées à l'utilisation de l'interface de ligne de commande IBM Cloud
 {: #cli_qa}
 
 Vous trouverez ci-après les réponses aux questions fréquentes concernant l'utilisation de l'interface de ligne de commande {{site.data.keyword.Bluemix}} avec le service {{site.data.keyword.monitoringshort}}. 
 {:shortdesc}
 
-* [Comment installer l'interface de ligne de commande {{site.data.keyword.Bluemix_notm}} ?](#install_bmx_cli)
-* [Comment obtenir l'identificateur global unique d'un compte ?](#account_guid)
-* [Comment obtenir l'identificateur global unique d'une organisation ? ](#org_guid)
-* [Comment obtenir l'identificateur global unique d'un espace ?](#space_guid)
+* [Comment se connecter à {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login)
+* [Comment installer l'interface de ligne de commande {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#install_bmx_cli)
+* [Comment obtenir l'identificateur global unique d'un compte](/docs/services/cloud-monitoring/qa/cli_qa.html#account_guid)
+* [Comment obtenir l'identificateur global unique d'une organisation](/docs/services/cloud-monitoring/qa/cli_qa.html#org_guid)
+* [Comment obtenir l'identificateur global unique d'un espace](/docs/services/cloud-monitoring/qa/cli_qa.html#space_guid)
 
+## Comment se connecter à IBM Cloud ?
+{: #login}
 
-## Comment installer l'interface de ligne de commande Bluemix ?
+Exécutez la commande suivante pour vous connecter à une région, une organisation et un espace dans {{site.data.keyword.Bluemix_notm}} :
+
+```
+bx login -a Endpoint
+```
+{: codeblock}
+	
+Où *Endpoint* est l'URL permettant de se connecter à {{site.data.keyword.Bluemix_notm}}. Cette adresse URL varie selon les régions.
+	
+<table>
+    <caption>Liste des noeuds finaux permettant d'accéder à {{site.data.keyword.Bluemix_notm}}</caption>
+	<tr>
+	  <th>Région</th>
+	  <th>URL</th>
+	</tr>
+	<tr>
+	  <td>Allemagne</td>
+	  <td>api.eu-de.bluemix.net</td>
+	</tr>
+	<tr>
+	  <td>Sydney</td>
+	  <td>api.au-syd.bluemix.net</td>
+	</tr>
+	<tr>
+	  <td>Royaume-Uni</td>
+	  <td>api.eu-gb.bluemix.net</td>
+	</tr>
+	<tr>
+	  <td>Sud des Etats-Unis</td>
+	  <td>api.ng.bluemix.net</td>
+	</tr>
+</table>
+
+Par exemple, pour vous connecter à la région Sud des Etats-Unis, exécutez la commande suivante :
+	
+```
+bx login -a https://api.ng.bluemix.net
+```
+{: codeblock}
+
+Suivez les instructions. 
+
+Définissez ensuite l'organisation et l'espace. Exécutez la commande suivante :
+
+```
+bx target -o OrgName -s SpaceName
+```
+{: codeblock}
+
+où
+
+* OrgName est le nom de l'organisation.
+* SpaceName est le nom de l'espace.
+
+	
+## Comment installer l'interface de ligne de commande IBM Cloud ?
 {: #install_bmx_cli}
 
-Procédez comme suit pour installer l'interface de ligne de commande {{site.data.keyword.Bluemix_notm}} :
+Voir [Téléchargement et installation de l'interface de ligne de commande {{site.data.keyword.Bluemix_notm}}](/docs/cli/reference/bluemix_cli/download_cli.html#download_install).
 
-1. Téléchargez l'interface de ligne de commande.
-
-    Par exemple, pour installer le package d'interface de ligne de commande {{site.data.keyword.Bluemix_notm}} sur un système Ubuntu, téléchargez le [package d'interface de ligne de commande {{site.data.keyword.Bluemix_notm}} ![External link icon](../../../icons/launch-glyph.svg "External link icon")](http://clis.ng.bluemix.net/ui/home.html){: new_window}. 
-
-2. Exécutez la commande suivante pour extraire le package d'interface de ligne de commande {{site.data.keyword.Bluemix_notm}} :
-    
-    ```
-    tar -xvf Bluemix_CLI_0.5.4_amd64.tar.gz
-    ```
-    {: codeblock}
-    
-3. Accédez au répertoire *Bluemix_CLI* et exécutez la commande `./install_bluemix_cli` avec les droits root afin d'installer le plug-in CF. Vous pouvez exécuter la commande en tant qu'utilisateur root ou utiliser la commande sudo pour obtenir les droits root. Par exemple :
-    
-    ```
-    cd Bluemix_CLI
-    ```
-    {: codeblock}
-    
-    ```
-    sudo ./install_bluemix_cli
-    ```
-    {: codeblock}
-    
-4. Vérifiez l'installation du plug-in CF. Par exemple, vérifiez la version du plug-in CF. Exécutez la commande suivante :
-    
-    ```
-    cf -v
-    ```
-    {: codeblock}
-    
-    La sortie est similaire à :
-    
-    ```
-    cf version 6.25.0+787326d.2017-02-28
-    ```
-    {: screen}
-    
-5. Vérifiez l'installation de l'interface de ligne de commande {{site.data.keyword.Bluemix_notm}}. Par exemple, vérifiez la version du plug-in. Exécutez la commande suivante :
-    
-    ```
-    bx -version
-    ```
-    {: codeblock}
-    
-    La sortie est similaire à :
-    
-    ```
-    bx version 0.5.4+ae22935-2017-05-18T03:55:55+00:00
-    ```
-    {: screen}
-	
 ## Comment obtenir l'identificateur global unique d'un compte ?
 {: #account_guid}
 	
 Procédez comme suit pour obtenir l'identificateur global unique d'un compte :
 	
-1. Connectez-vous à une région, une organisation et un espace {{site.data.keyword.Bluemix_notm}}. Exécutez la commande :
+1. Connectez-vous à une région, une organisation et un espace dans {{site.data.keyword.Bluemix_notm}}. Exécutez la commande :
 
     ```
-    bx login -a [https://api.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>](https://api.{DomainName})
+	bx login -a Endpoint
+	```
+	{: codeblock}
+	
+	Où *Endpoint* est l'adresse URL de connexion à {{site.data.keyword.Bluemix_notm}}. Cette adresse URL varie selon les régions.
+	
+	<table>
+	    <caption>Liste des noeuds finaux permettant d'accéder à {{site.data.keyword.Bluemix_notm}}</caption>
+		<tr>
+		  <th>Région</th>
+		  <th>URL</th>
+		</tr>
+		<tr>
+		  <td>Sud des Etats-Unis</td>
+		  <td>api.ng.bluemix.net</td>
+		</tr>
+		<tr>
+		  <td>Royaume-Uni</td>
+		  <td>api.eu-gb.bluemix.net</td>
+		</tr>
+	</table>
+
+    Par exemple, pour vous connecter à la région Sud des Etats-Unis, exécutez la commande suivante :
+	
+	```
+    bx login -a https://api.ng.bluemix.net
     ```
     {: codeblock}
 
     Suivez les instructions. Entrez vos données d'identification {{site.data.keyword.Bluemix_notm}} et sélectionnez une organisation et un espace.
+	
+	Pour les **ID utilisateur fédéré**, exécutez la commande suivante et appliquez les instructions :
+	
+	```
+    bx login -a https://api.ng.bluemix.net --sso
+    ```
+    {: codeblock}
 	
 2. Exécutez la commande `bx iam accounts` pour obtenir l'identificateur global unique d'un compte.
 
@@ -122,39 +164,103 @@ Procédez comme suit pour obtenir l'identificateur global unique d'un compte :
 
 Procédez comme suit pour obtenir l'identificateur global unique d'une organisation :
 	
-1. Connectez-vous à une région, une organisation et un espace {{site.data.keyword.Bluemix_notm}}. Exécutez la commande :
+1. Connectez-vous à une région, une organisation et un espace dans {{site.data.keyword.Bluemix_notm}}. Exécutez la commande :
 
     ```
-    bx login -a [https://api.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>](https://api.{DomainName})
+	bx login -a Endpoint
+	```
+	{: codeblock}
+	
+	Où *Endpoint* est l'adresse URL de connexion à {{site.data.keyword.Bluemix_notm}}. Cette adresse URL varie selon les régions.
+	
+	<table>
+	    <caption>Liste des noeuds finaux permettant d'accéder à {{site.data.keyword.Bluemix_notm}}</caption>
+		<tr>
+		  <th>Région</th>
+		  <th>URL</th>
+		</tr>
+		<tr>
+		  <td>Sud des Etats-Unis</td>
+		  <td>api.ng.bluemix.net</td>
+		</tr>
+		<tr>
+		  <td>Royaume-Uni</td>
+		  <td>api.eu-gb.bluemix.net</td>
+		</tr>
+	</table>
+
+    Par exemple, pour vous connecter à la région Sud des Etats-Unis, exécutez la commande suivante :
+	
+	```
+    bx login -a https://api.ng.bluemix.net
     ```
     {: codeblock}
 
     Suivez les instructions. Entrez vos données d'identification {{site.data.keyword.Bluemix_notm}} et sélectionnez une organisation et un espace.
+	
+	Pour les ID utilisateur fédéré, exécutez la commande suivante et suivez les instructions :
+	
+	```
+    bx login -a https://api.ng.bluemix.net --sso
+    ```
+    {: codeblock}
 
-2. Exécutez la commande `bx iam org` pour obtenir l'identificateur global unique d'une organisation. 
+2. Exécutez la commande `bx iam org` pour obtenir l'identificateur global unique de l'organisation. 
 
     ```
     bx iam org NAME --guid
     ```
     {: codeblock}
 	
-    où NAME est le nom de l'organisation {{site.data.keyword.Bluemix_notm}}.
+    où NAME est le nom de l'organisation {{site.data.keyword.Bluemix_notm}}.        
 		
-## Comment obtenir l'identificateur global unique d'un espace ?
+## Comment obtenir l'identificateur global unique d'un espace
 {: #space_guid}
 	
 Procédez comme suit pour obtenir l'identificateur global unique d'un espace :
 	
-1. Connectez-vous à une région, une organisation et un espace {{site.data.keyword.Bluemix_notm}}. Exécutez la commande :
+1. Connectez-vous à une région, une organisation et un espace dans {{site.data.keyword.Bluemix_notm}}. Exécutez la commande :
 
     ```
-    bx login -a [https://api.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>](https://api.{DomainName})
+	bx login -a Endpoint
+	```
+	{: codeblock}
+	
+	Où *Endpoint* est l'adresse URL de connexion à {{site.data.keyword.Bluemix_notm}}. Cette adresse URL varie selon les régions.
+	
+	<table>
+	    <caption>Liste des noeuds finaux permettant d'accéder à {{site.data.keyword.Bluemix_notm}}</caption>
+		<tr>
+		  <th>Région</th>
+		  <th>URL</th>
+		</tr>
+		<tr>
+		  <td>Sud des Etats-Unis</td>
+		  <td>api.ng.bluemix.net</td>
+		</tr>
+		<tr>
+		  <td>Royaume-Uni</td>
+		  <td>api.eu-gb.bluemix.net</td>
+		</tr>
+	</table>
+
+    Par exemple, pour vous connecter à la région Sud des Etats-Unis, exécutez la commande suivante :
+	
+	```
+    bx login -a https://api.ng.bluemix.net
     ```
     {: codeblock}
 
     Suivez les instructions. Entrez vos données d'identification {{site.data.keyword.Bluemix_notm}} et sélectionnez une organisation et un espace.
 	
-2. Exécutez la commande `bx iam space` pour obtenir l'identificateur global unique d'un espace. 
+	Pour les ID utilisateur fédéré, exécutez la commande suivante et suivez les instructions :
+	
+	```
+    bx login -a https://api.ng.bluemix.net --sso
+    ```
+    {: codeblock}
+	
+2. Exécutez la commande `bx iam space` pour obtenir l'identificateur global unique de l'espace. 
 
     ```
     bx iam space NAME --guid

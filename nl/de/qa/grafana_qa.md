@@ -1,31 +1,63 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-06-19"
+lastupdated: "2018-02-09"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
-# Häufige Fragen und Antworten bei der Verwendung von Grafana
+
+# Häufig gestellte Fragen zur Verwendung von Grafana
 {: #grafana_qa}
 
 Hier sind die Antworten auf häufig gestellte Fragen zur Verwendung von Grafana mit dem {{site.data.keyword.monitoringshort}}-Service. 
 {:shortdesc}
 
-* [Ich bekomme den Fehler 404, wenn ich mich bei der Webbenutzerschnittstelle des Überwachungsservice anmelde.](/docs/services/cloud-monitoring/qa/grafana_qa.html#404)
+* [Ich kann Alerts nicht im Grafana-Dashboard sehen, die ich mithilfe der Alert-API definiert habe](/docs/services/cloud-monitoring/qa/grafana_qa.html#alerts1)
+* [Ich erhalte den Fehler BXNMSAL41E, wenn ich versuche, eine Änderung am Grafana-Dashboard zu speichern](/docs/services/cloud-monitoring/qa/grafana_qa.html#BXNMSAL41E)
+* [Ich erhalte den Fehler BXNMSAL36E, wenn ich versuche, eine Änderung zu speichern, nachdem ich einen Alert zum Grafana-Dashboard hinzugefügt habe](/docs/services/cloud-monitoring/qa/grafana_qa.html#BXNMSAL36E)
+* [Ich erhalte den Fehler 404, wenn ich mich bei der Webbenutzerschnittstelle des Überwachungsservice anmelde](/docs/services/cloud-monitoring/qa/grafana_qa.html#404)
 * [Ich habe gerade JSON-Daten für ein Grafana-Dashboard hochgeladen. Warum wird meine Bildlaufleiste nicht mehr angezeigt?](/docs/services/cloud-monitoring/qa/grafana_qa.html#2)
 
 
-## Ich bekomme den Fehler 404, wenn ich mich bei der Webbenutzerschnittstelle des Überwachungsservice mit dem UUA-Authentifizierungsmodell anmelde.
+## Ich kann Alerts nicht im Grafana-Dashboard sehen, die ich mithilfe der Alert-API definiert habe
+{: #alerts1}
+
+Alerts, die Sie mithilfe der Alert-API definieren, werden nicht auf der Registerkarte mit den Alerts in Grafana angezeigt. Um Alerts in Grafana sehen zu können, müssen Sie sie direkt in einem Grafana-Dashboard definieren.
+
+Weitere Informationen finden Sie unter [Alerts in Grafana konfigurieren](/docs/services/cloud-monitoring/alerts/config_alerts_grafana.html#config_alerts_grafana).
+
+## Ich erhalte den Fehler BXNMSAL41E, wenn ich versuche, eine Änderung am Grafana-Dashboard zu speichern
+{: #BXNMSAL41E}
+
+Sie können Benachrichtigungskanäle und Alerts in Grafana definieren. Wenn Sie einen Benachrichtigungskanal in Grafana löschen und Sie die Regel zum Entfernen dieser Benachrichtigung nicht aktualisiert haben, erhalten Sie den Fehler **BXNMSAL41E**, wenn Sie versuchen, das Grafana-Dashboard zu speichern.
+
+Um das Problem zu beheben, aktualisieren Sie die Regel mithilfe der Alert-API und versuchen Sie, das Dashboard erneut zu speichern. Wenn Sie die Regel aktualisieren, entfernen Sie den Benachrichtigungskanal, der gelöscht wurde.
+
+Weitere Informationen finden Sie unter [Alert-API](https://console.bluemix.net/apidocs/940-ibm-cloud-monitoring-alerts-api?&language=node#introduction).
+
+## Ich erhalte den Fehler BXNMSAL36E, wenn ich versuche, eine Änderung zu speichern, nachdem ich einen Alert zum Grafana-Dashboard hinzugefügt habe
+{: #BXNMSAL36E}
+
+Wenn Sie das Kontingent für die Domäne erschöpfen, für die Sie Metriken im {{site.data.keyword.monitoringshort}}-Service überwachen, erhalten Sie den folgenden Fehler: **BXNMSAL36E**
+
+Aktualisieren Sie Ihren Plan und versuchen Sie es erneut.
+
+Weitere Informationen zur Vorgehensweise beim Aktualisieren des Plans finden Sie unter [Plan ändern](/docs/services/cloud-monitoring/plan/change_plan.html#change_plan).
+
+
+## Ich erhalte den Fehler 404, wenn ich mich bei der Webbenutzerschnittstelle des Überwachungsservice mit dem UUA-Authentifizierungsmodell anmelde
 {: #404}
 
 Wenn Sie den Fehler 404 erhalten, nachdem Sie versucht haben, sich bei der Webbenutzerschnittstelle (Grafana) des {{site.data.keyword.monitoringshort}}-Service anzumelden, überprüfen Sie, dass der Bereich vorhanden ist und dass Sie darauf zugreifen dürfen.

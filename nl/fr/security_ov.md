@@ -1,47 +1,47 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-07-12"
+lastupdated: "2018-02-01"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
 # Sécurité
 {: #security_ov}
 
-Vous pouvez utiliser d'autres méthodes d'authentification pour envoyer des métriques au service {{site.data.keyword.monitoringshort}}. Les droits d'accès, de modification et de suppression des métriques sont contrôlés à l'aide de rôles.
+Pour contrôler les actions du service {{site.data.keyword.monitoringshort}} qu'un utilisateur est autorisé à effectuer, vous pouvez affecter un ou plusieurs rôles à l'utilisateur. Pour authentifier un utilisateur pour qu'il utilise des métriques et des alertes, vous pouvez utiliser un jeton UAA, un jeton IAM ou une clé d'API. 
 {:shortdesc}
 
    
 ## Modèles d'authentification
 {: #auth}
 
-Une jeton d'authentification ou une clé d'API est nécessaire pour accéder aux métriques qui sont stockées dans le service {{site.data.keyword.monitoringshort}} pour un espace {{site.data.keyword.Bluemix_notm}}.  
+Une jeton d'authentification ou une clé d'API est nécessaire pour utiliser des métriques stockées dans le service {{site.data.keyword.monitoringshort}} pour un espace.  
 
-Le service {{site.data.keyword.monitoringshort}} prend en charge les modèles d'authentification suivants :
+Pour obtenir un jeton de sécurité, voir :
 
-* [L'authentification {{site.data.keyword.Bluemix_notm}} UAA](/docs/services/cloud-monitoring/security/auth_uaa.html#auth_uaa)
-* [L'authentification {{site.data.keyword.Bluemix_notm}} IAM](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam)
+* [Obtention d'un jeton UAA](/docs/services/cloud-monitoring/security/auth_uaa.html#auth_uaa)
+* [Obtention d'un jeton IAM](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam)
+
+Pour obtenir une clé d'API, voir [Génération d'une clé d'API](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key). Si la clé d'API est compromise, vous pouvez la révoquer en la supprimant. Ensuite, vous pouvez en créer une nouvelle. Pour plus d'informations, voir [Révocation d'une clé d'API à l'aide de l'interface utilisateur {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_api_key.html#revoke_ui). 
 
 Un jeton UAA et un jeton IAM arrivent à expiration au bout d'un certain temps. La clé d'API n'arrive jamais à expiration. 
 
-Si la clé d'API est compromise, vous pouvez la révoquer en la supprimant. Ensuite, vous pouvez en créer une nouvelle. Pour plus d'informations, voir [Révocation d'une clé d'API à l'aide de l'interface utilisateur Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#revoke_ui). 
-
-Le modèle d'authentification IAM offre des fonctions d'interface utilisateur, d'interface de ligne de commande ou de gestion d'API. Vous pouvez utiliser l'interface de ligne de commande pour gérer des jetons UAA. 
-
-Le tableau suivant répertorie les modèles d'authentification pris en charge pour chaque type de domaine :
+Le tableau suivant répertorie les modèles de sécurité pris en charge pour chaque type de domaine :
 
 <table>
-  <caption>Tableau 1. Modèles d'authentification pris en charge pour chaque domaine</caption>
+  <caption>Tableau 1. Modèles de sécurité pris en charge pour chaque domaine</caption>
   <tr>
     <th></th>
 	<th align="right">Compte</th>
@@ -66,13 +66,13 @@ Le service {{site.data.keyword.monitoringshort}} utilise la fonction de contrôl
 
 
 
-## Rôles Bluemix UAA
+## Rôles Cloud Foundry
 {: #bmx_roles}
 
-Le tableau suivant répertorie les privilèges de chaque rôle {{site.data.keyword.Bluemix_notm}} pouvant être utilisé avec le service {{site.data.keyword.monitoringshort}} : 
+Le tableau suivant répertorie les privilèges de chaque rôle Cloud Foundry pouvant être utilisé avec le service {{site.data.keyword.monitoringshort}} :
 
 <table>
-  <caption>Tableau 2. Rôles et privilèges {{site.data.keyword.Bluemix_notm}} pouvant être utilisés avec le service {{site.data.keyword.monitoringshort}}. </caption>
+  <caption>Tableau 2. Rôle et privilèges Cloud Foundry permettant d'utiliser le service {{site.data.keyword.monitoringshort}}</caption>
   <tr>
     <th>Rôle</th>
 	<th>Domaine</th>
@@ -96,45 +96,60 @@ Le tableau suivant répertorie les privilèges de chaque rôle {{site.data.keywo
 </table>
 
 
-## Rôles Bluemix IAM
+## Rôles IAM
 {: #iam_roles}
 
-Le tableau ci-dessous répertorie la relation entre l'API, une action de service et un rôle IAM qui est utilisée par le service {{site.data.keyword.monitoringshort}}.
+Le tableau suivant répertorie les actions du service {{site.data.keyword.monitoringshort}} lorsque vous utilisez des métriques et les rôles IAM qui accordent à un utilisateur des droits pour exécuter ces tâches :
 
 <table>
-  <caption>Tableau 3. Relation entre l'API, une action de service et un rôle IAM </caption>
+  <caption>Tableau 3. Utilisation des métriques. </caption>
   <tr>
-    <th>API</th>
 	<th>Action</th>
 	<th>Rôle IAM</th>
-	<th>Description</th>
   </tr>
   <tr>
-    <td>POST /v1/metrics</td>
-    <td>domain.write</td>
+    <td>Envoyer des métriques au domaine</td>
 	<td>Administrateur, Editeur, Opérateur</td>
-	<td>Envoyer des métriques au domaine</td>
   </tr>
   <tr>
-    <td>GET /v1/metrics</td>
-    <td>domain.render</td>
+    <td>Extraire/interroger des métriques</td>
 	<td>Administrateur, Editeur, Afficheur</td>
-	<td>Extraire/interroger des métriques</td>
   </tr>
   <tr>
-    <td>GET /v1/metrics/list</td>
-    <td>domain.find</td>
+    <td>Rechercher des métriques dans le domaine</td>
 	<td>Administrateur, Editeur</td>
-	<td>Rechercher des métriques dans le domaine</td>
   </tr>
 </table>
 
-## Obtention du jeton de sécurité ou de la clé d'API
-{: #get_token}
+Le tableau suivant répertorie les actions du service {{site.data.keyword.monitoringshort}} lorsque vous utilisez des alertes et les rôles IAM qui accordent à un utilisateur des droits pour exécuter ces tâches :
 
-Utilisez le modèle {{site.data.keyword.Bluemix_notm}} UAA afin d'obtenir un jeton d'authentification que vous pouvez utiliser pour accéder aux données stockées dans le service {{site.data.keyword.monitoringshort}} pour un espace dans {{site.data.keyword.Bluemix_notm}}. Vous pouvez vous procurer le jeton d'authentification via l'interface de ligne de commande {{site.data.keyword.Bluemix_notm}} ou l'API REST `Login`. Pour plus d'informations, voir [Obtention du jeton UAA via l'interface de ligne de commande {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_uaa.html#auth_cli) et  [Obtention du jeton UAA via l'API](/docs/services/cloud-monitoring/security/auth_uaa.html#auth_api).
-
-Utilisez le modèle {{site.data.keyword.Bluemix_notm}} IAM afin d'obtenir un jeton d'authentification que vous pouvez utiliser pour accéder aux données qui sont stockées dans le service {{site.data.keyword.monitoringshort}} ou afin d'obtenir une clé d'API. Le jeton possède un délai d'expiration. La clé d'API n'arrive jamais à expiration. Pour plus d'informations, voir [Obtention du jeton IAM via l'interface de ligne de commande {{site.data.keyword.Bluemix_notm}} ](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli), [Génération d'une clé d'API IAM via l'interface de ligne de commande {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli) ou [Génération d'une clé d'API IAM via l'interface utilisateur {{site.data.keyword.Bluemix_notm}} ](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_ui).
+<table>
+  <caption>Tableau 4. Utilisation des alertes. </caption>
+  <tr>
+	<th>Action</th>
+	<th>Rôle IAM</th>
+  </tr>
+  <tr>
+    <td>Créer, éditer et supprimer des règles d'alerte</td>
+	<td>Administrateur, Editeur</td>
+  </tr>
+  <tr>
+    <td>Afficher des alertes</td>
+	<td>Administrateur, Editeur, Afficheur</td>
+  </tr>
+  <tr>
+    <td>Créer, éditer et supprimer des notifications d'alerte</td>
+	<td>Administrateur, Editeur</td>
+  </tr>
+  <tr>
+    <td>Afficher des notifications</td>
+	<td>Administrateur, Editeur, Afficheur</td>
+  </tr>
+  <tr>
+    <td>Afficher des enregistrements d'historique d'alerte déclenchée</td>
+	<td>Administrateur, Editeur, Afficheur</td>
+  </tr>
+</table>
 
 
 

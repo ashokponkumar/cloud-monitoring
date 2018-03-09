@@ -1,30 +1,33 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-07-14"
+lastupdated: "2018-02-01"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
-# 通过 Bluemix 控制台分析容器度量值
+
+# 通过 IBM Cloud 控制台分析容器度量值（不推荐）
 {: #analyzing_metrics_bmx_ui}
 
-在 {{site.data.keyword.Bluemix}} 中，可以通过可用于在 {{site.data.keyword.Bluemix_notm}} 管理的云基础架构中部署的 Docker 容器的*监视*选项卡来查看和分析度量值。
+在 {{site.data.keyword.Bluemix}} 中，对于由 {{site.data.keyword.Bluemix_notm}} 管理的基础架构中部署的 Docker 容器，可以通过所提供的*监视*选项卡来查看和分析其度量值。
 {:shortdesc}
 
 
-##  导航至 Bluemix 中受管的 Docker 容器的度量值
+##  导航至在 IBM Cloud 中管理的 Docker 容器的度量值（不推荐）
 {: #launch_metrics_tab_bmx_ui_containers}
 
-要查看在 {{site.data.keyword.Bluemix_notm}} 管理的云基础架构中部署的 Docker 容器的度量值，请完成以下步骤：
+要查看在 {{site.data.keyword.Bluemix_notm}} 管理的基础架构中部署的 Docker 容器的度量值，请完成以下步骤：
 
 1. 在“应用程序”仪表板中，单击单个容器或容器组。 
     

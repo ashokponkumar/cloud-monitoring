@@ -1,17 +1,21 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-05-26"
+lastupdated: "2018-02-01"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
+{:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
+
 
 # Erstellen eines Grafana-Dashboards
 {:#create_grafana_dashboard}
@@ -114,7 +118,7 @@ Führen Sie die folgenden Schritte aus, um eine Visualisierung der Speicherbeleg
     Wenn Sie beispielsweise mit Containern arbeiten, die in einer {{site.data.keyword.Bluemix_notm}}-verwalteten Cloudinfrastruktur implementiert sind, enthält das Abfrageformat die Bereichs-ID, eine Containergruppen-ID und eine einzelne Containerinstanz-ID in folgendem Format:
         
     1. Klicken Sie in der Zeile A auf **Metrik auswählen**. Wählen Sie dann Ihre Bereichs-ID aus.
-    2. Klicken Sie auf **Metrix auswählen** und wählen Sie den Stern (\*) aus.
+    2. Klicken Sie auf **Metrik auswählen** und wählen Sie den Stern (\*) aus.
     
     Wenn Sie (\*) auswählen, enthalten die Daten Metriken von jeder Containergruppe im Bereich. Optional können Sie dieses Format mit einem regulären Ausdruck verändern, um nur Metriken von bestimmen Containern einzuschließen. Wenn Sie nur die Metriken einzelner Container anzeigen und Containergruppen ausschließen möchten, klicken Sie auf **Metrik auswählen** und wählen **0000** aus.
     

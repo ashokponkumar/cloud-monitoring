@@ -1,32 +1,38 @@
 ---
 
 copyright:
-  years: 2017
-lastupdated: "2017-07-10"
+  years: 2017, 2018
+
+lastupdated: "2018-02-01"
 
 ---
 
 {:new_window: target="_blank"}
 {:shortdesc: .shortdesc}
 {:screen: .screen}
-{:codeblock: .codeblock}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
 # Changement de plan
 {: #change_plan}
 
-Votre pouvez changer de plan de service {{site.data.keyword.monitoringshort}} dans {{site.data.keyword.Bluemix}} dans le tableau de bord du service ou en exécutant la commande `cf update-service`. Vous pouvez mettre à niveau ou rétrograder votre plan à tout moment.
+Votre pouvez changer de plan de service {{site.data.keyword.monitoringshort}} via le tableau de bord {{site.data.keyword.monitoringlong_notm}}  ou en exécutant la commande `cf update-service`. Vous pouvez mettre à niveau ou rétrograder votre plan à tout moment.
 {:shortdesc}
 
 ## Changement de plan de service dans l'interface utilisateur
 {: #change_plan_ui}
 
-Pour changer de plan de service dans {{site.data.keyword.Bluemix_notm}} depuis le tableau de bord du service, procédez comme suit :
+Pour changer de plan de service dans le tableau de bord {{site.data.keyword.monitoringlong_notm}}, procédez comme suit : 
 
-1. Connectez-vous à {{site.data.keyword.Bluemix_notm}}, puis cliquez sur le service {{site.data.keyword.monitoringshort}} dans le tableau de bord {{site.data.keyword.Bluemix_notm}}. 
+1. Connectez-vous à {{site.data.keyword.Bluemix_notm}}, puis cliquez sur le service {{site.data.keyword.monitoringshort}} dans le tableau de bord.  
+
+    Le tableau de bord du service {{site.data.keyword.monitoringshort}} s'ouvre. 
     
-2. Sélectionnez l'onglet **Plan** dans l'interface utilisateur {{site.data.keyword.Bluemix_notm}}.
+2. Sélectionnez l'onglet **Plan**.
 
     Les informations relatives au plan en cours sont affichées.
 	
@@ -41,38 +47,35 @@ Pour changer de plan de service dans {{site.data.keyword.Bluemix_notm}} depuis l
 
 Pour changer de plan de service dans {{site.data.keyword.Bluemix_notm}} via l'interface de ligne de commande, procédez comme suit :
 
-1. 1. Connectez-vous à une région, une organisation et un espace {{site.data.keyword.Bluemix_notm}}. Exécutez la commande :
+1. Connectez-vous à une région, une organisation et un espace dans {{site.data.keyword.Bluemix_notm}}. 
 
-    ```
-    cf login -a [https://api.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>](https://api.{DomainName})
-    ```
-    {: codeblock}
+    Pour plus d'informations, voir [Comment se connecter à {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
 	
-2. Exécutez la commande `cf services` pour identifier le plan en cours et pour obtenir le nom du service {{site.data.keyword.loganalysisshort}} depuis la liste des services disponible dans l'espace.  
+2. Exécutez la commande `bx cf services` pour identifier le plan en cours et pour obtenir le nom du service {{site.data.keyword.loganalysisshort}} depuis la liste des services disponible dans l'espace.  
 
     La valeur de la zone **nom** est celle que vous devez utiliser pour changer de plan. 
 
     Par exemple,
 	
 	```
-	$ cf services
-	Obtention des services dans l'organisation MyOrg / l'espace dev en tant que xxx@yyy.com...
+	$ bx cf services
+	Getting services in org MyOrg / space dev as xxx@yyy.com...
 	OK
-	nom             service      plan   applications liées dernière opération
-	Monitoring-0c   Monitoring   premium                   create succeeded
+	name            service      plan   bound apps   last operation
+	Monitoring-0c   Monitoring   premium             create succeeded
     ```
 	{: screen}
     
-3. Mettez à jour votre plan ou rétrogradez-le. Exécutez la commande `cf update-service`.
+3. Mettez à jour votre plan ou rétrogradez-le. Exécutez la commande `bx cf update-service`.
     
 	```
-	cf update-service service_name [-p new_plan]
+	bx cf update-service service_name [-p new_plan]
 	```
 	{: codeblock}
 	
 	où 
 	
-	* *service_name* est le nom de votre service. Vous pouvez exécuter la commande `cf services` pour obtenir cette valeur.
+	* *service_name* est le nom de votre service. Vous pouvez exécuter la commande `bx cf services` pour obtenir la valeur.
 	* *new_plan* est le nom du plan.
 	
 	Le tableau suivant répertorie les différents plans et les valeurs prises en charge :
@@ -99,17 +102,17 @@ Pour changer de plan de service dans {{site.data.keyword.Bluemix_notm}} via l'in
 	Par exemple, pour rétrograder votre plan et passer au plan *Lite*, exécutez la commande suivante :
 	
 	```
-	cf update-service "Monitoring-0c" -p lite
-    Mise à jour de l'instance de service Monitoring-0c en tant que xxx@yyy.com...
+	bx cf update-service "Monitoring-0c" -p lite
+    Updating service instance Monitoring-0c as xxx@yyy.com...
     OK
 	```
 	{: screen}
 
-4. Vérifiez que le plan a été changé. Exécutez la commande `cf services`.
+4. Vérifiez que le plan a été changé. Exécutez la commande `bx cf services`. 
 
     ```
-	cf services
-    Obtention des services dans l'organisation MyOrg / l'espace dev en tant que xxx@yyy.com...
+	bx cf services
+    Getting services in org MyOrg / space dev as xxx@yyy.com...
     OK
 
     nom               service       plan   applications liées  dernière opération

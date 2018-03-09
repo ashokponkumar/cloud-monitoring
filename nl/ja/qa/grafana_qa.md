@@ -1,28 +1,60 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-06-19"
+lastupdated: "2018-02-09"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
-# Grafana を使用する際のよくある質問と回答
+
+# Grafana の使用に関する FAQ
 {: #grafana_qa}
 
-{{site.data.keyword.monitoringshort}} サービスでの Grafana の使用に関する一般的な質問の回答を以下に示します。
+{{site.data.keyword.monitoringshort}} サービスでの Grafana の使用に関する一般的な質問の回答を以下に示します。 
 {:shortdesc}
 
+* [アラート API を使用して定義したアラートが Grafana ダッシュボードに表示されない](/docs/services/cloud-monitoring/qa/grafana_qa.html#alerts1)
+* [Grafana ダッシュボードに加えた変更を保存しようとすると BXNMSAL41E を受け取る](/docs/services/cloud-monitoring/qa/grafana_qa.html#BXNMSAL41E)
+* [Grafana ダッシュボードにアラートを追加した後で変更を保存しようとすると BXNMSAL36E を受け取る](/docs/services/cloud-monitoring/qa/grafana_qa.html#BXNMSAL36E)
 * [Monitoring サービスの Web UI にログインする際に 404 を受け取る](/docs/services/cloud-monitoring/qa/grafana_qa.html#404)
 * [Grafana ダッシュボード用の JSON データをアップロードしたところ、スクロール・バーが消えた](/docs/services/cloud-monitoring/qa/grafana_qa.html#2)
+
+
+## アラート API を使用して定義したアラートが Grafana ダッシュボードに表示されない
+{: #alerts1}
+
+アラート API を使用して定義したアラートは、Grafana のアラート・タブに表示されません。Grafana でアラートを表示するには、Grafana ダッシュボードで直接それらを定義する必要があります。
+
+詳しくは、[Grafana でのアラートの構成](/docs/services/cloud-monitoring/alerts/config_alerts_grafana.html#config_alerts_grafana)を参照してください。
+
+## Grafana ダッシュボードに加えた変更を保存しようとすると BXNMSAL41E を受け取る
+{: #BXNMSAL41E}
+
+通知チャネルおよびアラートを Grafana で定義できます。Grafana で通知チャネルを削除したが、ルールを更新してその通知チャネルを除去していない場合、Grafana ダッシュボードを保存しようとすると **BXNMSAL41E** エラーを受け取ります。
+
+この問題を修正するには、アラート API を使用してルールを更新し、その後でダッシュボードの保存を再試行してください。 ルールを更新する際、削除された通知チャネルを除去してください。
+
+詳しくは、[アラート API](https://console.bluemix.net/apidocs/940-ibm-cloud-monitoring-alerts-api?&language=node#introduction) を参照してください。
+
+## Grafana ダッシュボードにアラートを追加した後で変更を保存しようとすると BXNMSAL36E を受け取る
+{: #BXNMSAL36E}
+
+{{site.data.keyword.monitoringshort}} サービスでメトリックをモニターしているドメインの割り当て量に達した場合、**BXNMSAL36E** エラーを受け取ります。
+
+プランをアップグレードし、再試行してください。
+
+プランのアップグレード方法について詳しくは、[プランの変更](/docs/services/cloud-monitoring/plan/change_plan.html#change_plan)を参照してください。
 
 
 ## UUA 認証モデルを使用して Monitoring サービスの Web UI にログインする際に 404 を受け取る
@@ -34,14 +66,14 @@ lastupdated: "2017-06-19"
 
 ログインしようとしているアカウント、組織、およびスペースへのアクセス権を持っているかどうか確認するには、{{site.data.keyword.Bluemix_notm}} コンソールにログインし、スペースに切り替えます。 
 
-また、コマンド・ラインを使用して、そのスペースへのアクセス権があるかどうかを確認することもできます。以下のコマンドを実行して、{{site.data.keyword.Bluemix_notm}} 地域、組織、およびスペースにログインします。
+また、コマンド・ラインを使用して、そのスペースへのアクセス権があるかどうかを確認することもできます。 以下のコマンドを実行して、{{site.data.keyword.Bluemix_notm}} で、地域、組織、およびスペースにログインします。
 
 ```
-    bx login -a https://api.ng.bluemix.net
-    ```
+bx login -a https://api.ng.bluemix.net
+```
 {: codeblock}
 
-指示に従います。{{site.data.keyword.Bluemix_notm}} の資格情報を入力し、組織とスペースを選択します。
+指示に従います。 {{site.data.keyword.Bluemix_notm}} の資格情報を入力し、組織とスペースを選択します。
 
 
 ## Grafana ダッシュボード用の JSON データをアップロードしたところ、スクロール・バーが消えた

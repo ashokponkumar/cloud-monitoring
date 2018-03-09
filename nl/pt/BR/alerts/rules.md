@@ -1,38 +1,46 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-07-18"
+lastupdated: "2018-02-01"
 
 ---
 
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
-# Trabalhando com regras usando a API de Alertas
+# Regras do CRUD
 {: #rules}
 
-Use a API de Alertas para criar, excluir e atualizar uma regra, para mostrar os detalhes para uma regra e para listar as regras que são definidas em seu espaço do {{site.data.keyword.Bluemix_notm}}.
+Use a API Alerts para criar, excluir ou atualizar uma regra, para mostrar os detalhes de uma regra
+e para listar as regras que são definidas em um espaço.
 {:shortdesc}
 
 
 ## Criando uma regra
 {: #create}
 
-Para criar uma regra, conclua as etapas a seguir:
+Para configurar uma regra no serviço {{site.data.keyword.monitoringshort}}, crie um arquivo de regras que inclua os detalhes da regra e registre a regra com o serviço {{site.data.keyword.monitoringshort}}.
+
+Conclua as etapas
+a seguir:
 
 1. Crie um arquivo de regras que contenha JSON válido. Salve o arquivo. 
 
-    Por exemplo, para salvar o arquivo, use um prefixo como *s-* para as regras que você define para as consultas em execução em um espaço do {{site.data.keyword.Bluemix_notm}}.
+    Por exemplo, para salvar o arquivo, use um prefixo como *s-* para regras que você
+define para as consultas em execução em um espaço.
 	
 	**Dicas:** 
 	
-	* Defina regras diferentes para uma consulta a fim de alertar sobre erros ou avisos usando um método de notificação diferente. É possível configurar somente um método de notificação por regra. 
+	* Defina regras diferentes para uma consulta a fim de alertar sobre erros ou avisos usando um método de notificação diferente. 
 	* Crie seu arquivo de regras no diretório a seguir: *~/cloud-monitoring/rules/* para agrupar os recursos do serviço {{site.data.keyword.monitoringshort_notm}}. 
 
     Insira as informações a seguir no arquivo de regras:
@@ -50,7 +58,7 @@ Para criar uma regra, conclua as etapas a seguir:
 	* *dashboard_url*: define uma URL que mostra um painel com a consulta no Grafana.
 	* *notifications*: o método de notificação em caso de alerta descrito com essa regra é acionado.
 	
-	Por exemplo, 
+	Por exemplo, o arquivo de regras myrulefile.json é semelhante ao seguinte:
 	
 	```
 	{
@@ -73,57 +81,59 @@ Para criar uma regra, conclua as etapas a seguir:
     ```
 	{: screen}
 	
-2. Efetue login em uma região, uma organização e um espaço do {{site.data.keyword.Bluemix_notm}}. Execute o comando:
-
-    Por exemplo, para efetuar login na região sul dos EUA, execute o comando a seguir:
+	Em seguida, exporte a variável *RULE_FILE*:
 	
 	```
-    bx login -a https://api.ng.bluemix.net
+	export RULE_FILE="myrulefile.json"
+	```
+	{: screen}
+	
+2. Efetue login em uma região, uma organização e um espaço no {{site.data.keyword.Bluemix_notm}}.
+
+    Para obter mais informações, veja [Como efetuar login no {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+3. Obtenha o token de segurança. É possível usar um token UAA, um token IAM ou uma chave API. Escolha um dos métodos a seguir para obter o token de segurança:
+	
+	* Para obter um token do UAA, consulte [Obtendo o token do UAA usando a CLI do {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli.
+	
+	* Para obter um token do IAM, consulte [Obtendo o token do IAM usando a CLI do {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* Para obter uma chave API, consulte [Recebendo uma chave API](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
+	Por exemplo, para usar o token IAM, execute o comando a seguir:
+    
+    ```
+    bx iam oauth-tokens
     ```
     {: codeblock}
-
-    Siga as instruções. Insira suas credenciais do {{site.data.keyword.Bluemix_notm}}, selecione uma organização e um espaço.
-
-3. Obtenha o token de autenticação ou a chave API.
-
-    * Para a autenticação do IAM, veja [Obtendo o token do IAM usando a CLI do Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) ou [Gerando uma chave API do IAM usando a CLI do Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
 	
-	* Para a autenticação do UAA, veja [Obtendo o token do UAA usando a CLI do Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) ou [Obtendo o token do UAA usando a API de REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
-	Por exemplo, para usar o token IAM, execute o comando a seguir:
-
+    O resultado desse comando é o seguinte:
+	
     ```
-	bx iam oauth-tokens
-	```
-	{: codeblock}
-	
-	O resultado desse comando é o seguinte:
-	
-	```
-	IAM token:  Bearer djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ
+    IAM token:  Bearer djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ
     UAA token:  Bearer eyJhbGciOiJIUz..Ky6vagp3k_QcIcKJ-td83qXhO5Uze43KcplG6PzcGs8
-	```
-	{: screen}
+    ```
+    {: screen}
 	
-	Em seguida, exporte a *Token* variável:
+    Em seguida, exporte a variável *Token*:
 	
-	```
-	export Token="djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ"
-	```
-	{: screen}
+    ```
+    export Token="djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ"
+    ```
+    {: screen}
 	
-	**Nota:** O token exclui *Bearer*.
+    **Nota:** o token exclui *Bearer*.
 	
-4. Obtenha o GUID de espaço. O GUID deve ser prefixado com *s-* para identificar um espaço.
+4. Obtenha o GUID do espaço. O GUID deve ser prefixado com *s-* para identificar um espaço.
 
-    Execute o comando a seguir:
+    Execute o seguinte comando:
 	
 	```
 	bx iam space SpaceName --guid
 	```
 	{: codeblock}
 	
-	Em que *SpaceName* é o nome do espaço em que você definirá uma notificação.
+	Em que *SpaceName* é o nome do espaço em que você irá definir uma notificação.
 	
 	Por exemplo, para obter o GUID de um espaço com o nome *dev*, execute o comando a seguir:
 	
@@ -139,23 +149,23 @@ Para criar uma regra, conclua as etapas a seguir:
 	```
 	{: screen}
 	
-	Em seguida, exporte a *Space* variável:
+	Em seguida, exporte a variável *Space*:
 	
 	```
 	export Space="s-667fadfc-jhtg-1234-9f0e-cf4123451095"
 	```
 	{: screen}
 	
-5. Execute o comando cURL a seguir para criar uma regra:
+5. Execute o comando cURL a seguir para registrar a regra no serviço do {{site.data.keyword.monitoringshort}}:
 
     ```
-	curl -XPOST -d @Rule_File --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rule
+	curl -XPOST -d @$RULE_FILE --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/rule
 	```
 	{: codeblock}
 	
 	Em que
 	
-	* Rule_File é o arquivo JSON que define sua regra de alerta.
+	* RULE_FILE é o arquivo JSON que define sua regra de alerta.
 	
 	* O *X-Auth-User-Token* é um parâmetro que transmite o token do UAA, o token do IAM ou a chave API do {{site.data.keyword.Bluemix_notm}}.
 	
@@ -169,12 +179,14 @@ Para criar uma regra, conclua as etapas a seguir:
 	
 	* Token é o token de autenticação UAA ou IAM ou a chave API.
 	
-	* Espaço é o GUID do espaço. Ele será necessário apenas quando você usar um token UAA.
+	* Espaço é o GUID do espaço. 
+	
+	* METRICS_ENDPOINT representa o ponto de entrada para o serviço. Cada região possui uma URL diferente. Para obter a lista de terminais por região, veja [Terminais](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
     Por exemplo, 	
 	
 	```
-	curl -XPOST -d @s-rule-1.json --header "X-Auth-User-Token:iam ${Token}" https://metrics.ng.bluemix.net/v1/alert/rule
+	curl -XPOST -d @$RULE_FILE --header "X-Auth-User-Token:iam ${Token}" https://metrics.ng.bluemix.net/v1/alert/rule
 	```
 	{: screen}
 
@@ -183,23 +195,18 @@ Para criar uma regra, conclua as etapas a seguir:
 
 Para excluir uma regra, conclua as etapas a seguir:
 
-1. Efetue login em uma região, uma organização e um espaço do {{site.data.keyword.Bluemix_notm}}. Execute o comando:
+1. Efetue login em uma região, uma organização e um espaço no {{site.data.keyword.Bluemix_notm}}.
 
-    Por exemplo, para efetuar login na região sul dos EUA, execute o comando a seguir:
+    Para obter mais informações, consulte [Como efetuar login no {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+2. Obtenha o token de segurança. É possível usar um token UAA, um token IAM ou uma chave API. Escolha um dos métodos a seguir para obter o token de segurança:
 	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
+	* Para obter um token do UAA, consulte [Obtendo o token do UAA usando a CLI do {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
 
-    Siga as instruções. Insira suas credenciais do {{site.data.keyword.Bluemix_notm}}, selecione uma organização e um espaço.
+	* Para obter um token do IAM, consulte [Obtendo o token do IAM usando a CLI do {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
 
-2. Obtenha o token de autenticação ou a chave API.
-
-    * Para a autenticação do IAM, veja [Obtendo o token do IAM usando a CLI do Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) ou [Gerando uma chave API do IAM usando a CLI do Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	* Para obter uma chave API, veja [obtendo uma chave API](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
 	
-	* Para a autenticação do UAA, veja [Obtendo o token do UAA usando a CLI do Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) ou [Obtendo o token do UAA usando a API de REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
 	Por exemplo, para usar o token IAM, execute o comando a seguir:
 
     ```
@@ -255,18 +262,18 @@ Para excluir uma regra, conclua as etapas a seguir:
 	export Space="s-667fadfc-jhtg-1234-9f0e-cf4123451095"
 	```
 	{: screen}
-	
+		
 4. Execute o comando cURL a seguir para excluir uma regra:
 
     ```
-	curl -XDELETE --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rule/Rule_Name
+	curl -XDELETE --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/rule/Rule_Name
 	```
 	{: codeblock}
 	
 	Em que
 	
-    * O *X-Auth-User-Token* é um parâmetro que transmite o token do UAA, o token do IAM ou a chave API do {{site.data.keyword.Bluemix_notm}}.
-	
+    * O *X-Auth-User-Token * é um parâmetro que transmite o token UAA, o token do IAM ou a chave API.
+
 	* *Auth_Type* é o prefixo que define o tipo de token ou a chave API. A lista a seguir descreve os valores válidos: *apikey*, *iam* ou *uaa*, em que
 
         * *apikey* identifica que o token é uma chave API.
@@ -277,9 +284,11 @@ Para excluir uma regra, conclua as etapas a seguir:
 	
 	* Token é o token de autenticação UAA ou IAM ou a chave API.
 	
-	* Espaço é o GUID do espaço. Ele será necessário apenas quando você usar um token UAA.
+	* Espaço é o GUID do espaço. 
 	
 	* Rule_Name é o nome da regra conforme especificado no campo *name*.
+	
+	* METRICS_ENDPOINT representa o ponto de entrada para o serviço. Cada região possui uma URL diferente. Para obter a lista de terminais por região, veja [Terminais](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
     
 	
@@ -288,23 +297,18 @@ Para excluir uma regra, conclua as etapas a seguir:
 
 Para listar todas as regras, conclua as etapas a seguir:
 
-1. Efetue login em uma região, uma organização e um espaço do {{site.data.keyword.Bluemix_notm}}. Execute o comando:
+1. Efetue login em uma região, uma organização e um espaço no {{site.data.keyword.Bluemix_notm}}. 
 
-    Por exemplo, para efetuar login na região sul dos EUA, execute o comando a seguir:
+    Para obter mais informações, consulte [Como efetuar login no {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+2. Obtenha o token de segurança. É possível usar um token UAA, um token IAM ou uma chave API. Escolha um dos métodos a seguir para obter o token de segurança:
 	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
+	* Para obter um token do UAA, consulte [Obtendo o token do UAA usando a CLI do {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
 
-    Siga as instruções. Insira suas credenciais do {{site.data.keyword.Bluemix_notm}}, selecione uma organização e um espaço.
+	* Para obter um token do IAM, consulte [Obtendo o token do IAM usando a CLI do {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
 
-2. Obtenha o token de autenticação ou a chave API.
-
-    * Para a autenticação do IAM, veja [Obtendo o token do IAM usando a CLI do Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) ou [Gerando uma chave API do IAM usando a CLI do Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	* Para obter uma chave API, veja [obtendo uma chave API](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
 	
-	* Para a autenticação do UAA, veja [Obtendo o token do UAA usando a CLI do Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) ou [Obtendo o token do UAA usando a API de REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
 	Por exemplo, para usar o token IAM, execute o comando a seguir:
 
     ```
@@ -364,14 +368,14 @@ Para listar todas as regras, conclua as etapas a seguir:
 4. Execute o comando cURL a seguir para listar todas as regras em um espaço:
 
     ```
-	curl -XGET --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rules
+	curl -XGET --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/rules
 	```
 	{: codeblock}
 	
 	Em que
 	
-	* O *X-Auth-User-Token* é um parâmetro que transmite o token do UAA, o token do IAM ou a chave API do {{site.data.keyword.Bluemix_notm}}.
-	
+	* O *X-Auth-User-Token * é um parâmetro que transmite o token UAA, o token do IAM ou a chave API.
+
 	* *Auth_Type* é o prefixo que define o tipo de token ou a chave API. A lista a seguir descreve os valores válidos: *apikey*, *iam* ou *uaa*, em que
 
         * *apikey* identifica que o token é uma chave API.
@@ -382,7 +386,9 @@ Para listar todas as regras, conclua as etapas a seguir:
 	
 	* Token é o token de autenticação UAA ou IAM ou a chave API.
 	
-	* Espaço é o GUID do espaço. Ele será necessário apenas quando você usar um token UAA.
+	* Espaço é o GUID do espaço. 
+	
+	* METRICS_ENDPOINT representa o ponto de entrada para o serviço. Cada região possui uma URL diferente. Para obter a lista de terminais por região, veja [Terminais](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
 
 	
@@ -393,23 +399,18 @@ Para listar todas as regras, conclua as etapas a seguir:
 
 Para mostrar os detalhes de uma regra, conclua as etapas a seguir:
 
-1. Efetue login em uma região, uma organização e um espaço do {{site.data.keyword.Bluemix_notm}}. Execute o comando:
+1. Efetue login em uma região, uma organização e um espaço no {{site.data.keyword.Bluemix_notm}}. 
 
-    Por exemplo, para efetuar login na região sul dos EUA, execute o comando a seguir:
+    Para obter mais informações, consulte [Como efetuar login no {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+2. Obtenha o token de segurança. É possível usar um token UAA, um token IAM ou uma chave API. Escolha um dos métodos a seguir para obter o token de segurança:
 	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
+	* Para obter um token do UAA, consulte [Obtendo o token do UAA usando a CLI do {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
 
-    Siga as instruções. Insira suas credenciais do {{site.data.keyword.Bluemix_notm}}, selecione uma organização e um espaço.
+	* Para obter um token do IAM, consulte [Obtendo o token do IAM usando a CLI do {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
 
-2. Obtenha o token de autenticação ou a chave API.
-
-    * Para a autenticação do IAM, veja [Obtendo o token do IAM usando a CLI do Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) ou [Gerando uma chave API do IAM usando a CLI do Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	* Para obter uma chave API, veja [obtendo uma chave API](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
 	
-	* Para a autenticação do UAA, veja [Obtendo o token do UAA usando a CLI do Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) ou [Obtendo o token do UAA usando a API de REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
 	Por exemplo, para usar o token IAM, execute o comando a seguir:
 
     ```
@@ -469,14 +470,14 @@ Para mostrar os detalhes de uma regra, conclua as etapas a seguir:
 4. Execute o comando cURL a seguir para mostrar os detalhes de uma regra:
 
     ```
-	curl -XGET --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rule/Rule_Name
+	curl -XGET --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/rule/Rule_Name
 	```
 	{: codeblock}
 	
 	Em que
 	
-	* O *X-Auth-User-Token* é um parâmetro que transmite o token do UAA, o token do IAM ou a chave API do {{site.data.keyword.Bluemix_notm}}.
-	
+	* O *X-Auth-User-Token * é um parâmetro que transmite o token UAA, o token do IAM ou a chave API.
+
 	* *Auth_Type* é o prefixo que define o tipo de token ou a chave API. A lista a seguir descreve os valores válidos: *apikey*, *iam* ou *uaa*, em que
 
         * *apikey* identifica que o token é uma chave API.
@@ -487,33 +488,30 @@ Para mostrar os detalhes de uma regra, conclua as etapas a seguir:
 	
 	* Token é o token de autenticação UAA ou IAM ou a chave API.
 	
-	* Espaço é o GUID do espaço. Ele será necessário apenas quando você usar um token UAA.
+	* Espaço é o GUID do espaço. 
 	
 	* Rule_Name é o nome da regra conforme especificado no campo *name*.
+	
+	* METRICS_ENDPOINT representa o ponto de entrada para o serviço. Cada região possui uma URL diferente. Para obter a lista de terminais por região, veja [Terminais](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
 
 ## Atualizando uma regra
 {: #update}
 
-Para atualizar uma regra, conclua as etapas a seguir:
+Para atualizar uma regra, modifique a regra atualizando o arquivo de regras, em seguida, conclua as etapas a seguir:
 
-1. Efetue login em uma região, uma organização e um espaço do {{site.data.keyword.Bluemix_notm}}. Execute o comando:
+1. Efetue login em uma região, uma organização e um espaço no {{site.data.keyword.Bluemix_notm}}. 
 
-    Por exemplo, para efetuar login na região sul dos EUA, execute o comando a seguir:
+    Para obter mais informações, consulte [Como efetuar login no {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+2. Obtenha o token de segurança. É possível usar um token UAA, um token IAM ou uma chave API. Escolha um dos métodos a seguir para obter o token de segurança:
 	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
+	* Para obter um token do UAA, consulte [Obtendo o token do UAA usando a CLI do {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
 
-    Siga as instruções. Insira suas credenciais do {{site.data.keyword.Bluemix_notm}}, selecione uma organização e um espaço.
+	* Para obter um token do IAM, consulte [Obtendo o token do IAM usando a CLI do {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
 
-2. Obtenha o token de autenticação ou a chave API.
-
-    * Para a autenticação do IAM, veja [Obtendo o token do IAM usando a CLI do Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) ou [Gerando uma chave API do IAM usando a CLI do Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	* Para obter uma chave API, veja [obtendo uma chave API](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
 	
-	* Para a autenticação do UAA, veja [Obtendo o token do UAA usando a CLI do Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) ou [Obtendo o token do UAA usando a API de REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
 	Por exemplo, para usar o token IAM, execute o comando a seguir:
 
     ```
@@ -573,16 +571,16 @@ Para atualizar uma regra, conclua as etapas a seguir:
 4. Execute o comando cURL a seguir para atualizar uma regra:
 
     ```
-	curl -XPUT `-d @Rule_File` --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rule
+	curl -XPUT `-d @$RULE_FILE` --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/rule
 	```
 	{: codeblock}
 	
 	Em que
 	
-	* Rule_File é o arquivo JSON que define sua regra de alerta.
+	* RULE_FILE é o arquivo JSON que define sua regra de alerta.
 	
-	* O *X-Auth-User-Token* é um parâmetro que transmite o token do UAA, o token do IAM ou a chave API do {{site.data.keyword.Bluemix_notm}}.
-	
+	* O *X-Auth-User-Token * é um parâmetro que transmite o token UAA, o token do IAM ou a chave API.
+
 	* *Auth_Type* é o prefixo que define o tipo de token ou a chave API. A lista a seguir descreve os valores válidos: *apikey*, *iam* ou *uaa*, em que
 
         * *apikey* identifica que o token é uma chave API.
@@ -593,7 +591,9 @@ Para atualizar uma regra, conclua as etapas a seguir:
 	
 	* Token é o token de autenticação UAA ou IAM ou a chave API.
 	
-	* Espaço é o GUID do espaço. Ele será necessário apenas quando você usar um token UAA.
+	* Espaço é o GUID do espaço. 
+	
+	* METRICS_ENDPOINT representa o ponto de entrada para o serviço. Cada região possui uma URL diferente. Para obter a lista de terminais por região, veja [Terminais](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 
 	
 	

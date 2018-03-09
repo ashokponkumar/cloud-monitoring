@@ -1,30 +1,33 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-07-14"
+lastupdated: "2018-02-01"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
-# Análisis de métricas de contenedor desde la consola de Bluemix
+
+# Análisis de métricas de contenedor desde la consola de IBM Cloud (en desuso)
 {: #analyzing_metrics_bmx_ui}
 
-En {{site.data.keyword.Bluemix}}, tiene la posibilidad de visualizar y analizar métricas a través del separador *Supervisión* que está disponible para contenedores Docker desplegados en una infraestructura de nube gestionada de {{site.data.keyword.Bluemix_notm}}.
+En {{site.data.keyword.Bluemix}}, tiene la posibilidad de visualizar y analizar métricas a través del separador *Supervisión* que está disponible para contenedores Docker desplegados en una infraestructura gestionada de {{site.data.keyword.Bluemix_notm}}.
 {:shortdesc}
 
 
-##  Navegación a métricas de un contenedor Docker que se gestiona en Bluemix
+##  Navegación a métricas de un contenedor Docker que se gestiona en IBM Cloud (en desuso)
 {: #launch_metrics_tab_bmx_ui_containers}
 
-Para ver las métricas para un contenedor Docker desplegado en una infraestructura de nube gestionada de {{site.data.keyword.Bluemix_notm}}, complete los siguientes pasos:
+Para ver las métricas para un contenedor Docker desplegado en la infraestructura gestionada de {{site.data.keyword.Bluemix_notm}}, realice los siguientes pasos:
 
 1. En el panel de control Apps, pulse en un contenedor o grupo de contenedores. 
     

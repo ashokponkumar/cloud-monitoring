@@ -1,47 +1,51 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-07-12"
+lastupdated: "2018-02-01"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
 # Segurança
 {: #security_ov}
 
-É possível usar métodos de autenticação diferentes para enviar métricas para o serviço {{site.data.keyword.monitoringshort}}. As permissões para acessar, modificar e excluir métricas são controladas usando funções.
+Para controlar as ações de serviço do {{site.data.keyword.monitoringshort}} que um usuário tem permissão para executar, é possível designar uma ou mais funções a um usuário. Para autenticar um usuário para trabalhar com métricas e alertas, é possível usar um token do UAA, um token do IAM ou uma Chave API. 
 {:shortdesc}
 
    
 ## Modelos de Autenticação
 {: #auth}
 
-Para acessar as métricas que são armazenadas no serviço do {{site.data.keyword.monitoringshort}} para um espaço do {{site.data.keyword.Bluemix_notm}}, você requer um token de autenticação ou uma chave API. 
+Para trabalhar com métricas que são armazenadas no serviço do {{site.data.keyword.monitoringshort}}
+para um espaço, você requer um token de autenticação ou uma chave API. 
 
-O serviço {{site.data.keyword.monitoringshort}} suporta os modelos de autenticação a seguir:
+Para obter um token de segurança, veja:
 
-* [{{site.data.keyword.Bluemix_notm}} UAA autenticação](/docs/services/cloud-monitoring/security/auth_uaa.html#auth_uaa)
-* [{{site.data.keyword.Bluemix_notm}} IAM Autenticação](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam)
+* [Obtendo um token do UAA](/docs/services/cloud-monitoring/security/auth_uaa.html#auth_uaa)
+* [Obtendo um token do IAM](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam)
+
+Para obter uma chave API, veja [Gerando uma chave API](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key). Se a chave API estiver comprometida, será possível revogá-la excluindo-a. Em seguida, será possível será possível uma nova. 
+Para obter mais informações, consulte
+[Revogando uma chave API
+usando a UI do {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_api_key.html#revoke_ui). 
 
 Um token do UAA e um token do IAM expiram após um período de tempo. A chave API não expira. 
 
-Se a chave API estiver comprometida, será possível revogá-la excluindo-a. Em seguida, será possível será possível uma nova. Para obter mais informações, veja [Revogando uma chave API usando a UI do Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#revoke_ui). 
-
-O modelo de autenticação do IAM oferece recursos de gerenciamento de UI, CLI ou API. É possível usar a CLI apenas para gerenciar tokens do UAA.
-
-A tabela a seguir lista os modelos de autenticação que são suportados para cada tipo de domínio:
+A tabela a seguir lista os modelos de segurança que são suportados para cada tipo de domínio:
 
 <table>
-  <caption>Tabela 1. Modelos de autenticação suportadas para cada domínio</caption>
+  <caption>Tabela 1. Modelos de segurança suportados para cada domínio</caption>
   <tr>
     <th></th>
 	<th align="right">Conta</th>
@@ -66,13 +70,14 @@ O serviço {{site.data.keyword.monitoringshort}} usa o recurso de controle de ac
 
 
 
-## Funções do UAA do Bluemix
+## Funções do Cloud Foundry
 {: #bmx_roles}
 
-A tabela a seguir lista os privilégios de cada função do {{site.data.keyword.Bluemix_notm}} para trabalhar com o serviço do {{site.data.keyword.monitoringshort}}:
+A tabela a seguir lista os privilégios de cada função do Cloud Foundry para trabalhar com o
+serviço do {{site.data.keyword.monitoringshort}}:
 
 <table>
-  <caption>Tabela 2. As funções e privilégios do {{site.data.keyword.Bluemix_notm}} para trabalhar com o serviço do {{site.data.keyword.monitoringshort}}.</caption>
+  <caption>Tabela 2. Funções e privilégios do Cloud Foundry para trabalhar com o serviço {{site.data.keyword.monitoringshort}}.</caption>
   <tr>
     <th>Atribuição</th>
 	<th>Domain</th>
@@ -96,45 +101,60 @@ A tabela a seguir lista os privilégios de cada função do {{site.data.keyword.
 </table>
 
 
-## Funções do IAM do Bluemix
+## Funções IAM
 {: #iam_roles}
 
-A tabela a seguir lista o relacionamento entre a API, uma ação de serviço e uma função do IAM que é usada pelo serviço {{site.data.keyword.monitoringshort}}.
+A tabela a seguir lista as ações de serviço do {{site.data.keyword.monitoringshort}} quando você trabalha com métricas e as funções do IAM que concedem permissões a um usuário para executar estas tarefas:
 
 <table>
-  <caption>Tabela 3. Relacionamento entre a API, uma ação de serviço e uma função do IAM. </caption>
+  <caption>Tabela 3. Trabalhando com métricas </caption>
   <tr>
-    <th>API</th>
 	<th>Ação</th>
 	<th>Função IAM</th>
-	<th>Descrição</th>
   </tr>
   <tr>
-    <td>POST /v1/metrics</td>
-    <td>Domain.write</td>
+    <td>Enviar métricas para o domínio</td>
 	<td>Administrador, Editor, Operador</td>
-	<td>Enviar métricas para o domínio</td>
   </tr>
   <tr>
-    <td>GET /v1/metrics</td>
-    <td>Domain.render</td>
+    <td>Recuperar / consulta de métricas</td>
 	<td>Administrador, Editor, Visualizador</td>
-	<td>Recuperar / consulta de métricas</td>
   </tr>
   <tr>
-    <td>GET /v1/metrics/list</td>
-    <td>Domain.find</td>
+    <td>Procure métricas no domínio</td>
 	<td>Administrador, Editor</td>
-	<td>Procure métricas no domínio</td>
   </tr>
 </table>
 
-## Obtendo o token de segurança ou a chave API
-{: #get_token}
+A tabela a seguir lista as ações de serviço do {{site.data.keyword.monitoringshort}} quando você trabalha com alertas e as funções do IAM que concedem permissões a um usuário para executar estas tarefas:
 
-Use o modelo do UAA do {{site.data.keyword.Bluemix_notm}} para obter um token de autenticação que possa ser usado para acessar os dados que estiverem armazenados no serviço do {{site.data.keyword.monitoringshort}} para um espaço no {{site.data.keyword.Bluemix_notm}}. É possível obter o token de autenticação usando a CLI do {{site.data.keyword.Bluemix_notm}} ou usando a API de REST de `Login`. Para obter mais informações, veja [Obtendo o token do UAA usando a CLI do {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_uaa.html#auth_cli) e [Obtendo o token do UAA usando a API](/docs/services/cloud-monitoring/security/auth_uaa.html#auth_api).
-
-Use o modelo do IAM do {{site.data.keyword.Bluemix_notm}} para obter um token de autenticação que possa ser usado para acessar os dados que estiverem armazenados no serviço do {{site.data.keyword.monitoringshort}} ou para obter uma chave API. O token tem um tempo de expiração. A chave API não expira. Para obter mais informações, veja [Obtendo o token do IAM usando a CLI do {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli), [Gerando uma chave API do IAM usando a CLI do {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli) ou [Gerando uma chave API do IAM usando a UI do {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_ui).
+<table>
+  <caption>Tabela 4. Trabalhando com alertas. </caption>
+  <tr>
+	<th>Ação</th>
+	<th>Função IAM</th>
+  </tr>
+  <tr>
+    <td>Criar, editar e excluir regras de alerta</td>
+	<td>Administrador, Editor</td>
+  </tr>
+  <tr>
+    <td>Visualizar alertas</td>
+	<td>Administrador, Editor, Visualizador</td>
+  </tr>
+  <tr>
+    <td>Criar, editar e excluir notificações de alerta</td>
+	<td>Administrador, Editor</td>
+  </tr>
+  <tr>
+    <td>Visualizar notificações</td>
+	<td>Administrador, Editor, Visualizador</td>
+  </tr>
+  <tr>
+    <td>Visualizar registros de histórico de alerta acionado</td>
+	<td>Administrador, Editor, Visualizador</td>
+  </tr>
+</table>
 
 
 

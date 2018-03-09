@@ -1,18 +1,20 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-07-12"
+lastupdated: "2018-02-07"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
 # About
@@ -21,17 +23,25 @@ lastupdated: "2017-07-12"
 Use o serviço do {{site.data.keyword.monitoringlong}} para expandir os seus recursos de coleta e retenção ao trabalhar com métricas, bem como para poder definir regras e alertas que notifiquem você sobre as condições que requerem atenção. Confira poderes às suas equipes do DevOps equipe com recursos que fornecem insight sobre como seus apps estão executando e consumindo recursos. Identifique tendências, detecte e diagnostique problemas rapidamente; todos com prazo de lançamento no mercado imediato e baixo custo total de propriedade. Use o Grafana para monitorar seu ambiente. 
 {:shortdesc}
 
-O {{site.data.keyword.Bluemix}}, por padrão, coleta e exibe métricas para uso de CPU, utilização de memória e E/S de rede para o {{site.data.keyword.containershort}}. É possível usar o serviço {{site.data.keyword.monitoringshort}} no {{site.data.keyword.Bluemix_notm}} para coletar automaticamente e medir as métricas de chave de seu ambiente e dos aplicativos. Nenhuma instrumentação especial é necessária para coletar métricas. Por exemplo, é possível usar as informações fornecidas por métricas de desempenho para monitorar como um serviço está em execução na nuvem, detectar gargalos de recursos e manter-se atento ao acordo de nível de serviço (SLA). Ao analisar dados de desempenho para um serviço, é possível detectar situações que podem levar a um gargalo de recurso e, consequentemente, afetar seu SLA do serviço para seus clientes. Tomando uma ação antecipada, é possível evitar situações que podem impactar negativamente seus negócios.  
+A figura a seguir mostra uma visualização de alto nível dos diferentes recursos de onde é possível enviar métricas para o serviço {{site.data.keyword.monitoringshort}} para análise:
 
-É possível enviar métricas para os seus aplicativos Cloud Foundry (CF) e para as suas Máquinas virtuais (VMs) no serviço do {{site.data.keyword.monitoringshort}}.  
+![Visão geral de alto nível de componentes no
+serviço do {{site.data.keyword.monitoringlong}} ](images/cloud_monitoring_ov.png "Visão geral de alto nível de componentes noserviço do {{site.data.keyword.monitoringlong}} ")
 
-A figura a seguir mostra uma visualização de alto nível dos diferentes recursos em que é possível enviar métricas para o serviço {{site.data.keyword.monitoringshort}} para análise:
 
-![Visão geral do componente de alto nível dos componentes no serviço do {{site.data.keyword.monitoringlong}}](images/cloud_monitoring_ov.gif)
+Por padrão, o {{site.data.keyword.Bluemix}} coleta e exibe métricas para uso de CPU,
+utilização de memória e E/S de rede para o {{site.data.keyword.containershort}}. É possível usar o
+serviço do {{site.data.keyword.monitoringshort}} no {{site.data.keyword.Bluemix_notm}}
+para coletar e medir automaticamente as métricas de chave de seu ambiente e aplicativos. Nenhuma instrumentação especial é necessária para coletar métricas. Por exemplo, é possível usar as informações fornecidas por métricas de desempenho para monitorar como um serviço está em execução na nuvem, detectar gargalos de recursos e manter-se atento ao acordo de nível de serviço (SLA). Ao analisar dados de desempenho para um serviço, é possível detectar situações que podem levar a um gargalo de recurso e, consequentemente, afetar seu SLA do serviço para seus clientes. Tomando uma ação antecipada, é possível evitar situações que podem impactar negativamente seus negócios.  
 
-Para obter mais informações sobre como enviar métricas, veja [Enviando métricas para o serviço do {{site.data.keyword.monitoringshort}}](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#send_retrieve_metrics_ov).
+É possível enviar métricas para os seus aplicativos Cloud Foundry (CF) e para as suas Máquinas virtuais (VMs) no serviço do {{site.data.keyword.monitoringshort}}. Para obter mais informações sobre como enviar métricas, veja [Enviando métricas para o serviço do {{site.data.keyword.monitoringshort}}](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#send_retrieve_metrics_ov).
 
-É possível acessar o serviço do {{site.data.keyword.monitoringlong}} por meio do catálogo do {{site.data.keyword.Bluemix_notm}}. Para o {{site.data.keyword.containershort}} com contêineres simples e de grupo, também é possível acessar o serviço por meio da UI do {{site.data.keyword.Bluemix_notm}}.
+É possível fornecer o serviço do {{site.data.keyword.monitoringshort}} por meio do
+catálogo {{site.data.keyword.Bluemix_notm}}.  
+
+É possível visualizar e analisar as métricas coletadas pelo serviço
+do {{site.data.keyword.monitoringshort}} por meio do painel do
+{{site.data.keyword.Bluemix_notm}}.  
 
 ## Por que usar o serviço Monitoring
 {: #value}
@@ -40,7 +50,7 @@ Para obter mais informações sobre como enviar métricas, veja [Enviando métri
 
     O serviço {{site.data.keyword.monitoringlong_notm}} coleta automaticamente dados de métrica dos serviços {{site.data.keyword.IBM_notm}} Cloud, eliminando a necessidade de agentes. As APIs facilitam a inclusão das métricas customizadas e a consulta de seus dados de monitoramento. 
 	
-	O serviço do {{site.data.keyword.monitoringlong_notm}} oferece a coleta de métrica de uma vez só por minuto. O plano Lite retém as métricas de resolução integral por 15 dias. O plano Premium retém as métricas de resolução integral por 45 dias.
+	O serviço do {{site.data.keyword.monitoringlong_notm}} oferece a coleta de métrica de uma vez só por minuto.  O plano Lite retém as métricas de resolução integral por 15 dias.  O plano Premium retém as métricas de resolução integral por 45 dias.
 
 2. **Estenda facilmente o monitoramento em seu aplicativo com APIs**
 
@@ -52,7 +62,7 @@ Para obter mais informações sobre como enviar métricas, veja [Enviando métri
 	
 4. **Construa painéis reutilizáveis e torne-os interativos**
 
-    O Grafana hospedado do serviço do {{site.data.keyword.monitoringlong_notm}} fornece suporte para construir painéis customizados com uma ampla gama de opções de visualização. Faça seus painéis dinâmicos com modelos usando consultas de métrica com variáveis.
+    O Grafana hospedado do serviço do {{site.data.keyword.monitoringlong_notm}} fornece suporte para construir painéis customizados com uma ampla gama de opções de visualização.  Faça seus painéis dinâmicos com modelos usando consultas de métrica com variáveis.
 
 5. **Receber alertas**
 
@@ -60,46 +70,53 @@ Para obter mais informações sobre como enviar métricas, veja [Enviando métri
 
 6. **Escolha o plano de serviço que se ajuste às suas necessidades** 
 
-    É possível escolher o plano de serviços Lite ou o plano de serviços Premium para corresponder às suas necessidades de uso. O plano Lite oferece a coleta de métrica de plataforma básica e alerta complementar. Alternativamente, é possível selecionar o plano Premium para permitir um maior consumo de métrica com um período mais longo de retenção, para aumentar o número de alertas que podem ser definidos, incluindo alertas que sejam relatados em múltiplos serviços, bem como para obter acesso às APIs de serviços.
+    É possível escolher o plano de serviços Lite ou o plano de serviços Premium para corresponder às suas necessidades de uso.  O plano Lite oferece a coleta de métrica de plataforma básica e alerta complementar.  Alternativamente, é possível selecionar o plano Premium para permitir um maior consumo de métrica com um período mais longo de retenção, para aumentar o número de alertas que podem ser definidos, incluindo alertas que sejam relatados em múltiplos serviços, bem como para obter acesso às APIs de serviços.
 
  
-## Plano de Serviço
+## Planos de serviço
 {: #plan}
 
 O {{site.data.keyword.monitoringshort}} serviço fornece vários planos. Cada plano tem diferentes recursos de métricas de coleta, de retenção e de definição de alerta. 
 
 É possível mudar um plano por meio da UI do {{site.data.keyword.Bluemix_notm}} ou por meio da linha de comandos. É possível fazer upgrade ou reduzir seu plano a qualquer momento. Para obter mais informações sobre upgrades de plano de serviço no {{site.data.keyword.Bluemix_notm}}, veja [Mudando o plano](/docs/services/cloud-monitoring/plan/change_plan.html#change_plan). 
 
-A tabela a seguir descreve os planos que estão disponíveis:
+A tabela a seguir descreve os planos que estão disponíveis ao fornecer o
+serviço do {{site.data.keyword.monitoringshort}} em um espaço:
 
 <table>
-    <caption>Tabela 1. Resumo de planos para o serviço do {{site.data.keyword.monitoringshort}}.</caption>
+    <caption>Tabela 1. Resumo de planos para o serviço do {{site.data.keyword.monitoringshort}}
+por espaço.</caption>
       <tr>
         <th>Plan</th>
         <th>Enviando métricas usando a API</th>
         <th>Período de Retenção</th>
         <th>Alertas</th>
+		    <th>Métodos de notificação</th>
       </tr>
       <tr>
         <td>Lite (padrão)</td>
         <td>Não está disponível</td>
         <td>15 dias</td>
-        <td>É possível definir até 10 regras únicas de alerta de métrica ou 1 regra que inclua um curinga.</td>
+        <td>É possível definir até 10 regras de alertas com consultas de métrica únicas ou 1 regra de alerta
+que inclua um curinga.</td>
+		    <td>Email</td>
       </tr>
       <tr>
         <td>Premium</td>
         <td>Disponíveis</td>
         <td>45 dias</td>
         <td>É possível definir regras de alerta incluindo regras com curingas.</td>
+		    <td>E-mail, webhook, PagerDuty</td>
       </tr>
 </table>
 
-**Nota:** o plano Lite oferece os mesmos recursos que os recursos integrados de monitoramento no {{site.data.keyword.Bluemix_notm}}.
+**Nota:** o plano Lite oferece os mesmos recursos que os recursos de monitoramento
+integrados no {{site.data.keyword.Bluemix_notm}}. O domínio da conta oferece os mesmos recursos que o
+plano Lite.
 
 
 ## Período de Retenção
 {: #metrics_retention}
-
 
 A tabela a seguir resume o período de retenção com base em seu plano de serviço:
 
@@ -127,21 +144,29 @@ As métricas que não tiverem recebido dados nos últimos 7 dias serão excluíd
 ## Fornecendo o serviço Monitoring
 {: #provision}
 
-No catálogo do {{site.data.keyword.Bluemix_notm}}, é possível localizar o serviço {{site.data.keyword.monitoringshort}} na seção **DevOps**. Para obter mais informações sobre o fornecimento de um serviço no {{site.data.keyword.Bluemix_notm}}, veja [Provisionando o serviço do {{site.data.keyword.monitoringshort}}](/docs/services/cloud-monitoring/how-to/provision.html#provision).
+No catálogo do {{site.data.keyword.Bluemix_notm}}, é possível localizar o serviço {{site.data.keyword.monitoringshort}} na seção **DevOps**. 
+Para obter mais informações sobre o fornecimento de um serviço no {{site.data.keyword.Bluemix_notm}},
+consulte [Fornecendo o
+serviço do {{site.data.keyword.monitoringshort}}](/docs/services/cloud-monitoring/how-to/provision.html#provision).
 
 Considere as informações a seguir sobre o serviço do {{site.data.keyword.monitoringshort}}:
 
-* Para coletar métricas para recursos em nuvem em execução em um espaço do {{site.data.keyword.Bluemix_notm}}, deve-se fornecer o serviço no mesmo espaço em que os recursos estão em execução.
+* É possível fornecer somente uma instância do serviço do {{site.data.keyword.monitoringshort}}
+por espaço.
+* Para coletar métricas para recursos em nuvem em execução em um espaço do Cloud Foundry, deve-se
+fornecer o serviço no mesmo espaço em que os recursos estão em execução.
 
-* Para enviar métricas para o serviço do {{site.data.keyword.monitoringshort}}, deve-se provisionar uma instância do serviço do {{site.data.keyword.monitoringshort}} no espaço do {{site.data.keyword.Bluemix_notm}} para o qual você deseja enviar as métricas. 
 
 
 
 ## Regiões
 {: #regions}
 
-O serviço {{site.data.keyword.monitoringshort}} está disponível na região a seguir:
+O serviço {{site.data.keyword.monitoringshort}} está disponível nas regiões a seguir:
 
+* Alemão
+* Sydney
+* Reino Unido
 * Sul dos Estados Unidos
 
 
@@ -150,24 +175,38 @@ O serviço {{site.data.keyword.monitoringshort}} está disponível na região a 
 ## URLs para o serviço Monitoring
 {: #region}
 
-O serviço {{site.data.keyword.monitoringshort}} está disponível para qualquer pessoa com um ID do usuário do {{site.data.keyword.Bluemix_notm}} e acesso a um espaço em uma organização do {{site.data.keyword.Bluemix_notm}}. 
+O serviço do {{site.data.keyword.monitoringshort}} está disponível para qualquer pessoa com um
+ID e permissões do {{site.data.keyword.Bluemix_notm}} para trabalhar com o serviço no
+{{site.data.keyword.Bluemix_notm}}.
 
 * Para cada região em que o serviço {{site.data.keyword.monitoringshort}} está disponível, há um conjunto diferente de terminais. 
 * Há uma única URL que é compartilhada pelos terminais de ingestão e de API/UI da web.
 * A porta 443 é a porta do TLS que é usada para acessar as métricas por meio da API e da UI da Web (Grafana).
 
-A tabela a seguir lista a URL para o ambiente de nuvem pública que é suportado:
+A tabela a seguir lista as URLs por região:
 
 <table>
-  <caption>Tabela 3. Lista de terminais para trabalhar com o serviço do {{site.data.keyword.monitoringshort}}.</caption>
+  <caption>Tabela 3. Lista de terminais para trabalhar com o serviço {{site.data.keyword.monitoringshort}}</caption>
   <tr>
     <th>Região</th>
 	<th>Nó de
 extremidade</th>
   </tr>
   <tr>
+    <td>Alemão</td>
+	<td>[https://metrics.eu-de.bluemix.net](https://metrics.eu-de.bluemix.net)</td>
+  </tr>
+  <tr>
+    <td>Sydney</td>
+	<td>[https://metrics.au-syd.bluemix.net](https://metrics.au-syd.bluemix.net)</td>
+  </tr>
+  <tr>
+    <td>Reino Unido</td>
+	<td>[https://metrics.eu-gb.bluemix.net](https://metrics.eu-gb.bluemix.net)</td>
+  </tr>
+  <tr>
     <td>Sul dos Estados Unidos</td>
-	<td>Metrics.ng.bluemix.net</td>
+	<td>[https://metrics.ng.bluemix.net/](https://metrics.ng.bluemix.net/)</td>
   </tr>
 </table>
 

@@ -1,78 +1,67 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-07-12"
+lastupdated: "2018-02-01"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
-
-# Monitoring サービスへのデータの送信
+# Metrics API を使用したデータの送信
 {: #send_data_api}
 
-Metrics API を使用して、{{site.data.keyword.monitoringshort}} サービスにメトリックを送信することができます。メトリックは、{{site.data.keyword.Bluemix_notm}} のスペースに送信できます。
+Metrics API を使用して、{{site.data.keyword.monitoringshort}} サービスにメトリックを送信することができます。 
 {:shortdesc}
 
 
-{{site.data.keyword.Bluemix_notm}} Docker コンテナーの場合、基本のシステム・メトリックは自動的に収集されます。Cloud Foundry アプリケーション、および仮想計算機 (VM) で実行されているアプリの場合、メトリックは、[Metrics API](https://console.bluemix.net/apidocs/927-ibm-cloud-monitoring-rest-api?&language=node#introduction){: new_window} を使用してアプリから直接送信する必要があります。 
+{{site.data.keyword.Bluemix_notm}} Docker コンテナーの場合、基本のシステム・メトリックは自動的に収集されます。 Cloud Foundry アプリケーション、および仮想計算機 (VM) で実行されているアプリの場合、メトリックは、[Metrics API](https://console.bluemix.net/apidocs/927-ibm-cloud-monitoring-rest-api?&language=node#introduction){: new_window} を使用してアプリから直接送信する必要があります。 
 
 
 
-## UAA を使用したスペースへのメトリックの送信
-{: #uaa}
+## スペース・ドメインへのメトリックの送信
+{: #space_uaa}
 
-メトリックを {{site.data.keyword.Bluemix_notm}} スペースに送信するには、以下の手順を実行します。
+cURL を使用してメトリックをスペースに送信するには、以下の手順を実行します。
 
-1. {{site.data.keyword.Bluemix_notm}} の地域、組織、およびスペースにログインします。以下のコマンドを実行します。
+1. {{site.data.keyword.Bluemix_notm}} で、地域、組織、およびスペースにログインします。 
 
-    例えば、米国南部地域にログインするには、以下のコマンドを実行します。
+    詳しくは、[{{site.data.keyword.Bluemix_notm}} にログインするにはどうすればよいですか](/docs/services/cloud-monitoring/qa/cli_qa.html#login)を参照してください。
+
+2. セキュリティー・トークンを取得します。 UAA トークン、IAM トークン、または API キーを使用することができます。
+
+    以下のいずれかの方法を選択して、メトリックの送信に必要なセキュリティー・トークンを取得します。
 	
-	```
-    cf login -a https://api.ng.bluemix.net
+	* UAA トークンを取得するには、[{{site.data.keyword.Bluemix_notm}} CLI を使用した UAA トークンの取得](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli)を参照してください。
+	
+	* IAM トークンを取得するには、[{{site.data.keyword.Bluemix_notm}} CLI を使用した IAM トークンの 取得](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam)を参照してください。
+	
+	* API キーを取得する場合は、
+[API キーの取得](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key)を参照してください。
+	
+	{{site.data.keyword.Bluemix_notm}} にログインした同じ端末から、トークンに *Token* 変数を設定します。
+
+    例えば、UAA トークンを設定し、トークンの値から *Bearer* 部分を削除します。
+
     ```
-    {: codeblock}
-
-    指示に従います。{{site.data.keyword.Bluemix_notm}} の資格情報を入力し、組織とスペースを選択します。
-
-2. UAA 認証トークンを取得します。
-
-    UAA 認証について詳しくは、[Bluemix CLI を使用した UAA トークンの取得](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli)または [REST API を使用した UAA トークンの取得](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api)を参照してください。
-
-	例えば、UAA トークンを使用するには、以下のコマンドを実行します。
-
+    export Token="kjshdgf.....ldkdjdj"
     ```
-	cf oauth-token
-	```
-	{: codeblock}
-	
-	このコマンドの結果は以下のようになります。
-	
-	```
-	bearer eyJhbGciOiJI....cGFzc3dvcmQiLCJjZiIsInVhYSIsIm9wZW5pZCJdfQ.JaoaVudG4jqjeXz6q3JQL_SJJfoIFvY8m-rGlxryWS8
-	```
-	{: screen}
-	
-	次に、変数 *Token* をエクスポートします。以下に例を示します。```
-	export Token="eyJhbGciOiJI....cGlxryWS8"
-	```
-	{: screen}
-	
-	**注:** このトークンは *Bearer* を除外します。
+    {: screen}
 		
-3. スペース GUID を取得します。この GUID には、スペースを識別するための *s-* の接頭部が付いている必要があります。
+3. スペース GUID を取得します。 この GUID には、スペースを識別するための *s-* の接頭部が付いている必要があります。
 
     以下のコマンドを実行します。
 	
 	```
-	cf space SpaceName --guid
+	bx iam space SpaceName --guid
 	```
 	{: codeblock}
 	
@@ -81,7 +70,7 @@ Metrics API を使用して、{{site.data.keyword.monitoringshort}} サービス
 	例えば、*dev* という名前のスペースの GUID を取得するには、以下のコマンドを実行します。
 	
 	```
-	cf space dev --guid
+	bx iam space dev --guid
 	```
 	{: screen}
 	
@@ -92,7 +81,11 @@ Metrics API を使用して、{{site.data.keyword.monitoringshort}} サービス
 	```
 	{: screen}
 	
-	次に、変数 *Space* をエクスポートします。以下に例を示します。```
+	次に、変数 *Space* をエクスポートします。 **注:** この GUID には、スペースを識別するための *s-* の接頭部が付いている必要があります。
+	
+	以下に例を示します。
+	
+	```
 	export Space="s-667fadfc-jhtg-1234-9f0e-cf4123451095"
 	```
 	{: screen}
@@ -100,7 +93,7 @@ Metrics API を使用して、{{site.data.keyword.monitoringshort}} サービス
 5. 以下の cURL コマンドを実行して、メトリックを送信します。
 
     ```
-	curl -XPOST -d @Metric_File --header "X-Auth-User-Token:uaa ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/metrics
+	curl -XPOST -d @Metric_File --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" Endpoint/v1/metrics
 	```
 	{: codeblock}
 	
@@ -108,18 +101,25 @@ Metrics API を使用して、{{site.data.keyword.monitoringshort}} サービス
 	
 	* Metrics_File は、{{site.data.keyword.monitoringshort}} サービスに送信されるメトリックの定義を含む JSON ファイルを表しています。
 	
-	* *X-Auth-User-Token* は、{{site.data.keyword.Bluemix_notm}} の UAA トークンを渡すパラメーターです。
+	* *X-Auth-User-Token* は、セキュリティー・トークンを渡すパラメーターです。
 	
-	* *Auth_Type* は、トークンのタイプを定義する接頭部です。*uaa* は、指定されたトークンが UAA 生成トークンであることを識別します。
+	* *Auth_Type* は、トークンのタイプを定義する接頭部です。 有効な値は、UAA トークンの場合は
+ *uaa*、IAM トークンの場合は *iam*、API キーの場合は *api* です。
 	
-	* *X-Auth-Scope-Id* は、スペースの GUID を渡すパラメーターです。この GUID には、スペースを識別するための *s-* の接頭部が付いている必要があります。
-
- * Token は、UAA トークンを表します。
+	* *X-Auth-Scope-Id* は、スペースの GUID を渡すパラメーターです。 この GUID には、スペースを識別するための *s-* の接頭部が付いている必要があります。
 	
-	* Space は、スペースの GUID を表します。例えば、以下のコマンドを実行して、2 つのメトリック `myhost.cpu.idle` と `myapp.login.attempts` を {{site.data.keyword.monitoringshort}} サービスに送信することができます。
+	* Token は、セキュリティー・トークン、または API キーを表します。
+	
+	* Space は、スペースの GUID を表します。 
+	
+	* Endpoint はサービスへのエントリー ・ポイントを示しています。 各地域の URL は異なります。 地域ごとのエンドポイントのリストを取得するには、[エンドポイント]
+(/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints)
+を参照してください。
+	
+	例えば、以下のコマンドを実行して、2 つのメトリック `myhost.cpu.idle` と `myapp.login.attempts` を {{site.data.keyword.monitoringshort}} サービスに送信することができます。
 	
 	```
-	curl -XPOST @metric.json --header "X-Auth-User-Token:uaa ${Token}" https://metrics.ng.bluemix.net/v1/metrics
+	curl -XPOST @metric.json --header "X-Auth-User-Token: uaa ${Token}" https://metrics.ng.bluemix.net/v1/metrics
 	```
 	{: screen}
 	
@@ -139,119 +139,7 @@ Metrics API を使用して、{{site.data.keyword.monitoringshort}} サービス
 	```
 	{: screen}
 
-
-## IAM または API キーを使用したスペースへのメトリックの送信
-{: #iam}
-
-メトリックを {{site.data.keyword.Bluemix_notm}} スペースに送信するには、以下の手順を実行します。
-
-1. {{site.data.keyword.Bluemix_notm}} の地域、組織、およびスペースにログインします。以下のコマンドを実行します。
-
-    例えば、米国南部地域にログインするには、以下のコマンドを実行します。
-	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    指示に従います。{{site.data.keyword.Bluemix_notm}} の資格情報を入力し、組織とスペースを選択します。
-
-2. 認証トークンまたは API キーを取得します。
-
-    IAM 認証について詳しくは、[Bluemix CLI を使用した IAM トークンの取得](/docs/services/cloud-monitoring/security/auth_iam.html#iam_cli) または [Bluemix CLI を使用した IAM API キーの生成](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli) を参照してください。
-	例えば、IAM トークンを使用するには、以下のコマンドを実行します。
-
-    ```
-	bx iam oauth-tokens
-	```
-	{: codeblock}
-	
-	このコマンドの結果は以下のようになります。
-	
-	```
-	IAM token:  Bearer djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ
-    UAA token:  Bearer eyJhbGciOiJIUz..Ky6vagp3k_QcIcKJ-td83qXhO5Uze43KcplG6PzcGs8
-	```
-	{: screen}
-	
-	次に、変数 *Token* をエクスポートします。以下に例を示します。```
-	export Token="djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ"
-	```
-	{: screen}
-	
-	**注:** このトークンは *Bearer* を除外します。
-		
-3. スペース GUID を取得します。スペース GUID を取得するには、[スペースの GUID を取得する方法を教えてください](/docs/service/cloud-monitoring/qa/cli_qa.html#space_guid) を参照してください。この GUID には、スペースを識別するための *s-* の接頭部が付いている必要があります。例えば、以下のコマンドを実行します。
-	
-	```
-	    bx iam space NAME --guid
-    ```
-	{: codeblock}
-	
-	ここで、*SpaceName* は、通知を定義するスペースの名前です。
-	
-	例えば、*dev* という名前のスペースの GUID を取得するには、以下のコマンドを実行します。
-	
-	```
-	bx iam space dev --guid
-	```
-	{: screen}
-	
-	このコマンドの結果は以下のようになります。
-	
-	```
-	667fadfc-jhtg-1234-9f0e-cf4123451095
-	```
-	{: screen}
-	
-	次に、変数 *Space* をエクスポートします。以下に例を示します。```
-	export Space="s-667fadfc-jhtg-1234-9f0e-cf4123451095"
-	```
-	{: screen}
-	
-5. cURL コマンドを実行してメトリックを送信します。
-
-    ```
-	curl -XPOST -d @Metric_File --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/metrics
-	```
-	{: codeblock}
-	
-	ここで、
-	
-	* Metrics_File は、{{site.data.keyword.monitoringshort}} サービスに送信されるメトリックの定義を含む JSON ファイルを表しています。
-	
-	* *X-Auth-User-Token* は、{{site.data.keyword.Bluemix_notm}} の IAM トークン、または API キーを渡すパラメーターです。
-	
-	* *Auth_Type* は、トークンまたは API キーのタイプを定義する接頭部です。以下のリストに、有効値 *apikey*、*iam*、または *uaa* の概要を示します。詳細は次のとおりです。
-
-  * *apikey* は、トークンが API キーであることを識別します。
-		* *iam* は、指定されたトークンが IAM 生成トークンであることを識別します。
-		* *X-Auth-Scope-Id* は、スペースの GUID を渡すパラメーターです。この GUID には、スペースを識別するための *s-* の接頭部が付いている必要があります。
-
- * Token は、IAM トークン、または API キーを表します。
-	
-	* Space は、スペースの GUID を表します。例えば、以下のコマンドを実行して、2 つのメトリック `myhost.cpu.idle` と `myapp.login.retries` を、スペースを宛先にして、{{site.data.keyword.monitoringshort}} サービスに送信することができます。
-	
-	```
-curl -XPOST @metric.json --header "X-Auth-User-Token:iam ${Token}" https://metrics.ng.bluemix.net/v1/metrics
-```
-{: screen}
-	
-サンプル・ファイル *metric.json* は以下のように定義されています。
-
-    ```
-[
-  {
-    "name" : "myhost.cpu.idle",
-        "value" : 22.37
-      },
-  {
-    "name": "myapp.login.retries",
-    "value": 4
-  }
-]
-```
-{: screen}
+ 
 
 
 
@@ -263,7 +151,4 @@ curl -XPOST @metric.json --header "X-Auth-User-Token:iam ${Token}" https://metri
 
 
 
-
-
-
-
+ 

@@ -1,38 +1,43 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-07-18"
+lastupdated: "2018-02-01"
 
 ---
 
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
-# 使用警示 API 來使用規則
+# CRUD 規則
 {: #rules}
 
-使用「警示 API」來建立、刪除及更新規則，以顯示規則的詳細資料，以及列出 {{site.data.keyword.Bluemix_notm}} 空間中所定義的規則。
+使用 Alerts API 來建立、刪除或更新規則、顯示規則的詳細資料，以及列出空間中所定義的規則。
 {:shortdesc}
 
 
 ## 建立規則
 {: #create}
 
-若要建立規則，請完成下列步驟：
+若要在 {{site.data.keyword.monitoringshort}} 服務中配置規則，請建立包括規則詳細資料的規則檔案，並向 {{site.data.keyword.monitoringshort}} 服務登錄此規則。
+
+請完成下列步驟：
 
 1. 建立規則檔案，其中包含有效的 JSON。儲存檔案。 
 
-    例如，若要儲存檔案，請對您為 {{site.data.keyword.Bluemix_notm}} 空間中所執行查詢定義的規則，使用 *s-* 之類的字首。
+    例如，若要儲存檔案，請對您為空間中所執行查詢定義的規則，使用 *s-* 之類的字首。
 	
 	**提示：** 
 	
-	* 請使用不同的通知方法，為警示錯誤或警告的查詢定義不同的規則。每個規則只能設定 1 個通知方法。 
+	* 請使用不同的通知方法，為警示錯誤或警告的查詢定義不同的規則。 
 	* 請在下列目錄中建立規則檔案：*~/cloud-monitoring/rules/*，以將 {{site.data.keyword.monitoringshort_notm}} 服務的資源分組。 
 
     在規則的檔案中輸入下列資訊：
@@ -50,7 +55,7 @@ lastupdated: "2017-07-18"
 	* *dashboard_url*：定義 URL，它會在 Grafana 顯示具有查詢的儀表板。
 	* *notifications*：此規則所述警示觸發時的通知方法。
 	
-	例如， 
+	例如，規則檔案 myrulefile.json 會如下所示：
 	
 	```
 	{
@@ -73,46 +78,48 @@ lastupdated: "2017-07-18"
 	```
 	{: screen}
 	
-2. 登入 {{site.data.keyword.Bluemix_notm}} 地區、組織及空間。執行下列指令：
-
-    例如，若要登入「美國南部」地區，請執行下列指令：
+	然後，匯出變數 *RULE_FILE*：
 	
+	```
+	export RULE_FILE="myrulefile.json"
+	```
+	{: screen}
+	
+2. 登入 {{site.data.keyword.Bluemix_notm}} 中的地區、組織及空間。
+
+    如需相關資訊，請參閱[如何登入 {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login)。
+
+3. 取得安全記號。您可以使用 UAA 記號、IAM 記號或 API 金鑰。選擇下列其中一種方法來取得安全記號：
+	
+	* 若要取得 UAA 記號，請參閱[使用 {{site.data.keyword.Bluemix_notm}} CLI 取得 UAA 記號](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli)。
+	
+	* 若要取得 IAM 記號，請參閱[使用 {{site.data.keyword.Bluemix_notm}} CLI 取得 IAM 記號](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam)。
+	
+	* 若要取得 API 金鑰，請參閱[取得 API 金鑰](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key)。
+	
+	例如，若要使用 IAM 記號，請執行下列指令：
+    
     ```
-    bx login -a https://api.ng.bluemix.net
+    bx iam oauth-tokens
     ```
     {: codeblock}
-
-    遵循指示。輸入您的 {{site.data.keyword.Bluemix_notm}} 認證，選取組織及空間。
-
-3. 取得鑑別記號或 API 金鑰。
-
-	* 若為 IAM 鑑別，請參閱[使用 Bluemix CLI 取得 IAM 記號](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli)或[使用 Bluemix CLI 產生 IAM API 金鑰](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli)。
 	
-	* 若為 UAA 鑑別，請參閱[使用 Bluemix CLI 取得 UAA 記號](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli)或[使用 REST API 取得 UAA 記號](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api)。
-
-	例如，若要使用 IAM 記號，請執行下列指令：
-
-	```
-	bx iam oauth-tokens
-	```
-	{: codeblock}
+    這個指令的結果如下：
 	
-	這個指令的結果如下：
-	
-	```
-	IAM token:  Bearer djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ
+    ```
+    IAM token:  Bearer djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ
     UAA token:  Bearer eyJhbGciOiJIUz..Ky6vagp3k_QcIcKJ-td83qXhO5Uze43KcplG6PzcGs8
-	```
-	{: screen}
+    ```
+    {: screen}
 	
-	然後，匯出變數 *Token*：
+    然後，匯出變數 *Token*：
 	
-	```
-	export Token="djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ"
-	```
-	{: screen}
+    ```
+    export Token="djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ"
+    ```
+    {: screen}
 	
-	**附註：**記號會排除 *Bearer*。
+    **附註：**記號會排除 *Bearer*。
 	
 4. 取得空間 GUID。GUID 必須加上字首 *s-*，以識別空間。
 
@@ -146,16 +153,16 @@ lastupdated: "2017-07-18"
 	```
 	{: screen}
 	
-5. 執行下列 cURL 指令，以建立規則：
+5. 執行下列 cURL 指令，以在 {{site.data.keyword.monitoringshort}} 服務中登錄規則：
 
 	```
-	curl -XPOST -d @Rule_File --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rule
+	curl -XPOST -d @$RULE_FILE --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/rule
 	```
 	{: codeblock}
 	
 	其中
 	
-	* Rule_File 是定義警示規則的 JSON 檔案。
+	* RULE_FILE 是用於定義警示規則的 JSON 檔案。
 	
 	* *X-Auth-User-Token* 參數會傳遞 {{site.data.keyword.Bluemix_notm}} UAA 記號、IAM 記號或 API 金鑰。
 	
@@ -169,37 +176,34 @@ lastupdated: "2017-07-18"
 	
 	* Token 是 UAA 或 IAM 鑑別記號，或是 API 金鑰。
 	
-	* Space 是空間的 GUID。只有在您使用 UAA 記號時才需要它。
+	* Space 是空間的 GUID。 
+	
+	* METRICS_ENDPOINT 代表服務的進入點。每一個地區都有不同的 URL。若要取得每個地區的端點清單，請參閱[端點](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints)。
 	
     例如， 	
 	
 	```
-	curl -XPOST -d @s-rule-1.json --header "X-Auth-User-Token:iam ${Token}" https://metrics.ng.bluemix.net/v1/alert/rule
+	curl -XPOST -d @$RULE_FILE --header "X-Auth-User-Token:iam ${Token}" https://metrics.ng.bluemix.net/v1/alert/rule
 	```
 	{: screen}
 
 ## 刪除規則
 {: #delete}
 
-若要列出所有規則，請完成下列步驟：
+若要刪除規則，請完成下列步驟：
 
-1. 登入 {{site.data.keyword.Bluemix_notm}} 地區、組織及空間。執行下列指令：
+1. 登入 {{site.data.keyword.Bluemix_notm}} 中的地區、組織及空間。 
 
-    例如，若要登入「美國南部」地區，請執行下列指令：
+    如需相關資訊，請參閱[如何登入 {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login)。
+
+2. 取得安全記號。您可以使用 UAA 記號、IAM 記號或 API 金鑰。選擇下列其中一種方法來取得安全記號：
 	
-    ```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    遵循指示。輸入您的 {{site.data.keyword.Bluemix_notm}} 認證，選取組織及空間。
-
-2. 取得鑑別記號或 API 金鑰。
-
-	* 若為 IAM 鑑別，請參閱[使用 Bluemix CLI 取得 IAM 記號](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli)或[使用 Bluemix CLI 產生 IAM API 金鑰](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli)。
+	* 若要取得 UAA 記號，請參閱[使用 {{site.data.keyword.Bluemix_notm}} CLI 取得 UAA 記號](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli)。
 	
-	* 若為 UAA 鑑別，請參閱[使用 Bluemix CLI 取得 UAA 記號](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli)或[使用 REST API 取得 UAA 記號](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api)。
-
+	* 若要取得 IAM 記號，請參閱[使用 {{site.data.keyword.Bluemix_notm}} CLI 取得 IAM 記號](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam)。
+	
+	* 若要取得 API 金鑰，請參閱[取得 API 金鑰](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key)。
+	
 	例如，若要使用 IAM 記號，請執行下列指令：
 
 	```
@@ -255,17 +259,17 @@ lastupdated: "2017-07-18"
 	export Space="s-667fadfc-jhtg-1234-9f0e-cf4123451095"
 	```
 	{: screen}
-	
+		
 4. 執行下列 cURL 指令，以刪除規則：
 
 	```
-	curl -XDELETE --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rule/Rule_Name
+	curl -XDELETE --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/rule/Rule_Name
 	```
 	{: codeblock}
 	
 	其中
 	
-    * *X-Auth-User-Token* 參數會傳遞 {{site.data.keyword.Bluemix_notm}} UAA 記號、IAM 記號或 API 金鑰。
+	* *X-Auth-User-Token* 參數會傳遞 UAA 記號、IAM 記號或 API 金鑰。
 	
 	* *Auth_Type* 是定義記號或 API 金鑰類型的字首。下列清單概述有效值：*apikey*、*iam* 或 *uaa*，其中
 
@@ -277,9 +281,11 @@ lastupdated: "2017-07-18"
 	
 	* Token 是 UAA 或 IAM 鑑別記號，或是 API 金鑰。
 	
-	* Space 是空間的 GUID。只有在您使用 UAA 記號時才需要它。
+	* Space 是空間的 GUID。 
 	
 	* Rule_Name 是 *name* 欄位中指定的規則名稱。
+	
+	* METRICS_ENDPOINT 代表服務的進入點。每一個地區都有不同的 URL。若要取得每個地區的端點清單，請參閱[端點](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints)。
 	
     
 	
@@ -288,23 +294,18 @@ lastupdated: "2017-07-18"
 
 若要列出所有規則，請完成下列步驟：
 
-1. 登入 {{site.data.keyword.Bluemix_notm}} 地區、組織及空間。執行下列指令：
+1. 登入 {{site.data.keyword.Bluemix_notm}} 中的地區、組織及空間。 
 
-    例如，若要登入「美國南部」地區，請執行下列指令：
+    如需相關資訊，請參閱[如何登入 {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login)。
+
+2. 取得安全記號。您可以使用 UAA 記號、IAM 記號或 API 金鑰。選擇下列其中一種方法來取得安全記號：
 	
-    ```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    遵循指示。輸入您的 {{site.data.keyword.Bluemix_notm}} 認證，選取組織及空間。
-
-2. 取得鑑別記號或 API 金鑰。
-
-	* 若為 IAM 鑑別，請參閱[使用 Bluemix CLI 取得 IAM 記號](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli)或[使用 Bluemix CLI 產生 IAM API 金鑰](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli)。
+	* 若要取得 UAA 記號，請參閱[使用 {{site.data.keyword.Bluemix_notm}} CLI 取得 UAA 記號](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli)。
 	
-	* 若為 UAA 鑑別，請參閱[使用 Bluemix CLI 取得 UAA 記號](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli)或[使用 REST API 取得 UAA 記號](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api)。
-
+	* 若要取得 IAM 記號，請參閱[使用 {{site.data.keyword.Bluemix_notm}} CLI 取得 IAM 記號](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam)。
+	
+	* 若要取得 API 金鑰，請參閱[取得 API 金鑰](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key)。
+	
 	例如，若要使用 IAM 記號，請執行下列指令：
 
 	```
@@ -364,13 +365,13 @@ lastupdated: "2017-07-18"
 4. 執行下列 cURL 指令，以列出空間中的所有規則：
 
 	```
-	curl -XGET --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rules
+	curl -XGET --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/rules
 	```
 	{: codeblock}
 	
 	其中
 	
-	* *X-Auth-User-Token* 參數會傳遞 {{site.data.keyword.Bluemix_notm}} UAA 記號、IAM 記號或 API 金鑰。
+	* *X-Auth-User-Token* 參數會傳遞 UAA 記號、IAM 記號或 API 金鑰。
 	
 	* *Auth_Type* 是定義記號或 API 金鑰類型的字首。下列清單概述有效值：*apikey*、*iam* 或 *uaa*，其中
 
@@ -382,7 +383,9 @@ lastupdated: "2017-07-18"
 	
 	* Token 是 UAA 或 IAM 鑑別記號，或是 API 金鑰。
 	
-	* Space 是空間的 GUID。只有在您使用 UAA 記號時才需要它。
+	* Space 是空間的 GUID。 
+	
+	* METRICS_ENDPOINT 代表服務的進入點。每一個地區都有不同的 URL。若要取得每個地區的端點清單，請參閱[端點](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints)。
 	
 
 	
@@ -393,23 +396,18 @@ lastupdated: "2017-07-18"
 
 若要顯示規則的詳細資料，請完成下列步驟：
 
-1. 登入 {{site.data.keyword.Bluemix_notm}} 地區、組織及空間。執行下列指令：
+1. 登入 {{site.data.keyword.Bluemix_notm}} 中的地區、組織及空間。 
 
-    例如，若要登入「美國南部」地區，請執行下列指令：
+    如需相關資訊，請參閱[如何登入 {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login)。
+
+2. 取得安全記號。您可以使用 UAA 記號、IAM 記號或 API 金鑰。選擇下列其中一種方法來取得安全記號：
 	
-    ```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    遵循指示。輸入您的 {{site.data.keyword.Bluemix_notm}} 認證，選取組織及空間。
-
-2. 取得鑑別記號或 API 金鑰。
-
-	* 若為 IAM 鑑別，請參閱[使用 Bluemix CLI 取得 IAM 記號](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli)或[使用 Bluemix CLI 產生 IAM API 金鑰](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli)。
+	* 若要取得 UAA 記號，請參閱[使用 {{site.data.keyword.Bluemix_notm}} CLI 取得 UAA 記號](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli)。
 	
-	* 若為 UAA 鑑別，請參閱[使用 Bluemix CLI 取得 UAA 記號](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli)或[使用 REST API 取得 UAA 記號](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api)。
-
+	* 若要取得 IAM 記號，請參閱[使用 {{site.data.keyword.Bluemix_notm}} CLI 取得 IAM 記號](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam)。
+	
+	* 若要取得 API 金鑰，請參閱[取得 API 金鑰](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key)。
+	
 	例如，若要使用 IAM 記號，請執行下列指令：
 
 	```
@@ -469,13 +467,13 @@ lastupdated: "2017-07-18"
 4. 執行下列 cURL 指令，以顯示規則的詳細資料：
 
 	```
-	curl -XGET --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rule/Rule_Name
+	curl -XGET --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/rule/Rule_Name
 	```
 	{: codeblock}
 	
 	其中
 	
-	* *X-Auth-User-Token* 參數會傳遞 {{site.data.keyword.Bluemix_notm}} UAA 記號、IAM 記號或 API 金鑰。
+	* *X-Auth-User-Token* 參數會傳遞 UAA 記號、IAM 記號或 API 金鑰。
 	
 	* *Auth_Type* 是定義記號或 API 金鑰類型的字首。下列清單概述有效值：*apikey*、*iam* 或 *uaa*，其中
 
@@ -487,33 +485,30 @@ lastupdated: "2017-07-18"
 	
 	* Token 是 UAA 或 IAM 鑑別記號，或是 API 金鑰。
 	
-	* Space 是空間的 GUID。只有在您使用 UAA 記號時才需要它。
+	* Space 是空間的 GUID。 
 	
 	* Rule_Name 是 *name* 欄位中指定的規則名稱。
+	
+	* METRICS_ENDPOINT 代表服務的進入點。每一個地區都有不同的 URL。若要取得每個地區的端點清單，請參閱[端點](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints)。
 	
 
 ## 更新規則
 {: #update}
 
-若要更新規則，請完成下列步驟：
+若要更新規則，請藉由更新規則檔案來修改規則，然後完成下列步驟：
 
-1. 登入 {{site.data.keyword.Bluemix_notm}} 地區、組織及空間。執行下列指令：
+1. 登入 {{site.data.keyword.Bluemix_notm}} 中的地區、組織及空間。 
 
-    例如，若要登入「美國南部」地區，請執行下列指令：
+    如需相關資訊，請參閱[如何登入 {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login)。
+
+2. 取得安全記號。您可以使用 UAA 記號、IAM 記號或 API 金鑰。選擇下列其中一種方法來取得安全記號：
 	
-    ```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    遵循指示。輸入您的 {{site.data.keyword.Bluemix_notm}} 認證，選取組織及空間。
-
-2. 取得鑑別記號或 API 金鑰。
-
-	* 若為 IAM 鑑別，請參閱[使用 Bluemix CLI 取得 IAM 記號](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli)或[使用 Bluemix CLI 產生 IAM API 金鑰](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli)。
+	* 若要取得 UAA 記號，請參閱[使用 {{site.data.keyword.Bluemix_notm}} CLI 取得 UAA 記號](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli)。
 	
-	* 若為 UAA 鑑別，請參閱[使用 Bluemix CLI 取得 UAA 記號](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli)或[使用 REST API 取得 UAA 記號](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api)。
-
+	* 若要取得 IAM 記號，請參閱[使用 {{site.data.keyword.Bluemix_notm}} CLI 取得 IAM 記號](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam)。
+	
+	* 若要取得 API 金鑰，請參閱[取得 API 金鑰](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key)。
+	
 	例如，若要使用 IAM 記號，請執行下列指令：
 
 	```
@@ -573,15 +568,15 @@ lastupdated: "2017-07-18"
 4. 執行下列 cURL 指令，以更新規則：
 
 	```
-	curl -XPUT `-d @Rule_File` --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rule
+	curl -XPUT `-d @$RULE_FILE` --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/rule
 	```
 	{: codeblock}
 	
 	其中
 	
-	* Rule_File 是定義警示規則的 JSON 檔案。
+	* RULE_FILE 是用於定義警示規則的 JSON 檔案。
 	
-	* *X-Auth-User-Token* 參數會傳遞 {{site.data.keyword.Bluemix_notm}} UAA 記號、IAM 記號或 API 金鑰。
+	* *X-Auth-User-Token* 參數會傳遞 UAA 記號、IAM 記號或 API 金鑰。
 	
 	* *Auth_Type* 是定義記號或 API 金鑰類型的字首。下列清單概述有效值：*apikey*、*iam* 或 *uaa*，其中
 
@@ -593,7 +588,9 @@ lastupdated: "2017-07-18"
 	
 	* Token 是 UAA 或 IAM 鑑別記號，或是 API 金鑰。
 	
-	* Space 是空間的 GUID。只有在您使用 UAA 記號時才需要它。
+	* Space 是空間的 GUID。 
+	
+	* METRICS_ENDPOINT 代表服務的進入點。每一個地區都有不同的 URL。若要取得每個地區的端點清單，請參閱[端點](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints)。
 
 	
 	

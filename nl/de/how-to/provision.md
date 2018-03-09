@@ -1,18 +1,21 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-07-10"
+lastupdated: "2018-02-01"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
+
 
 
 # Bereitstellungs- und Überwachungsservice
@@ -29,7 +32,7 @@ Führen Sie die folgenden Schritte aus, um eine Instanz des {{site.data.keyword.
 
 1. Melden Sie sich bei Ihrem {{site.data.keyword.Bluemix_notm}}-Konto an.
 
-    Das {{site.data.keyword.Bluemix_notm}}-Dashboard finden Sie hier: [http://bluemix.net ![Symbol für externen Link](../../../icons/launch-glyph.svg "Symbol für externen Link")](http://bluemix.net "Symbol für externen Link"){:new_window}.
+    Das {{site.data.keyword.Bluemix_notm}}-Dashboard finden Sie hier: [http://bluemix.net ![Symbol für externen Link](../../../icons/launch-glyph.svg "Symbol für externen Link")](http://bluemix.net){:new_window}.
     
 	Nach der Anmeldung mit Ihrer Benutzer-ID und Ihrem Kennwort wird die {{site.data.keyword.Bluemix_notm}}-Benutzerschnittstelle geöffnet.
 
@@ -39,9 +42,13 @@ Führen Sie die folgenden Schritte aus, um eine Instanz des {{site.data.keyword.
 
 4. Klicken Sie auf die Kachel **Überwachung**.
 
-5. Wählen Sie einen Serviceplan aus. Für die Erfassung und den Zugriff auf Metriken für bis zu 45 Tage und für die Definition von Alertregeln, einschließlich Regeln mit Platzhaltern, wählen Sie den **Premium**-Plan aus. Standardmäßig ist der **Lite**-Plan festgelegt, der Sie zur Erfassung von Plattformmetriken in dem Bereich, in dem Sie den Service bereitstellen, und zu einer Aufbewahrungsdauer von 15 Tagen für diese Metriken berechtigt. 
+5. Wählen Sie einen Serviceplan aus. 
 
-    Weitere Informationen zu den Serviceplänen finden Sie in [Servicepläne](/docs/services/cloud-monitoring/monitoring_ov.html#plans).
+    * Für die Erfassung und den Zugriff auf Metriken für bis zu 45 Tage und für die Definition von Alertregeln, einschließlich Regeln mit Platzhaltern, wählen Sie den **Premium**-Plan aus. 
+	
+	* Standardmäßig ist der **Lite**-Plan festgelegt, der Sie zur Erfassung von Plattformmetriken in dem Bereich, in dem Sie den Service bereitstellen, und zu einer Aufbewahrungsdauer von 15 Tagen für diese Metriken berechtigt. 
+
+    Weitere Informationen zu den Serviceplänen finden Sie in [Servicepläne](/docs/services/cloud-monitoring/monitoring_ov.html#plan).
 	
 6. Klicken Sie auf **Erstellen**, um den {{site.data.keyword.monitoringshort}}-Service in dem {{site.data.keyword.Bluemix_notm}}-Bereich bereitzustellen, bei dem Sie angemeldet sind.
   
@@ -54,33 +61,28 @@ Führen Sie die folgenden Schritte aus, um eine Instanz des {{site.data.keyword.
 
 1. [Voraussetzung] Installieren Sie die {{site.data.keyword.Bluemix_notm}}-CLI.
 
-   Weitere Informationen dazu finden Sie unter [Installing the {{site.data.keyword.Bluemix_notm}} CLI](/docs/services/cloud-monitoring/qa/cli_qa.html#cli_qa).
+   Weitere Informationen dazu finden Sie unter [Installing the {{site.data.keyword.Bluemix_notm}} CLI](/docs/cli/reference/bluemix_cli/download_cli.html#download_install).
    
    Wenn die CLI installiert ist, fahren Sie mit dem nächsten Schritt fort.
     
-2. Melden Sie sich bei einer Region, einer Organisation und einem Bereich von {{site.data.keyword.Bluemix_notm}} an. Führen Sie den folgenden Befehl aus:
+2. Melden Sie sich bei einer Region, einer Organisation und einem Bereich in {{site.data.keyword.Bluemix_notm}} an. 
 
-    ```
-    cf login -a [https://api.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>](https://api.{DomainName})
-    ```
-    {: codeblock}
-
-    Befolgen Sie die Anweisungen. Geben Sie Ihre {{site.data.keyword.Bluemix_notm}}-Berechtigungsnachweise ein, wählen Sie eine Organisation und einen Bereich aus.
+    Weitere Informationen finden Sie unter [Wie melde ich mich bei {{site.data.keyword.Bluemix_notm}} an?](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
 	
-3. Führen Sie den Befehl `cf create-service` aus, um eine Instanz bereitzustellen.
+3. Führen Sie den Befehl `bx cf create-service` aus, um eine Instanz bereitzustellen.
 
     ```
-	cf create-service service_name service_plan service_instance_name
+	bx cf create-service service_name service_plan service_instance_name
 	```
 	{: codeblock}
 	
 	Dabei gilt:
 	
-	* service_name ist der Name des Service, also **Monitoring**.
+	* service_name ist **Monitoring**.
 	* service_plan ist der Name des Serviceplans. Für die Erfassung und den Zugriff auf Metriken für bis zu 45 Tage und für die Definition von Alertregeln, einschließlich Regeln mit Platzhaltern, wählen Sie den **Premium**-Plan aus. Standardmäßig ist der **Lite**-Plan festgelegt, der Sie zur Erfassung von Plattformmetriken in dem Bereich, in dem Sie den Service bereitstellen, und zu einer Aufbewahrungsdauer von 15 Tagen für diese Metriken berechtigt. Eine Liste der Pläne finden Sie in [{{site.data.keyword.monitoringshort}}-Servicepläne] (/docs/services/cloud-monitoring/monitoring_ov.html#plan).
 	* service_instance_name ist der Name, der für die neue Serviceinstanz verwendet werden soll, die Sie erstellen.
 	
-	Weitere Informationen zum Befehl cf finden Sie in [cf create-service](/docs/cli/reference/cfcommands/index.html#cf_create-service).
+	Weitere Informationen zum Befehl 'bx cf' finden Sie unter [cf create-service](/docs/cli/reference/cfcommands/index.html#cf_create-service).
 
 	Führen Sie zum Beispiel den folgenden Befehl aus, um eine Instanz des {{site.data.keyword.monitoringshort}}-Service mit einem Premium-Plan zu erstellen:
 	

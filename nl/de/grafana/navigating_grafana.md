@@ -1,31 +1,35 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-05-25"
+lastupdated: "2018-02-07"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
+{:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
-# Navigieren zum Grafana-Dashboard
+
+# Zum Grafana-Dashboard navigieren
 {:#navigating_grafana}
 
-In {{site.data.keyword.Bluemix}} können Sie Grafana, eine Open-Source-Analyse- und Darstellungsplattform, verwenden, um Ihre Metriken in einer Vielfalt von Grafiken (z.B. Diagramme und Tabellen) zu überwachen, zu durchsuchen, zu analysieren und zu visualisieren. Verwenden Sie Grafana, um erweiterte Analysetasks durchzuführen.
+In {{site.data.keyword.Bluemix}} können Sie Grafana, eine Open-Source-Analyse- und Darstellungsplattform, verwenden, um Ihre Metriken in einer Vielfalt von Grafiken (z. B. Diagramme und Tabellen) zu überwachen, zu durchsuchen, zu analysieren und zu visualisieren. Verwenden Sie Grafana, um erweiterte Analysetasks durchzuführen.
 {:shortdesc}
 
 Sie können Grafana auf eine der folgenden Weisen starten:
 
-* Von {{site.data.keyword.Bluemix_notm}}
+* Über {{site.data.keyword.Bluemix_notm}}
 
-    Sie können für Ihre spezifischen Docker-Container Metriken in Grafana im Kontext dieser spezifischen Container starten. Dieses Feature gilt nur für Container, die in der {{site.data.keyword.Bluemix_notm}}-verwalteten Cloudinfrastruktur implementiert sind. 
+    Sie können für Ihre spezifischen Docker-Container Metriken in Grafana im Kontext dieser spezifischen Container starten. Dieses Feature gilt nur für Container, die in der {{site.data.keyword.Bluemix_notm}}-verwalteten Infrastruktur implementiert sind. 
     
-    Weitere Informationen finden Sie unter [Navigieren vom {{site.data.keyword.Bluemix_notm}}-Dashboard zum Grafana-Dashboard](navigating_grafana.html#launch_grafana_from_bluemix).
+    Weitere Informationen finden Sie unter [Vom {{site.data.keyword.Bluemix_notm}}-Dashboard zum Grafana-Dashboard navigieren](navigating_grafana.html#launch_grafana_from_bluemix).
 
 * Von einem direkten Browser-Link
 
@@ -33,19 +37,19 @@ Sie können Grafana auf eine der folgenden Weisen starten:
     
     Weitere Informationen finden Sie unter [Von einem Web-Browser zum Grafana-Dashboard navigieren](navigating_grafana.html#launch_grafana_from_browser).
     
-Weitere Informationen zu Grafana finden Sie im [Grafana Benutzerhandbuch![Symbol für externen Link](../../../icons/launch-glyph.svg "Symbol für externen Link")](http://docs.grafana.org/guides/getting_started/ "Symbol für externen Link"){: new_window}.
+Weitere Informationen zu Grafana finden Sie im [Grafana Benutzerhandbuch![Symbol für externen Link](../../../icons/launch-glyph.svg "Symbol für externen Link")](http://docs.grafana.org/guides/getting_started/){: new_window}.
 
 
-##  Navigieren vom Bluemix-Dashboard zum Grafana-Dashboard
+##  Vom IBM Cloud-Dashboard zum Grafana-Dashboard navigieren
 {: #launch_grafana_from_bluemix}
 
-**Hinweis:** Dieses Feature gilt nur für Container, die in der {{site.data.keyword.Bluemix_notm}}-verwalteten Cloudinfrastruktur implementiert sind. 
+**Hinweis:** Dieses Feature gilt nur für Container, die in der {{site.data.keyword.Bluemix_notm}}-verwalteten Infrastruktur implementiert sind. 
 
 Die Abfrage wird verwendet, um die Daten zu filtern, die in Grafana angezeigt werden. Grafana ruft Daten für die {{site.data.keyword.Bluemix_notm}}-Container ab, von denen Sie Kibana starten. 
 
 Führen Sie die folgenden Schritte aus, um die Metriken eines Docker-Containers in Grafana anzuzeigen:
 
-1. Melden Sie sich bei {{site.data.keyword.Bluemix_notm}} an und klicken Sie anschließend vom {{site.data.keyword.Bluemix_notm}}-Dashboard auf den Container. 
+1. Melden Sie sich bei {{site.data.keyword.Bluemix_notm}} an und klicken Sie anschließend vom *Dashboard* aus auf den Container. 
     
 2. Klicken Sie in der Navigationsleiste auf **Überwachung und Protokolle**. Die Registerkarte für die Überwachung wird angezeigt. 
     
@@ -59,7 +63,35 @@ Die Abfrage wird verwendet, um die Daten zu filtern, die in Grafana angezeigt we
 
 Führen Sie die folgenden Schritte aus, um Grafana von einem Browser zu starten:
 
-1. Öffnen Sie [https://metrics.ng.bluemix.net](https://metrics.ng.bluemix.net), um sich bei der Grafana-Benutzerschnittstelle anzumelden. 
+1. Öffnen Sie einen Web-Browser. 
+2. Geben Sie die URL für die Region ein, in der Sie Metriken überwachen wollen. 
+
+    In der folgenden Tabelle sind die URLs nach Region aufgelistet:
+	<table>
+      <caption>URLs zum Starten von Grafana in verschiedenen Regionen</caption>
+      <tr>
+        <th>Region</th>
+	    <th>Endpunkt</th>
+      </tr>
+      <tr>
+        <td>Deutschland</td>
+	    <td>[https://metrics.eu-de.bluemix.net](https://metrics.eu-de.bluemix.net)</td>
+      </tr>
+      <tr>
+        <td>Vereinigtes Königreich</td>
+	    <td>[https://metrics.eu-gb.bluemix.net](https://metrics.eu-gb.bluemix.net)</td>
+      </tr>
+      <tr>
+        <td>USA (Süden)</td>
+    	<td>[https://metrics.ng.bluemix.net](https://metrics.ng.bluemix.net)</td>
+      </tr>
+      <tr>
+        <td>Vereinigtes Königreich</td>
+	    <td>[https://metrics.au-syd.bluemix.net](https://metrics.au-syd.bluemix.net)</td>
+      </tr>
+      
+    </table>
+	
 2. Wählen Sie **Grafana** aus.
      
 

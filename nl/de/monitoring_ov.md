@@ -1,18 +1,20 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-07-12"
+lastupdated: "2018-02-07"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
 # Informationen
@@ -21,17 +23,17 @@ lastupdated: "2017-07-12"
 Verwenden Sie den {{site.data.keyword.monitoringlong}}-Service zur Erweiterung Ihrer Erfassungs- und Aufbewahrungsfunktionen, wenn Sie mit Metriken arbeiten, und um Regeln und Alerts definieren zu können, die Sie über Bedingungen informieren, die Ihre Aufmerksamkeit erfordern. Stärken Sie Ihr DevOps-Team durch Features, die Ihnen Einblick in die Leistung und den Ressourcenverbrauch Ihrer Apps bieten. So identifizieren Sie schnell aktuelle Trends und können Probleme sofort erkennen und diagnostizieren. Dies amortisiert sich sofort und ist eine Investition mit geringen Anschaffungs- und Betriebskosten. Verwenden Sie Grafana, um Ihre Umgebung zu überwachen. 
 {:shortdesc}
 
-{{site.data.keyword.Bluemix}} erfasst standardmäßig Metriken zur CPU-Nutzung, Speicherauslastung und Netzein-/-ausgabe für den {{site.data.keyword.containershort}} und zeigt diese an. Sie können den {{site.data.keyword.monitoringshort}}-Service in {{site.data.keyword.Bluemix_notm}} verwenden, um Schlüsselmesswerte in Ihrer Umgebung und Ihren Anwendungen automatisch zu erfassen und zu messen. Es ist keine spezielle Instrumentierung erforderlich, um Metriken zu erfassen. Sie können beispielsweise Informationen, die von Leistungsmetriken bereitgestellt wurden, verwenden, um zu überwachen, wie ein Service in der Cloud ausgeführt wird. Sie können Ressourcenengpässe erkennen und das Service-Level-Agreement (SLA) im Blick behalten. Wenn Sie Leistungsdaten für einen Service analysieren, können Sie Situationen erkennen, die zu einem Ressourcenengpass führen können und folglich Ihr Service-SLA mit Ihren Kunden betreffen. Indem Sie in einem frühen Stadium Maßnahmen ergreifen, können Sie verhindern, dass solche Situationen Ihr Geschäft beeinträchtigen.  
-
-Sie können Metriken für Ihre Cloud Foundry-Anwendungen (CF-Anwendungen) und virtuellen Maschinen (VM) an den {{site.data.keyword.monitoringshort}}-Service senden.  
-
 Die folgende Abbildung zeigt eine Übersicht der unterschiedlichen Ressourcen, von denen aus Sie Metriken zur Analyse an den {{site.data.keyword.monitoringshort}}-Service senden können.
 
-![Übersicht über Komponenten höherer Ebene im {{site.data.keyword.monitoringlong}}-Service](images/cloud_monitoring_ov.gif)
+![Allgemeine Komponentenübersicht im {{site.data.keyword.monitoringlong}}-Service](images/cloud_monitoring_ov.png "Allgemeine Komponentenübersicht im {{site.data.keyword.monitoringlong}}-Service")
 
-Weitere Informationen zur Vorgehensweise beim Senden von Metriken finden Sie unter [Metriken an den {{site.data.keyword.monitoringshort}}-Service senden.](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#send_retrieve_metrics_ov)
+{{site.data.keyword.Bluemix}} erfasst standardmäßig Metriken zur CPU-Nutzung, Speicherauslastung und Netzein-/-ausgabe für den {{site.data.keyword.containershort}} und zeigt diese an. Sie können den {{site.data.keyword.monitoringshort}}-Service in {{site.data.keyword.Bluemix_notm}} verwenden, um Schlüsselmesswerte in Ihrer Umgebung und Ihren Anwendungen automatisch zu erfassen und zu messen. Es ist keine spezielle Instrumentierung erforderlich, um Metriken zu erfassen. Sie können beispielsweise Informationen, die von Leistungsmetriken bereitgestellt wurden, verwenden, um zu überwachen, wie ein Service in der Cloud ausgeführt wird. Sie können Ressourcenengpässe erkennen und das Service-Level-Agreement (SLA) im Blick behalten. Wenn Sie Leistungsdaten für einen Service analysieren, können Sie Situationen erkennen, die zu einem Ressourcenengpass führen können und folglich Ihr Service-SLA mit Ihren Kunden betreffen. Indem Sie in einem frühen Stadium Maßnahmen ergreifen, können Sie verhindern, dass solche Situationen Ihr Geschäft beeinträchtigen.  
 
-Sie können auf den {{site.data.keyword.monitoringlong}}-Service über den {{site.data.keyword.Bluemix_notm}}-Katalog zugreifen.  Für den {{site.data.keyword.containershort}} mit Einzel- und Gruppencontainern haben Sie darüber hinaus die Möglichkeit, über die {{site.data.keyword.Bluemix_notm}}-Benutzerschnittstelle auf den Service zuzugreifen. 
+Sie können Metriken für Ihre Cloud Foundry-Anwendungen (CF-Anwendungen) und virtuellen Maschinen (VM) an den {{site.data.keyword.monitoringshort}}-Service senden. Weitere Informationen zur Vorgehensweise beim Senden von Metriken finden Sie unter [Metriken an den {{site.data.keyword.monitoringshort}}-Service senden.](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#send_retrieve_metrics_ov)
+
+Sie können den {{site.data.keyword.monitoringshort}}-Service über den {{site.data.keyword.Bluemix_notm}}-Katalog bereitstellen.  
+
+Sie können vom {{site.data.keyword.monitoringshort}}-Service erfasste Metriken über das {{site.data.keyword.Bluemix_notm}}-Dashboard anzeigen und analysieren.  
 
 ## Gründe für die Verwendung des Überwachungsservice
 {: #value}
@@ -40,7 +42,7 @@ Sie können auf den {{site.data.keyword.monitoringlong}}-Service über den {{sit
 
     Der {{site.data.keyword.monitoringlong_notm}}-Service erfasst automatisch Metrikdaten von den {{site.data.keyword.IBM_notm}} Cloud-Services und macht so Agenten überflüssig. APIs erleichtern das Hinzufügen von angepassten Metriken und das Abfragen Ihrer Überwachungsdaten. 
 	
-	Der {{site.data.keyword.monitoringlong_notm}}-Service bietet eine Erfassung von Metriken in Intervallen von einer Minute. Im Rahmen des Lite-Plans werden die Metriken bei vollständiger Auflösung für 15 Tage gespeichert. Im Rahmen des Premium-Plans werden die Metriken bei vollständiger Auflösung für 45 Tage gespeichert. 
+	Der {{site.data.keyword.monitoringlong_notm}}-Service bietet eine Erfassung von Metriken in Intervallen von einer Minute.  Im Rahmen des Lite-Plans werden die Metriken bei vollständiger Auflösung für 15 Tage gespeichert.  Im Rahmen des Premium-Plans werden die Metriken bei vollständiger Auflösung für 45 Tage gespeichert.
 
 2. **Sie können die Überwachung ohne großen Aufwand in Ihrer Anwendung mit APIs erweitern**
 
@@ -52,7 +54,7 @@ Sie können auf den {{site.data.keyword.monitoringlong}}-Service über den {{sit
 	
 4. **Erstellen Sie wiederverwendbare Dashboards und machen Sie sie interaktiv.**
 
-    Die Grafana-Bereitstellung des {{site.data.keyword.monitoringlong_notm}}-Service bietet Unterstützung für die Erstellung benutzerdefinierter Dashboards mit einer großen Palette an Visualisierungsoptionen. Machen Sie Dashboards durch den Einsatz von Vorlagen dynamisch, indem Sie Metrikabfragen mit Variablen verwenden.
+    Die Grafana-Bereitstellung des {{site.data.keyword.monitoringlong_notm}}-Service bietet Unterstützung für die Erstellung benutzerdefinierter Dashboards mit einer großen Palette an Visualisierungsoptionen.  Machen Sie Dashboards durch den Einsatz von Vorlagen dynamisch, indem Sie Metrikabfragen mit Variablen verwenden.
 
 5. **Erhalten Sie Alerts.**
 
@@ -60,46 +62,48 @@ Sie können auf den {{site.data.keyword.monitoringlong}}-Service über den {{sit
 
 6. **Wählen Sie den Serviceplan aus, der Ihren Anforderungen entspricht.** 
 
-    Abhängig von den jeweiligen Nutzungsanforderungen können Sie den Lite- oder den Premium-Serviceplan auswählen. Der Lite-Plan bietet eine grundlegende Plattformmetrikerfassung und die zugehörige Alertfunktionalität. Alternativ dazu können Sie den Premium-Plan auswählen, der eine umfassendere Metrikverarbeitung mit längerer Aufbewahrungsdauer, eine größere Anzahl definierbarer Alerts - einschließlich Alerts für mehrere Services und Apps - und Zugriff auf die Service-APIs ermöglicht. 
+    Abhängig von den jeweiligen Nutzungsanforderungen können Sie den Lite- oder den Premium-Serviceplan auswählen.  Der Lite-Plan bietet eine grundlegende Plattformmetrikerfassung und die zugehörige Alertfunktionalität.  Alternativ dazu können Sie den Premium-Plan auswählen, der eine umfassendere Metrikverarbeitung mit längerer Aufbewahrungsdauer, eine größere Anzahl definierbarer Alerts - einschließlich Alerts für mehrere Services und Apps - und Zugriff auf die Service-APIs ermöglicht.
 
  
-## Serviceplan
+## Servicepläne
 {: #plan}
 
 Der {{site.data.keyword.monitoringshort}}-Service bietet mehrere Pläne. Jeder Plan weist eine andere Funktionalität bei der Metrikzusammenstellung, Aufbewahrung und Alertdefinition auf. 
 
 Sie können einen Plan über die {{site.data.keyword.Bluemix_notm}}-Benutzerschnittstelle oder über die Befehlszeile ändern. Sie können Ihren Plan jederzeit aktualisieren oder reduzieren. Weitere Informationen zu Serviceplanupgrades in {{site.data.keyword.Bluemix_notm}} finden Sie in [Plan ändern](/docs/services/cloud-monitoring/plan/change_plan.html#change_plan). 
 
-Die folgende Tabelle stellt die verfügbaren Pläne dar:
+In der folgenden Tabelle sind die Pläne aufgeführt, die bei der Bereitstellung des {{site.data.keyword.monitoringshort}}-Service in einem Bereich verfügbar sind:
 
 <table>
-    <caption>Tabelle 1. Zusammenfassung der Pläne für den {{site.data.keyword.monitoringshort}}-Service.</caption>
+    <caption>Tabelle 1. Zusammenfassung der Pläne für den {{site.data.keyword.monitoringshort}}-Service pro Bereich.</caption>
       <tr>
         <th>Plan</th>
         <th>Senden der Metriken mithilfe der API</th>
         <th>Aufbewahrungsdauer für Metriken</th>
         <th>Alerts</th>
+		    <th>Benachrichtigungsmethoden</th>
       </tr>
       <tr>
         <td>Lite (Standard)</td>
         <td>Nicht verfügbar</td>
         <td>15 Tage</td>
-        <td>Sie können bis zu 10 Alertregeln für einzelne Metriken oder eine einzelne Regel mit einem Platzhalter definieren.</td>
+        <td>Sie können bis zu 10 Alertregeln für einzelne Metrikabfragen oder eine einzelne Alertregel mit einem Platzhalter definieren.</td>
+		    <td>E-Mail</td>
       </tr>
       <tr>
         <td>Premium</td>
         <td>Verfügbar</td>
         <td>45 Tage</td>
-        <td>Sie können Alertregeln einschließlich Regeln mit Platzhaltern definieren. </td>
+        <td>Sie können Alertregeln einschließlich Regeln mit Platzhaltern definieren.</td>
+		    <td>E-Mail, Webhook, PagerDuty</td>
       </tr>
 </table>
 
-**Hinweis:** Der Lite-Plan bietet dieselben Features wie die integrierte Überwachungsfunktion in {{site.data.keyword.Bluemix_notm}}.
+**Hinweis:** Der Lite-Plan bietet dieselben Features wie die in {{site.data.keyword.Bluemix_notm}} integrierten Überwachungsfunktionen. Die Kontodomäne bietet wiederum dieselben Features wie der Lite-Plan.
 
 
 ## Aufbewahrungsdauer für Metriken
 {: #metrics_retention}
-
 
 In der folgenden Tabelle ist die Aufbewahrungsdauer auf der Basis Ihres Serviceplans zusammengefasst.
 
@@ -131,18 +135,21 @@ Im {{site.data.keyword.Bluemix_notm}}-Katalog können Sie den {{site.data.keywor
 
 Beachten Sie die folgenden Informationen zum {{site.data.keyword.monitoringshort}}-Service:
 
-* Um Metriken für die Cloudressourcen zu erfassen, die in einem {{site.data.keyword.Bluemix_notm}}-Bereich ausgeführt werden, müssen Sie den Service in demselben Bereich zur Verfügung stellen, in dem die Ressourcen ausgeführt werden.
+* Sie können nur eine Instanz des {{site.data.keyword.monitoringshort}}-Service pro Bereich bereitstellen.
+* Um Metriken für die Cloudressourcen zu erfassen, die in einem Cloud Foundry-Bereich ausgeführt werden, müssen Sie den Service in demselben Bereich zur Verfügung stellen, in dem die Ressourcen ausgeführt werden.
 
-* Um Metriken an den {{site.data.keyword.monitoringshort}}-Service zu senden, müssen Sie eine Instanz des {{site.data.keyword.monitoringshort}}-Service in dem {{site.data.keyword.Bluemix_notm}}-Bereich bereitstellen, an den die Metriken gesendet werden sollen. 
 
 
 
 ## Regionen
 {: #regions}
 
-Der {{site.data.keyword.monitoringshort}}-Service steht in der folgenden Region zur Verfügung:
+Der {{site.data.keyword.monitoringshort}}-Service steht in den folgenden Regionen zur Verfügung:
 
-* US South
+* Deutschland
+* Sydney
+* Vereinigtes Königreich
+* USA (Süden)
 
 
 
@@ -150,13 +157,13 @@ Der {{site.data.keyword.monitoringshort}}-Service steht in der folgenden Region 
 ## URLs für den Überwachungsservice
 {: #region}
 
-Der {{site.data.keyword.monitoringshort}}-Service steht jeder Person mit einer {{site.data.keyword.Bluemix_notm}}-Benutzer-ID und Zugriff auf einen Bereich in einer {{site.data.keyword.Bluemix_notm}}-Organisation zur Verfügung. 
+Der {{site.data.keyword.monitoringshort}}-Service steht jeder Person mit einer {{site.data.keyword.Bluemix_notm}}-ID und Berechtigungen zum Arbeiten mit dem Service in {{site.data.keyword.Bluemix_notm}} zur Verfügung.
 
 * Für jede Region, in der der {{site.data.keyword.monitoringshort}}-Service verfügbar ist, gibt es eine andere Gruppe von Endpunkten. 
 * Es gibt eine einzelne URL, die von den Endpunkten für die Aufnahme und die API-/Webbenutzerschnittstelle gemeinsam genutzt wird.
 * Port 443 ist ein TLS-Port, der für den Zugriff auf Metriken über die API und die Web-Benutzerschnittstelle (Grafana) verwendet wird.
 
-In der folgenden Tabelle ist die URL der öffentlichen Cloudumgebung aufgeführt, die unterstützt wird:
+In der folgenden Tabelle sind die URLs nach Region aufgelistet:
 
 <table>
   <caption>Tabelle 3. Liste der Endpunkte zur Verwendung mit dem {{site.data.keyword.monitoringshort}}-Service.</caption>
@@ -165,8 +172,20 @@ In der folgenden Tabelle ist die URL der öffentlichen Cloudumgebung aufgeführt
 	<th>Endpunkt</th>
   </tr>
   <tr>
-    <td>US South</td>
-	<td>metrics.ng.bluemix.net</td>
+    <td>Deutschland</td>
+	<td>[https://metrics.eu-de.bluemix.net](https://metrics.eu-de.bluemix.net)</td>
+  </tr>
+  <tr>
+    <td>Sydney</td>
+	<td>[https://metrics.au-syd.bluemix.net](https://metrics.au-syd.bluemix.net)</td>
+  </tr>
+  <tr>
+    <td>Vereinigtes Königreich</td>
+	<td>[https://metrics.eu-gb.bluemix.net](https://metrics.eu-gb.bluemix.net)</td>
+  </tr>
+  <tr>
+    <td>USA (Süden)</td>
+	<td>[https://metrics.ng.bluemix.net/](https://metrics.ng.bluemix.net/)</td>
   </tr>
 </table>
 

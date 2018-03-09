@@ -1,44 +1,52 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-07-12"
+lastupdated: "2018-02-07"
 
 ---
 
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
-
-# 检索规则的历史记录
+# 使用警报 API 检索警报的历史记录
 {: #retrieve_history}
 
+使用警报 API 可检索警报的历史记录。
+{:shortdesc}
 
-要检索警报的历史记录，请完成以下步骤：
 
-1. 登录到 {{site.data.keyword.Bluemix_notm}} 区域、组织和空间。运行以下命令：
+要使用警报 API 来检索警报的历史记录，请完成以下步骤：
 
-    例如，要登录到美国南部区域，请运行以下命令：
+1. 登录到 {{site.data.keyword.Bluemix_notm}} 中的区域、组织和空间。 
+
+    有关更多信息，请参阅[如何登录到 {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login)。
+
+2. 获取安全性令牌。您可以使用 UAA 令牌、IAM 令牌或 API 密钥。选择下列其中一种方法来获取安全性令牌：
+
+
 	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
+	* 要获取 UAA 令牌，请参阅[使用 {{site.data.keyword.Bluemix_notm}} CLI 获取 UAA 令牌](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli)。
+	
+	* 要获取 IAM 令牌，请参阅[使用 {{site.data.keyword.Bluemix_notm}} CLI 获取 IAM 令牌](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam)。
+	
+	* 要获取 API 密钥，请参阅[获取 API 密钥](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key)。
+	
+	通过您登录到 {{site.data.keyword.Bluemix_notm}} 的相同终端，为令牌设置 Token 变量。
 
-    遵循指示信息进行操作。输入您的 {{site.data.keyword.Bluemix_notm}} 凭证，然后选择组织和空间。
 
-2. 获取认证令牌或 API 密钥。
 
-    * 有关 IAM 认证的信息，请参阅[使用 Bluemix CLI 获取 IAM 令牌](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli)或[使用 Bluemix CLI 生成 IAM API 密钥](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli)。
-	                                          
-	* 对于 UAA 认证，请参阅[使用 Bluemix CLI 获取 UAA 令牌](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli)或[使用 REST API 获取 UAA 令牌](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api)。
+    例如，要使用 IAM 令牌，请运行以下命令：
 
-	例如，要使用 IAM 令牌，请运行以下命令：
+    
 
     ```
 	bx iam oauth-tokens
@@ -86,25 +94,37 @@ lastupdated: "2017-07-12"
 	```
 	{: screen}
 	
-	然后，导出变量 *Space*：
+	然后，导出变量 *Space*。**注：** GUID 必须以 *s-* 作为前缀，以标识空格。
+	
+	例如：
 	
 	```
 	export Space="s-667fadfc-jhtg-1234-9f0e-cf4123451095"
 	```
 	{: screen}
 	
-4. 运行以下 cURL 命令来获取警报的历史记录：
+4. 检索规则的历史记录
 
-    ```
-	curl -XGET --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/history?rule=Rule_Name
-	```
-	{: codeblock}
+    * 要按规则的名称检索规则的历史记录，请参阅[使用规则名称检索规则的历史记录](/docs/services/cloud-monitoring/alerts/retrieve_history.html#by_name)。
+	* 要检索一段时间的规则历史记录，请参阅[检索最近 48 小时的规则历史记录](/docs/services/cloud-monitoring/alerts/retrieve_history.html#by_time)。
+	* 要从规则的历史记录中检索多个条目，请参阅[检索规则的历史记录中的最后 3 个条目](/docs/services/cloud-monitoring/alerts/retrieve_history.html#number)。
 	
-	其中
 	
-	* *X-Auth-User-Token* 是用于传递 {{site.data.keyword.Bluemix_notm}} UAA 令牌、IAM 令牌或 API 密钥的参数。
+## 按规则名称检索规则的历史记录
+{: #by_name}
 	
-	* *Auth_Type* 是用于定义令牌或 API 密钥的类型的前缀。以下列表概括了有效值：*apikey*、*iam* 或 *uaa*，其中：
+运行以下 cURL 命令来获取警报的历史记录：
+
+```
+curl -XGET --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/history?rule_name=RULE_NAME
+```
+{: codeblock}
+	
+其中
+	
+    * *X-Auth-User-Token* 是用于传递 UAA 令牌、IAM 令牌或 API 密钥的参数。
+	
+* *Auth_Type* 是用于定义令牌或 API 密钥的类型的前缀。以下列表概括了有效值：*apikey*、*iam* 或 *uaa*，其中：
 
   * *apikey* 表明令牌是 API 密钥。
 		* *iam* 表明指定的令牌是 IAM 生成的令牌。
@@ -112,14 +132,22 @@ lastupdated: "2017-07-12"
 	
 	* *X-Auth-Scope-Id* 是用于传递空间 GUID 的参数。该 GUID 必须以 *s-* 为前缀以标识空间。如果使用 UAA 认证令牌，此头是必需的。如果使用 IAM 认证令牌，那么此头是可选的，并且将使用绑定到该令牌的域信息。
 	
-	* Token 是 UAA 或 IAM 认证令牌或者 API 密钥。
+	* *Token* 是 UAA 或 IAM 认证令牌，或 API 密钥。
 	
-	* Space 是空间的 GUID。仅当使用 UAA 令牌时才是必需的。
+* *Space* 是空间的 GUID。
 	
-	* Rule_Name 是用于触发警报的规则的名称。值为在 *name* 字段中指定的名称。
+* *RULE_NAME* 是用于触发警报的规则的名称。值为在 *name* 字段中指定的名称。
 	
 
-例如，规则“highNginxCPU”的历史记录如下所示：
+* *METRICS_ENDPOINT* 表示服务的入口点。每个区域都有不同的 URL。要获取每个区域的端点列表，请参阅[端点](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints)。
+	
+    例如，规则“highNginxCPU”的历史记录如下所示：
+
+```
+curl -XGET --header "X-Auth-User-Token: iam ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/history?rule_name=highNginxCPU
+```
+{: screen}
+
 
 ```
 [
@@ -149,3 +177,66 @@ lastupdated: "2017-07-12"
 {: screen}
 
 
+## 检索最近 48 小时的规则历史记录
+{: #by_time}
+
+运行以下 cURL 命令以获取最近 48 小时的警报历史记录：
+
+```
+curl -H "X-Auth-User-Token: iam $Token" -H "X-Auth-Scope-Id:$Space" METRICS_ENDPOINT/v1/alert/history?start=-48h
+```
+{: codeblock}
+
+	其中
+	
+	* *X-Auth-User-Token* 是用于传递 UAA 令牌、IAM 令牌或 API 密钥的参数。
+	
+* *Auth_Type* 是用于定义令牌或 API 密钥的类型的前缀。以下列表概括了有效值：*apikey*、*iam* 或 *uaa*，其中：
+
+  * *apikey* 表明令牌是 API 密钥。
+		* *iam* 表明指定的令牌是 IAM 生成的令牌。
+		* *uaa* 表明指定的令牌是 UAA 生成的令牌。
+	
+	* *X-Auth-Scope-Id* 是用于传递空间 GUID 的参数。该 GUID 必须以 *s-* 为前缀以标识空间。如果使用 UAA 认证令牌，此头是必需的。如果使用 IAM 认证令牌，那么此头是可选的，并且将使用绑定到该令牌的域信息。
+	
+	* *Token* 是 UAA 或 IAM 认证令牌，或 API 密钥。
+	
+* *Space* 是空间的 GUID。
+	
+* *RULE_NAME* 是用于触发警报的规则的名称。值为在 *name* 字段中指定的名称。
+	
+
+* *METRICS_ENDPOINT* 表示服务的入口点。每个区域都有不同的 URL。要获取每个区域的端点列表，请参阅[端点](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints)。
+	
+    ## 检索规则的历史记录中的最后 3 个条目
+{: #number}
+
+运行以下 cURL 命令以获取警报历史记录中的最后 3 个条目：
+
+```
+curl -H "X-Auth-User-Token: iam $Token" -H "X-Auth-Scope-Id:$Space" METRICS_ENDPOINT/v1/alert/history?max_results=3
+```
+{: codeblock}
+
+	其中
+	
+	* *X-Auth-User-Token* 是用于传递 UAA 令牌、IAM 令牌或 API 密钥的参数。
+	
+* *Auth_Type* 是用于定义令牌或 API 密钥的类型的前缀。以下列表概括了有效值：*apikey*、*iam* 或 *uaa*，其中：
+
+  * *apikey* 表明令牌是 API 密钥。
+		* *iam* 表明指定的令牌是 IAM 生成的令牌。
+		* *uaa* 表明指定的令牌是 UAA 生成的令牌。
+	
+	* *X-Auth-Scope-Id* 是用于传递空间 GUID 的参数。该 GUID 必须以 *s-* 为前缀以标识空间。如果使用 UAA 认证令牌，此头是必需的。如果使用 IAM 认证令牌，那么此头是可选的，并且将使用绑定到该令牌的域信息。
+	
+	* *Token* 是 UAA 或 IAM 认证令牌，或 API 密钥。
+	
+* *Space* 是空间的 GUID。
+	
+* *RULE_NAME* 是用于触发警报的规则的名称。值为在 *name* 字段中指定的名称。
+	
+
+* *METRICS_ENDPOINT* 表示服务的入口点。每个区域都有不同的 URL。要获取每个区域的端点列表，请参阅[端点](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints)。
+	
+    

@@ -1,17 +1,21 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-Lastupdated: "2017-05-26"
+lastupdated: "2018-02-01"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
+{:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
+
 
 # Criando um painel do Grafana
 {:#create_grafana_dashboard}
@@ -107,7 +111,7 @@ gráfico, por exemplo: CPU inativa
     * Para fornecer um rótulo ao eixo vertical, clique na guia Eixos e grade e, na seção Eixo Y à
 esquerda, no campo Rótulo, insira CPU.
     * Para mudar a cor do plano de fundo do gráfico, na seção Limites da grade, para o Nível 2, clique
-no ícone selecionador de cor do Plano de Fundo e mude a cor do plano de fundo para branco ou cinza claro.
+no ícone selecionador de cor do Plano de fundo e mude a cor do plano de fundo para branco ou cinza claro.
     
     No cabeçalho, clique em **Voltar para o painel**.
     
@@ -158,7 +162,7 @@ selecione bytes.
     * Para fornecer um rótulo ao eixo vertical, no campo Rótulo, insira
 Memória.
     * Para mudar a cor do plano de fundo do gráfico, na seção Limites da grade, para o Nível 2, clique
-no ícone selecionador de cor do Plano de Fundo e mude a cor do plano de fundo para branco ou cinza claro.
+no ícone selecionador de cor do Plano de fundo e mude a cor do plano de fundo para branco ou cinza claro.
     
     No cabeçalho, clique em **Voltar para o painel**.
 

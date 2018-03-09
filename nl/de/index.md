@@ -1,223 +1,119 @@
 ---
 
 copyright:
-  years: 2017
-lastupdated: "2017-06-26"
+  years: 2017, 2018
+
+lastupdated: "2018-02-09"
 
 ---
 
 {:new_window: target="_blank"}
 {:shortdesc: .shortdesc}
 {:screen: .screen}
-{:codeblock: .codeblock}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
-# Einführung in IBM Cloud Monitoring in Bluemix
+
+# Erste Schritte mit IBM Cloud Monitoring
 {: #getting-started-with-ibm-cloud-monitoring}
 
-In diesem einführenden Lernprogramm werden Sie Schritt für Schritt durch die Analyse eines Containers mithilfe des {{site.data.keyword.monitoringlong}}-Service geführt. Sie erfahren, wie Sie nach Containermetriken für eine App suchen, die in einem Kubernetes-Cluster implementiert ist, und wie Sie diese Metriken analysieren.
+In diesem Lernprogramm erfahren Sie, wie Sie mit dem {{site.data.keyword.monitoringlong}}-Service in {{site.data.keyword.Bluemix}} arbeiten können.
 {:shortdesc}
+
+Standardmäßig bietet {{site.data.keyword.Bluemix_notm}} integrierte Überwachungsfunktionen für auswählte Services. Sie können den {{site.data.keyword.monitoringlong_notm}}-Service zur Erweiterung Ihrer Erfassungs- und Aufbewahrungsfunktionen verwenden, wenn Sie mit Metriken arbeiten, und um Regeln und Alerts definieren zu können, die Sie über Bedingungen informieren, die Ihre Aufmerksamkeit erfordern. Der {{site.data.keyword.monitoringshort}}-Service bietet Funktionen, die Ihnen einen Einblick in die Leistung und Nutzung von Ressourcen der Apps liefern. Außerdem können Sie schnell aktuelle Trends und Probleme sofort erkennen und diagnostizieren. Dies amortisiert sich sofort und ist eine Investition mit geringen Anschaffungs- und Betriebskoste. Sie können Ihre Umgebung mit Grafana überwachen. 
+
+![Allgemeine Komponentenübersicht des {{site.data.keyword.monitoringlong}}-Service](images/cloud_monitoring_gs_ov.png "Allgemeine Komponentenübersicht des {{site.data.keyword.monitoringlong}}-Service")
 
 ## Vorbemerkungen
 {: #prereqs}
 
-Erstellen Sie ein [Bluemix-Konto](https://console.bluemix.net/registration/). Ihre Benutzer-ID muss ein Mitglied oder ein Eigner eines Bluemix-Kontos mit der Berechtigung zum Erstellen von Kubernetes-Clustern, zum Implementieren von Apps in Cluster und zum Abfragen der Bluemix-Protokolle für die erweiterte Analyse in Kibana sein.
+Sie müssen über eine Benutzer-ID verfügen, die ein Mitglied oder Eigner eines {{site.data.keyword.Bluemix_notm}}-Kontos ist. Um eine {{site.data.keyword.Bluemix_notm}}-Benutzer-ID zu erhalten, rufen Sie die Seite für die [Registrierung ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](https://console.bluemix.net/registration/){:new_window} auf.
 
-Öffnen Sie eine Terminalsitzung von der aus Sie die Kubernetes-Cluster verwalten und die Apps über die Befehlszeile implementieren können. Die Beispiele in diesem Lernprogramm sind für ein System mit Ubuntu Linux angegeben.
-
-[Installieren Sie die CLI-Plug-ins](/docs/containers/cs_cli_install.html#cs_cli_install_steps) in Ihrer lokalen Umgebung, um den IBM Bluemix Container-Service von der Befehlszeile aus zu verwalten. 
-
-
-
-## Schritt 1: Implementieren einer App in einem Container
+## Schritt 1: Zu überwachende Cloudressource auswählen
 {: #step1}
 
-Führen Sie die folgenden Schritte aus, um einen Container in einem Kubernetes-Cluster zu implementieren:
+In {{site.data.keyword.Bluemix_notm}} erfassen CF-Anwendungen, Container, die für den {{site.data.keyword.containershort}} ausgeführt werden, und ausgewählte Services Daten für Metrikserien automatisch und leiten diese an den {{site.data.keyword.monitoringshort}}-Service weiter.
 
-1. [Erstellen Sie ein Kubernetes-Cluster](/docs/containers/cs_cluster.html#cs_cluster_ui).
+In der folgenden Tabelle sind verschiedene Cloudressourcen aufgelistet. Führen Sie das Lernprogramm für eine Ressource aus, um mit der Arbeit mit dem {{site.data.keyword.monitoringshort}}-Service zu beginnen:
 
-2. [Konfigurieren Sie den Clusterkontext](/docs/containers/cs_cli_install.html#cs_cli_configure) in einem Linux-Terminal. Nach der Konfiguration des Kontexts können Sie den Kubernetes-Cluster verwalten und die Anwendung im Kubernetes-Cluster bereitstellen.
+<table>
+  <caption>Lernprogramm als Einführung in die Arbeit mit dem {{site.data.keyword.monitoringshort}}-Service </caption>
+  <tr>
+    <th>Ressource</th>
+    <th>Lernprogramm</th>
+    <th>Cloudumgebung</th>
+    <th>Szenario</th>
+  </tr>
+  <tr>
+    <td>Container, die für den {{site.data.keyword.containershort}} ausgeführt werden</td>
+    <td>[Metriken in Grafana für eine App analysieren, die in einem Kubernetes-Cluster bereitgestellt wurde](/docs/services/cloud-monitoring/tutorials/container_service_metrics.html#container_service_metrics)</td>
+    <td>Public </br>Dedicated</td>
+    <td>![Übersicht über Komponenten höherer Ebene von Containern, die in einem Kubernetes-Cluster implementiert sind.](containers/images/containers_kube_metrics_dedicated.png "Übersicht über Komponenten höherer Ebene von Containern, die in einem Kubernetes-Cluster implementiert sind.")</td>
+  </tr>
+  <tr>
+    <td>CF-Apps</td>
+    <td>[Metriken in Grafana für eine CF-App analysieren](/docs/services/cloud-monitoring/tutorials/cfapps_metrics.html#cfapps_metrics)</td>
+    <td>Public</td>
+    <td>![Allgemeine Übersicht der Überwachung von CF-Apps in {{site.data.keyword.Bluemix_notm}}](cf/images/cfapp_metrics_ov.png "Allgemeine Übersicht der Überwachung von CF-Apps in {{site.data.keyword.Bluemix_notm}}")</td>
+  </tr>
+</table>
 
-3. Implementieren Sie die Beispielapp im Kubernetes-Cluster und führen Sie sie aus. [ Führen Sie die Schritte für die Lerneinheit 1 aus](/docs/containers/cs_tutorials.html#cs_apps_tutorial).
-
-    Die App ist eine 'Hello World'-Node.js-App:
-
-    ```
-    var express = require('express')
-    var app = express()
-
-    app.get('/', function(req, res) {
-      res.send('Hello world! Your app is up and running in a cluster!\n')
-    })
-    app.listen(8080, function() {
-      console.log('Sample app is listening on port 8080.')
-    })
-    ```
-
-    Wenn die Anwendung bereitgestellt wird, wird die Metrikerfassung automatisch aktiviert.
 
 
-
-## Schritt 2: Navigieren zum Grafana-Dashboard
+## Schritt 2: Berechtigungen für einen Benutzer zum Anzeigen von Metriken festlegen
 {: #step2}
 
-Starten Sie Grafana von einem Browser. 
+Um zu steuern, welche {{site.data.keyword.monitoringshort}}-Aktionen ein Benutzer ausführen darf, können Sie einem Benutzer Rollen und Richtlinien zuweisen. 
 
-Zum Analysieren von Metriken für einen Cluster müssen Sie auf Grafana in der öffentlichen Cloud-Region zugreifen, in der der Cluster erstellt wird. 
-    
-Starten Sie dann in einem Browser die folgende URL, um Grafana zu öffnen: `https://metrics.ng.bluemix.net/`
-    
-    
-## Schritt 3: Analysieren von Metriken in Grafana
-{: #step3}
+Es gibt zwei Typen von Sicherheitsberechtigungen in {{site.data.keyword.Bluemix_notm}}, mit denen die Aktionen gesteuert werden, die Benutzer bei der Arbeit mit dem {{site.data.keyword.monitoringshort}}-Service ausführen können:
 
-Führen Sie die folgenden Schritte aus, um ein Grafana-Dashboard zu erstellen:
-    
-1. Erstellen Sie ein neues Dashboard.
-
-    * Wählen Sie das Steuerelement zum Hin- und Herschalten ![Grafana-Seitenmenüleiste](images/grafana_settings.gif "Grafana-Seitenmenüleiste") in der seitlichen Menüleiste aus.  
-    * Wählen Sie **Dashboards** aus. 
-    * Klicken Sie auf **Neu**
-    
-    Ein Dashboard wird geöffnet. Das Dashboard enthält eine leere Zeile, die konfiguriert werden kann. 
-    
-    ![Grafana-Dashboard](images/grafana4_f1.gif "Grafana-Dashboard")
-    
-     Fügen Sie in Grafana Zeilen hinzu, um das Dashboard in Abschnitte zu unterteilen. Eine Zeile gruppiert eine oder mehrere Anzeigen. Innerhalb einer Zeile ist eine Anzeige die kleinste Visualisierungseinheit, die Sie für die Anzeige von Daten für eine Metrik konfigurieren können. Sie können zum Beispiel eine Diagrammanzeige oder eine Tabellenanzeige auswählen. Sie können Anzeigen ziehen und übergeben, um sie in einem Dashboard neu anzuordnen. Die in den Anzeigen angezeigten Daten werden über Abfragen konfiguriert. Sie können eine oder mehrere Abfragen in einer Anzeige definieren. Jede Abfrage stellt eine andere Gruppe von Daten dar. Sie können auch den Zeitraum für eine Anzeige festlegen. Normalerweise wird der Zeitraum durch das Zeitauswahlfeld im *Dashboard* festgelegt.
-    
-2. Fügen Sie eine *Grafik*anzeige hinzu, um die Nanosekunden der CPU-Zeit über alle zentralen Bestandteile für einen Container zu überwachen.
-    
-    1. Wählen Sie **Grafik** aus.
-    
-    2. Klicken Sie auf den Grafiktitel und wählen Sie anschließend **Bearbeiten** aus.
-    
-        Die Registerkarte *Metriken* wird angezeigt. Sie können hier die Standarddatenquelle sehen.
-    
-        ![Grafikanzeige mit Konfigurationsregisterkarten](images/grafana4_f2.gif "Grafikanzeige mit Konfigurationsregisterkarten")
-    
-3. Definieren Sie die Abfrage, die die in der Grafik angezeigten Daten filtert. 
-
-    Die folgende Tabelle stellt die unterschiedlichen Felder dar, die für die Konfiguration einer Abfrage erforderlich sind, die Daten für eine Containermetrik filtert:
-
-    <table>
-      <caption>Tabelle 1. Grafana-Abfragefelder für Container</caption>
-      <tr>
-        <th align="center">Feld</th>
-        <th align="center">Beschreibung</th>
-        <th align="center">Gültige Werte</th>
-      </tr>
-      <tr>
-        <td>Präfix</td>
-        <td>Präfix für Container-Metriken. <br><br>Dieses Präfix gilt für Daten, die für Container gesammelt wurden, die in einem Kubernetes-Cluster implementiert sind.</td>
-        <td>`crn`</td>
-      </tr>
-      <tr>
-        <td>Version</td>
-        <td>Version der erfassten Metrikdaten.</td>
-        <td>`v1`</td>
-      </tr>
-      <tr>
-        <td>Provider</td>
-        <td>Cloud-Provider, bei dem die Daten erfasst werden.</td>
-        <td>`bluemix`</td>
-      </tr>
-      <tr>
-        <td>Typ</td>
-        <td>Cloudumgebung, in der die Daten erfasst werden.</td>
-        <td>`public`</td>
-      </tr>
-      <tr>
-        <td>Quelle</td>
-        <td>Cloudinfrastruktur, in der Metriken erfasst werden.</td>
-        <td>`containers-kubernetes`</td>
-      </tr>
-      <tr>
-        <td>Region</td>
-        <td>Cloudregion, in der Metriken erfasst werden.</td>
-        <td>* `ng` <br>* `eu-gb` <br>* `eu-de` </td>
-      </tr>
-      <tr>
-        <td>Konto</td>
-        <td>GUID des Kontos, in dem Metriken erfasst werden. <br>Das Format dieses Feldes lautet wie folgt: ` a_ *ID* `, wobei ID die GUID des Kontos ist.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>Cluster</td>
-        <td>GUID des Clusters, in dem Metriken erfasst werden.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>Container-Metrik</td>
-        <td>Metriken, die für einen Container erfasst wurden.</td>
-        <td>* `memory_current` <br>* `memory_limit` <br>* `cpu_usage` <br>* `cpu_usage_pct` <br>* `cpu_num_cores`</td>
-      </tr>
-      <tr>
-        <td>Container in einem Pod</td>
-        <td>Kombination von Kubernetes-Ressourcennamen und GUIDs, die für einen eindeutig gekennzeichneten Container erforderlich sind, der in einem Pod ausgeführt wird. <br> Das Format für diese Felder lautet: *{namespace}_#{pod_name}_#{container_name}_#{container_id}* <br><br>**Hinweis:** Wenn Sie die Liste verfügbarer Optionen für diesen Eintrag in der Abfrage anzeigen, beachten Sie, dass dort auch ein Eintrag mit folgendem Format vorhanden ist: *{namespace}_#{pod_name}_#{container_name}_POD_#{container_id}*. Diese Einträge entsprechen den internen Container-IDs, die von Kubernetes erstellt wurden.</td>
-        <td></td>
-      </tr>
-      <tr>
-        <td>Funktionen</td>
-        <td>Abfragefunktionen, die Sie zur Visualisierung einer Containermetrik in der Anzeige auswählen können. <br>Weitere Informationen finden Sie unter [Funktionen ![(Symbol für externen Link)](../icons/launch-glyph.svg "Symbol für externen Link") ](http://graphite.readthedocs.io/en/latest/functions.html "Symbol für externen Link"){: new_window}</td>
-        <td></td>
-      </tr>
-    </table>
-    
-    Das folgende Abbild zeigt, wie die Abfrage in Grafana angezeigt wird, wenn Sie sie konfigurieren: 
-    
-    ![Beispielabfrage](images/grafana4_query_f3.gif "Beispielabfrage")
-    
-    Führen Sie die folgenden Schritte aus, um die Abfrage zu definieren:
-    
-    Wählen Sie auf der Registerkarte *Metriken* die Option **Abfrage hinzufügen** aus. <br>Ein Abfrageeintrag wird hinzugefügt. Jede Abfrage wird mit einem Buchstaben gekennzeichnet.
-    
-    ![Neuer Abfrageeintrag](images/grafana4_query_f1.gif "Neuer Abfrageeintrag")
-        
-    1. Klicken Sie auf **Metrik auswählen** und wählen Sie dann `crn` aus.
-    
-    2. Klicken Sie auf **Metrik auswählen** und wählen Sie dann `v1` aus.
-    
-    3. Klicken Sie auf **Metrik auswählen** und wählen Sie dann `bluemix` aus.
-    
-    4. Klicken Sie auf **Metrik auswählen** und wählen Sie dann `public` aus.
-    
-    5. Klicken Sie auf **Metrik auswählen** und wählen Sie dann `containers-kubernetes` aus.
-    
-    6. Klicken Sie auf **Metrik auswählen** und wählen Sie dann `us-south` aus.
-    
-    7. Klicken Sie auf **Metrik auswählen** und wählen Sie dann die Konto-ID aus, für die Sie die Daten anzeigen möchten. Zum Beispiel: `a_91d1d1exxxxxxx4df920bbd06461b066`
-    
-    8. Klicken Sie auf **Metrik auswählen** und wählen Sie dann die Cluster-ID aus.
-    
-    9. Klicken Sie auf **Metrik auswählen** und wählen Sie dann eine Containermetrik aus. Zur Überwachung der *CPU-Auslastung* eines Containers wählen Sie `container-metric-cpu_usage` aus.
-    
-    10. Klicken Sie auf **Metrik auswählen** und wählen Sie dann die ID aus, die mit dem Container übereinstimmt, für den Sie die CPU-Auslastung überwachen wollen. Beispiel: `default_hello-world-deployment-3355293961-0fwkg_hello-world-deployment_ad5eb446a493db31f1d9eb158f5de915fc063d6c136823488b694e63bb00aa57`.
-    
-    11. Klicken Sie auf das Pluszeichen ![Symbol für das Hinzufügen](images/grafana_plus_image.gif "Pluszeichen") und wählen Sie eine Funktion aus. Sie können eine Funktion zur Transformation, zur Kombination und zur Durchführung von Berechnungen mit den Daten hinzufügen, die für eine Metrik zur Verfügung stehen.
-        
-        Sie können zum Beispiel die Funktion **alias(newName)** hinzufügen, um einen Aliasnamen für eine Metrik hinzuzufügen. Dieser Aliasname wird verwendet, um einen Zeichenfolge anstelle des Metriknamens in der Legende anzuzeigen, die in der Grafik angezeigt wird.
-        
-        Um einen Aliasnamen für Ihre Metrik hinzuzufügen, führen Sie die folgenden Schritte aus:
-        
-        1. Klicken Sie auf das Pluszeichen.
-        2. Wählen Sie **Spezieller Name** aus. 
-        3. Wählen Sie **Aliasname** aus.
-        4. Geben Sie eine Zeichenfolge ein. Zum Beispiel `My sample metric`.
-        
-4. Speichern Sie das Dashboard zur späteren Wiederverwendung. 
-
-    1. Klicken Sie auf die Dashboardabbildung zum Speichern ![Dashboardabbildung zum Speichern](images/grafana_save_image.gif "Dashboardabbildung zum Speichern"). 
-    
-        ![Dashboard speichern](images/grafana_save_dashboard.gif "Dashboard speichern")
-    
-    2. Geben Sie den Namen des Dashboards ein.
-    3. Klicken Sie auf **Speichern**.
+* CF-Rollen (CF, Cloud Foundry): Sie weisen einem Benutzer eine CF-Rolle zu, um die Berechtigungen zu definieren, die der Benutzer zum Anzeigen von Metriken in einem Bereich benötigt.
+* IAM-Rollen: Sie weisen einem Benutzer eine IAM-Richtlinie zu, um die Berechtigungen zu definieren, die der Benutzer zum Anzeigen von Metriken in der Kontodomäne benötigt.
 
 
-## Nächste Schritte
+Führen Sie die folgenden Schritte aus, um einem Benutzer Berechtigungen zum Anzeigen von Metriken in einem Bereich zu erteilen:
+
+1. Melden Sie sich bei der {{site.data.keyword.Bluemix_notm}}-Konsole an.
+
+    Öffnen Sie einen Web-Browser und starten Sie das {{site.data.keyword.Bluemix_notm}}-Dashboard: [http://bluemix.net ![Symbol für externen Link](../../icons/launch-glyph.svg "Symbol für externen Link")](http://bluemix.net){:new_window}
+	
+	Nach der Anmeldung mit Ihrer Benutzer-ID und Ihrem Kennwort wird die {{site.data.keyword.Bluemix_notm}}-Benutzerschnittstelle geöffnet.
+
+2. Klicken Sie in der Menüleiste auf **Verwalten>Konto>Benutzer**. 
+
+    Im Fenster *Benutzer* wird eine Liste der Benutzer mit ihren E-Mail-Adressen für das aktuell ausgewählte Konto angezeigt.
+	
+3. Wenn der Benutzer Mitglied des Kontos ist, wählen Sie den Benutzernamen in der Liste aus oder klicken Sie im Menü *Aktionen* auf **Benutzer verwalten**.
+
+    Wenn der Benutzer kein Mitglied des Kontos ist, finden Sie weitere Informationen unter [Benutzer einladen](/docs/iam/iamuserinv.html#iamuserinv).
+
+4. Wählen Sie **Cloud Foundry-Zugriff** und anschließend die Organisation aus.
+
+    Die Liste der in dieser Organisation verfügbaren Bereiche wird angezeigt.
+
+5. Wählen Sie den Bereich aus, in dem Sie den {{site.data.keyword.monitoringshort}}-Service bereitgestellt haben. Wählen Sie dann als Menüaktion die Option **Bereichsrolle bearbeiten** aus.
+
+6. Wählen Sie *Prüfer* aus. 
+
+    Sie können eine oder mehrere Bereichsrollen auswählen. Mit allen der folgenden Rollen kann ein Benutzer Protokolle anzeigen: *Manager*, *Entwickler*, und *Prüfer*.
+	
+7. Klicken Sie auf **Rolle speichern**.
+
+
+Weitere Informationen finden Sie unter [Berechtigungen erteilen](/docs/services/cloud-monitoring/security/assign_policy.html#grant_permissions).
+
+Um sicherzustellen, dass der Benutzer Metrikdaten anzeigen kann, starten Sie Grafana in der Cloud-Region, in der Sie eines der Lernprogramme absolviert haben. Öffnen Sie beispielsweise in der Region 'USA (Süden)' einen Web-Browser und geben Sie die folgende URL ein: [https://metrics.ng.bluemix.net/](https://metrics.ng.bluemix.net/).
+
+
+Weitere Informationen darüber, wie Sie Grafana in anderen Regionen starten, finden Sie unter [Zu Grafana über einen Web-Browser navigieren](/docs/services/cloud-monitoring/grafana/navigating_grafana.html#navigating_grafana).
+
+**Hinweis:** Wenn Ihnen beim Starten von Grafana eine Nachricht angezeigt wird, die angibt, dass das *Trägertoken nicht gültig* ist, überprüfen Sie die Berechtigungen im Bereich. Diese Nachricht ist ein Hinweis darauf, dass Ihre Benutzer-ID nicht über die Berechtigung zum Anzeigen von Metriken verfügt.
+    
+
+## Nächste Schritte 
 {: #next_steps}
 
 Definieren Sie einen Alert für eine Metrik. Weitere Informationen finden Sie unter [Alerts konfigurieren ](/docs/services/cloud-monitoring/config_alerts_ov.html#config_alerts_ov).
-
-
-

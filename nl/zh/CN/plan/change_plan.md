@@ -1,32 +1,38 @@
 ---
 
 copyright:
-  years: 2017
-lastupdated: "2017-07-10"
+  years: 2017, 2018
+
+lastupdated: "2018-02-01"
 
 ---
 
 {:new_window: target="_blank"}
 {:shortdesc: .shortdesc}
 {:screen: .screen}
-{:codeblock: .codeblock}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
 # 更改套餐
 {: #change_plan}
 
-可以在 {{site.data.keyword.Bluemix}} 的服务“仪表板”中或通过运行 `cf update-service` 命令来更改 {{site.data.keyword.monitoringshort}} 服务套餐。您可以随时升级或降级套餐。
+可以通过 {{site.data.keyword.monitoringlong_notm}} 仪表板或通过运行 `cf update-service` 命令来更改 {{site.data.keyword.monitoringshort}} 服务套餐。您可以随时升级或降级套餐。
 {:shortdesc}
 
 ## 通过 UI 更改服务套餐
 {: #change_plan_ui}
 
-要在 {{site.data.keyword.Bluemix_notm}} 的服务“仪表板”中更改服务套餐，请完成以下步骤：
+要在 {{site.data.keyword.monitoringlong_notm}} 仪表板中更改服务套餐，请完成以下步骤：
 
-1. 登录到 {{site.data.keyword.Bluemix_notm}}，然后单击 {{site.data.keyword.Bluemix_notm}}“仪表板”中的 {{site.data.keyword.monitoringshort}} 服务。 
+1. 登录到 {{site.data.keyword.Bluemix_notm}}，然后在“仪表板”中单击 {{site.data.keyword.monitoringshort}} 服务。 
+
+    这将打开 {{site.data.keyword.monitoringshort}} 服务仪表板。
     
-2. 在 {{site.data.keyword.Bluemix_notm}} UI 中选择**套餐**选项卡。
+2. 选择**套餐**选项卡。
 
     这将显示有关当前套餐的信息。
 	
@@ -41,21 +47,18 @@ lastupdated: "2017-07-10"
 
 要在 {{site.data.keyword.Bluemix_notm}} 中通过 CLI 更改服务套餐，请完成以下步骤：
 
-1. 登录到 {{site.data.keyword.Bluemix_notm}} 区域、组织和空间。运行以下命令：
+1. 登录到 {{site.data.keyword.Bluemix_notm}} 中的区域、组织和空间。 
 
-    ```
-    cf login -a [https://api.<span class="keyword" data-hd-keyref="DomainName">DomainName</span>](https://api.{DomainName})
-    ```
-    {: codeblock}
+    有关更多信息，请参阅[如何登录到 {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login)。
 	
-2. 运行 `cf services` 命令以检查当前套餐，并从空间中可用的服务列表中获取 {{site.data.keyword.loganalysisshort}} 服务名称。 
+2. 运行 `bx cf services` 命令以检查当前套餐，并从空间中可用的服务列表中获取 {{site.data.keyword.loganalysisshort}} 服务名称。 
 
     **name** 字段的值是必须用于更改套餐的名称。 
 
     例如：
 	
 	```
-	$ cf services
+	$ bx cf services
 	Getting services in org MyOrg / space dev as xxx@yyy.com...
 	OK
 	name            service      plan   bound apps   last operation
@@ -63,16 +66,16 @@ lastupdated: "2017-07-10"
     ```
 	{: screen}
     
-3. 升级或降级套餐。运行 `cf update-service` 命令。
+3. 升级或降级套餐。运行 `bx cf update-service` 命令。
     
 	```
-	cf update-service service_name [-p new_plan]
+	bx cf update-service service_name [-p new_plan]
 	```
 	{: codeblock}
 	
 	其中 
 	
-	* *service_name* 是服务的名称。可以运行 `cf services` 命令来获取相应值。
+	* *service_name* 是服务的名称。可以运行 `bx cf services` 命令来获取相应值。
 	* *new_plan* 是套餐的名称。
 	
 	下表列出了不同的套餐及其支持的值：
@@ -99,16 +102,16 @@ lastupdated: "2017-07-10"
 	例如，要将套餐降级到 *Lite* 套餐，请运行以下命令：
 	
 	```
-	cf update-service "Monitoring-0c" -p lite
+	bx cf update-service "Monitoring-0c" -p lite
     Updating service instance Monitoring-0c as xxx@yyy.com...
     OK
 	```
 	{: screen}
 
-4. 验证新套餐是否已更改。运行 `cf services` 命令。
+4. 验证是否已更改为新套餐。运行 `bx cf services` 命令。
 
     ```
-	cf services
+	bx cf services
     Getting services in org MyOrg / space dev as xxx@yyy.com...
     OK
 

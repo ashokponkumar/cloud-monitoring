@@ -1,39 +1,43 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-07-18"
+lastupdated: "2018-02-01"
 
 ---
 
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
-# Cómo trabajar con reglas mediante la API de alertas
+# Reglas CRUD
 {: #rules}
 
-Utilice la API de alertas para crear, suprimir y actualizar una regla, para mostrar los detalles de una regla y para obtener una lista de las reglas definidas en su espacio de {{site.data.keyword.Bluemix_notm}}.
+Utilice la API de alertas para crear, suprimir o actualizar una regla, para mostrar los detalles de una regla y para generar una lista de las reglas definidas en un espacio.
 {:shortdesc}
 
 
 ## Creación de una regla
 {: #create}
 
-Para
-crear una regla, realice los pasos siguientes:
+Para configurar una regla en el servicio de {{site.data.keyword.monitoringshort}}, cree un archivo de regla que incluya los detalles de regla y registre la regla con el servicio de {{site.data.keyword.monitoringshort}}.
+
+Realice los siguientes pasos:
 
 1. Cree un archivo de reglas que contenga un archivo JSON válido. Guarde el archivo. 
 
-    Por ejemplo, para guardar el archivo, utilice un prefijo como *s-* para las reglas que defina para las consultas que se ejecutan en un espacio de {{site.data.keyword.Bluemix_notm}}.
+    Por ejemplo, para guardar el archivo, utilice un prefijo como *s-* para las reglas que defina para las consultas que se ejecutan en un espacio.
 	
 	**Consejos:** 
 	
-	* Defina distintas reglas para una consulta para alertar acerca de errores o avisos mediante distintos métodos de notificación. Solo puede definir 1 método de notificación por regla. 
+	* Defina distintas reglas para una consulta para alertar acerca de errores o avisos mediante distintos métodos de notificación. 
 	* Cree su archivo de reglas en el directorio siguiente: *~/cloud-monitoring/roles/* para agrupar los recursos del servicio {{site.data.keyword.monitoringshort_notm}}. 
 
     Escriba la siguiente información en el archivo de la regla:
@@ -51,7 +55,7 @@ crear una regla, realice los pasos siguientes:
 	* *dashboard_url*: Define un URL que muestra en Grafana un panel de control con la consulta.
 	* *notifications*: El método de notificación en el caso de que se desencadene la alerta descrita con esta regla.
 	
-	Por ejemplo, 
+	Por ejemplo, el archivo de regla myrulefile.json tiene el siguiente aspecto:
 	
 	```
 	{
@@ -74,46 +78,48 @@ crear una regla, realice los pasos siguientes:
     ```
 	{: screen}
 	
-2. Inicie la sesión en una región, organización y espacio de {{site.data.keyword.Bluemix_notm}}. Ejecute el mandato:
-
-    Por ejemplo, para iniciar sesión en la región EE. UU. sur, ejecute el siguiente mandato:
+	A continuación, exporte la variable *RULE_FILE*:
 	
 	```
-    bx login -a https://api.ng.bluemix.net
+	export RULE_FILE="myrulefile.json"
+	```
+	{: screen}
+	
+2. Inicie la sesión en una región, organización y espacio en {{site.data.keyword.Bluemix_notm}}.
+
+    Para obtener más información, consulte [Cómo iniciar la sesión en {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+3. Obtenga la señal de seguridad. Puede utilizar una señal de UAA, una señal de IAM o una clave de API. Elija uno de los métodos siguientes para obtener la señal de seguridad:
+	
+	* Para obtener una señal de UAA, consulte [Obtención de una señal de UAA mediante la CLI de {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
+	
+	* Para obtener una señal de IAM, consulte [Obtención de la señal de IAM mediante la CLI de {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* Para obtener una clave de API, consulte [Obtención de una clave de API](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
+	Por ejemplo, para utilizar la señal de IAM, ejecute el siguiente mandato:
+    
+    ```
+    bx iam oauth-tokens
     ```
     {: codeblock}
-
-    Siga las instrucciones. Escriba sus credenciales de {{site.data.keyword.Bluemix_notm}}, seleccione una organización y un espacio.
-
-3. Obtenga la señal de autenticación o la clave de API.
-
-    * Para la autenticación de IAM, consulte [Obtención de la señal de IAM utilizando la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) u [Obtención de la clave de API de IAM utilizando la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
 	
-	* Para la autenticación de UAA, consulte [Obtención de la señal de UAA mediante la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) o bien [Obtención de la señal de UAA mediante la API REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
-	Por ejemplo, para utilizar la señal de IAM, ejecute el siguiente mandato:
-
+    El resultado de este mandato es el siguiente:
+	
     ```
-	bx iam oauth-tokens
-	```
-	{: codeblock}
-	
-	El resultado de este mandato es el siguiente:
-	
-	```
-	Señal de IAM:  Portador djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ
+    Señal de IAM:  Portador djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ
     Señal de UAA:  Portador eyJhbGciOiJIUz..Ky6vagp3k_QcIcKJ-td83qXhO5Uze43KcplG6PzcGs8
-	```
-	{: screen}
+    ```
+    {: screen}
 	
-	A continuación, exporte la variable *Token*:
+    A continuación, exporte la variable *Token*:
 	
-	```
-	export Token="djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ"
-	```
-	{: screen}
+    ```
+    export Token="djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ"
+    ```
+    {: screen}
 	
-	**Nota:** La señal excluye *Bearer*.
+    **Nota:** La señal excluye *Bearer*.
 	
 4. Obtenga el GUID del espacio. El GUID debe tener el prefijo *s-* para identificar un espacio.
 
@@ -126,7 +132,7 @@ crear una regla, realice los pasos siguientes:
 	
 	Donde *SpaceName* es el nombre del espacio donde va a definir una notificación.
 	
-	Por ejemplo, para obtener el GUID de un espacio con el nombre *dev*, ejecute el siguiente mandato:
+	Por ejemplo, para obtener el GUID de un espacio con el nombre *dev*, ejecute el mandato siguiente:
 	
 	```
 	bx iam space dev --guid
@@ -147,16 +153,16 @@ crear una regla, realice los pasos siguientes:
 	```
 	{: screen}
 	
-5. Ejecute el siguiente mandato cURL para crear una regla:
+5. Ejecute el mandato cURL siguiente para registrar la regla en el servicio de {{site.data.keyword.monitoringshort}}:
 
     ```
-	curl -XPOST -d @Rule_File --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rule
+	curl -XPOST -d @$RULE_FILE --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/rule
 	```
 	{: codeblock}
 	
 	donde
 	
-	* Rule_File es un archivo JSON que define la regla de alerta.
+	* RULE_FILE es el archivo JSON que define la regla de alerta.
 	
 	* El valor *X-Auth-User-Token* es un parámetro que pasa la señal UAA {{site.data.keyword.Bluemix_notm}}, señal IAM o clave de API.
 	
@@ -170,12 +176,14 @@ crear una regla, realice los pasos siguientes:
 	
 	* La señal es la señal de autenticación de UAA o IAM, o la clave de API.
 	
-	* Space es el GUID del espacio. Solo es necesario cuando se utiliza una señal de UAA.
+	* Space es el GUID del espacio. 
+	
+	* METRICS_ENDPOINT representa el punto de entrada al servicio. Cada región tiene un URL diferente. Para obtener una lista de los puntos finales por región, consulte[Puntos finales](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
     Por ejemplo, 	
 	
 	```
-	curl -XPOST -d @s-rule-1.json --header "X-Auth-User-Token:iam ${Token}" https://metrics.ng.bluemix.net/v1/alert/rule
+	curl -XPOST -d @$RULE_FILE --header "X-Auth-User-Token:iam ${Token}" https://metrics.ng.bluemix.net/v1/alert/rule
 	```
 	{: screen}
 
@@ -184,23 +192,18 @@ crear una regla, realice los pasos siguientes:
 
 Para suprimir una regla, siga los pasos siguientes:
 
-1. Inicie la sesión en una región, organización y espacio de {{site.data.keyword.Bluemix_notm}}. Ejecute el mandato:
+1. Inicie la sesión en una región, organización y espacio en {{site.data.keyword.Bluemix_notm}}. 
 
-    Por ejemplo, para iniciar sesión en la región EE. UU. sur, ejecute el siguiente mandato:
+    Para obtener más información, consulte [Cómo iniciar sesión en {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+2. Obtenga la señal de seguridad. Puede utilizar una señal de UAA, una señal de IAM o una clave de API. Elija uno de los métodos siguientes para obtener la señal de seguridad:
 	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    Siga las instrucciones. Escriba sus credenciales de {{site.data.keyword.Bluemix_notm}}, seleccione una organización y un espacio.
-
-2. Obtenga la señal de autenticación o la clave de API.
-
-    * Para la autenticación de IAM, consulte [Obtención de la señal de IAM mediante la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) o [Generación de una clave de API de IAM mediante la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	* Para obtener una señal de UAA, consulte [Obtención de una señal de UAA mediante la CLI de {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
 	
-	* Para la autenticación de UAA, consulte [Obtención de la señal de UAA utilizando la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) u [Obtención de la señal de UAA utilizando la API REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
+	* Para obtener una señal de IAM, consulte [Obtención de una señal de IAM mediante la CLI de {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* Para obtener una clave de API, consulte [Obtención de una clave de API](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
 	Por ejemplo, para utilizar la señal de IAM, ejecute el siguiente mandato:
 
     ```
@@ -256,17 +259,17 @@ Para suprimir una regla, siga los pasos siguientes:
 	export Space="s-667fadfc-jhtg-1234-9f0e-cf4123451095"
 	```
 	{: screen}
-	
+		
 4. Ejecute el siguiente mandato cURL para suprimir una regla:
 
     ```
-	curl -XDELETE --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rule/Rule_Name
+	curl -XDELETE --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/rule/Rule_Name
 	```
 	{: codeblock}
 	
 	donde
 	
-    * El valor *X-Auth-User-Token* es un parámetro que pasa la señal UAA {{site.data.keyword.Bluemix_notm}}, señal IAM o clave de API.
+    * *X-Auth-User-Token* es un parámetro que pasa la señal de UAA, la señal de IAM o la clave de API.
 	
 	* El valor *Auth_Type* es el prefijo que define el tipo de señal o de clave de API. En la lista siguiente se muestran los valores válidos: *apikey*, *iam* o *uaa*, donde
 
@@ -278,9 +281,11 @@ Para suprimir una regla, siga los pasos siguientes:
 	
 	* La señal es la señal de autenticación de UAA o IAM, o la clave de API.
 	
-	* Space es el GUID del espacio. Solo es necesario cuando se utiliza una señal de UAA.
+	* Space es el GUID del espacio. 
 	
 	* Rule_Name es el nombre de la regla especificada en el campo *name*.
+	
+	* METRICS_ENDPOINT representa el punto de entrada al servicio. Cada región tiene un URL diferente. Para obtener una lista de los puntos finales por región, consulte[Puntos finales](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
     
 	
@@ -289,23 +294,18 @@ Para suprimir una regla, siga los pasos siguientes:
 
 Para obtener una lista de todas las reglas, siga estos pasos:
 
-1. Inicie la sesión en una región, organización y espacio de {{site.data.keyword.Bluemix_notm}}. Ejecute el mandato:
+1. Inicie la sesión en una región, organización y espacio en {{site.data.keyword.Bluemix_notm}}. 
 
-    Por ejemplo, para iniciar sesión en la región EE. UU. sur, ejecute el siguiente mandato:
+    Para obtener más información, consulte [Cómo iniciar sesión en {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+2. Obtenga la señal de seguridad. Puede utilizar una señal de UAA, una señal de IAM o una clave de API. Elija uno de los métodos siguientes para obtener la señal de seguridad:
 	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    Siga las instrucciones. Escriba sus credenciales de {{site.data.keyword.Bluemix_notm}}, seleccione una organización y un espacio.
-
-2. Obtenga la señal de autenticación o la clave de API.
-
-    * Para la autenticación de IAM, consulte [Obtención de la señal de IAM mediante la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) o [Generación de una clave de API de IAM mediante la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	* Para obtener una señal de UAA, consulte [Obtención de una señal de UAA mediante la CLI de {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
 	
-	* Para la autenticación de UAA, consulte [Obtención de la señal de UAA utilizando la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) u [Obtención de la señal de UAA utilizando la API REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
+	* Para obtener una señal de IAM, consulte [Obtención de una señal de IAM mediante la CLI de {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* Para obtener una clave de API, consulte [Obtención de una clave de API](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
 	Por ejemplo, para utilizar la señal de IAM, ejecute el siguiente mandato:
 
     ```
@@ -365,13 +365,13 @@ Para obtener una lista de todas las reglas, siga estos pasos:
 4. Ejecute el siguiente mandato cURL para obtener una lista de todas las reglas de un espacio:
 
     ```
-	curl -XGET --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rules
+	curl -XGET --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/rules
 	```
 	{: codeblock}
 	
 	donde
 	
-	* El valor *X-Auth-User-Token* es un parámetro que pasa la señal UAA {{site.data.keyword.Bluemix_notm}}, señal IAM o clave de API.
+	* *X-Auth-User-Token* es un parámetro que pasa la señal de UAA, la señal de IAM o la clave de API.
 	
 	* El valor *Auth_Type* es el prefijo que define el tipo de señal o de clave de API. En la lista siguiente se muestran los valores válidos: *apikey*, *iam* o *uaa*, donde
 
@@ -383,7 +383,9 @@ Para obtener una lista de todas las reglas, siga estos pasos:
 	
 	* La señal es la señal de autenticación de UAA o IAM, o la clave de API.
 	
-	* Space es el GUID del espacio. Solo es necesario cuando se utiliza una señal de UAA.
+	* Space es el GUID del espacio. 
+	
+	* METRICS_ENDPOINT representa el punto de entrada al servicio. Cada región tiene un URL diferente. Para obtener una lista de los puntos finales por región, consulte[Puntos finales](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
 
 	
@@ -394,23 +396,18 @@ Para obtener una lista de todas las reglas, siga estos pasos:
 
 Para mostrar los detalles de una regla, siga estos pasos:
 
-1. Inicie la sesión en una región, organización y espacio de {{site.data.keyword.Bluemix_notm}}. Ejecute el mandato:
+1. Inicie la sesión en una región, organización y espacio en {{site.data.keyword.Bluemix_notm}}. 
 
-    Por ejemplo, para iniciar sesión en la región EE. UU. sur, ejecute el siguiente mandato:
+    Para obtener más información, consulte [Cómo iniciar sesión en {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+2. Obtenga la señal de seguridad. Puede utilizar una señal de UAA, una señal de IAM o una clave de API. Elija uno de los métodos siguientes para obtener la señal de seguridad:
 	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    Siga las instrucciones. Escriba sus credenciales de {{site.data.keyword.Bluemix_notm}}, seleccione una organización y un espacio.
-
-2. Obtenga la señal de autenticación o la clave de API.
-
-    * Para la autenticación de IAM, consulte [Obtención de la señal de IAM mediante la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) o [Generación de una clave de API de IAM mediante la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	* Para obtener una señal de UAA, consulte [Obtención de una señal de UAA mediante la CLI de {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
 	
-	* Para la autenticación de UAA, consulte [Obtención de la señal de UAA utilizando la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) u [Obtención de la señal de UAA utilizando la API REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
+	* Para obtener una señal de IAM, consulte [Obtención de una señal de IAM mediante la CLI de {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* Para obtener una clave de API, consulte [Obtención de una clave de API](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
 	Por ejemplo, para utilizar la señal de IAM, ejecute el siguiente mandato:
 
     ```
@@ -470,13 +467,13 @@ Para mostrar los detalles de una regla, siga estos pasos:
 4. Ejecute el siguiente mandato cURL para mostrar los detalles de una regla:
 
     ```
-	curl -XGET --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rule/Rule_Name
+	curl -XGET --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/rule/Rule_Name
 	```
 	{: codeblock}
 	
 	donde
 	
-	* El valor *X-Auth-User-Token* es un parámetro que pasa la señal UAA {{site.data.keyword.Bluemix_notm}}, señal IAM o clave de API.
+	* *X-Auth-User-Token* es un parámetro que pasa la señal de UAA, la señal de IAM o la clave de API.
 	
 	* El valor *Auth_Type* es el prefijo que define el tipo de señal o de clave de API. En la lista siguiente se muestran los valores válidos: *apikey*, *iam* o *uaa*, donde
 
@@ -488,33 +485,30 @@ Para mostrar los detalles de una regla, siga estos pasos:
 	
 	* La señal es la señal de autenticación de UAA o IAM, o la clave de API.
 	
-	* Space es el GUID del espacio. Solo es necesario cuando se utiliza una señal de UAA.
+	* Space es el GUID del espacio. 
 	
 	* Rule_Name es el nombre de la regla especificada en el campo *name*.
+	
+	* METRICS_ENDPOINT representa el punto de entrada al servicio. Cada región tiene un URL diferente. Para obtener una lista de los puntos finales por región, consulte[Puntos finales](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
 
 ## Actualización de una regla
 {: #update}
 
-Para actualizar una regla, siga los pasos siguientes:
+Para actualizar una regla, modifíquela mediante la actualización del archivo de regla y, a continuación, siga estos pasos:
 
-1. Inicie la sesión en una región, organización y espacio de {{site.data.keyword.Bluemix_notm}}. Ejecute el mandato:
+1. Inicie la sesión en una región, organización y espacio en {{site.data.keyword.Bluemix_notm}}. 
 
-    Por ejemplo, para iniciar sesión en la región EE. UU. sur, ejecute el siguiente mandato:
+    Para obtener más información, consulte [Cómo iniciar sesión en {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+2. Obtenga la señal de seguridad. Puede utilizar una señal de UAA, una señal de IAM o una clave de API. Elija uno de los métodos siguientes para obtener la señal de seguridad:
 	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    Siga las instrucciones. Escriba sus credenciales de {{site.data.keyword.Bluemix_notm}}, seleccione una organización y un espacio.
-
-2. Obtenga la señal de autenticación o la clave de API.
-
-    * Para la autenticación de IAM, consulte [Obtención de la señal de IAM mediante la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) o [Generación de una clave de API de IAM mediante la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	* Para obtener una señal de UAA, consulte [Obtención de una señal de UAA mediante la CLI de {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
 	
-	* Para la autenticación de UAA, consulte [Obtención de la señal de UAA utilizando la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) u [Obtención de la señal de UAA utilizando la API REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
+	* Para obtener una señal de IAM, consulte [Obtención de una señal de IAM mediante la CLI de {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* Para obtener una clave de API, consulte [Obtención de una clave de API](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
 	Por ejemplo, para utilizar la señal de IAM, ejecute el siguiente mandato:
 
     ```
@@ -574,15 +568,15 @@ Para actualizar una regla, siga los pasos siguientes:
 4. Ejecute el siguiente mandato cURL para actualizar una regla:
 
     ```
-	curl -XPUT `-d @Rule_File` --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rule
+	curl -XPUT `-d @$RULE_FILE` --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/rule
 	```
 	{: codeblock}
 	
 	donde
 	
-	* Rule_File es un archivo JSON que define la regla de alerta.
+	* RULE_FILE es el archivo JSON que define la regla de alerta.
 	
-	* El valor *X-Auth-User-Token* es un parámetro que pasa la señal UAA {{site.data.keyword.Bluemix_notm}}, señal IAM o clave de API.
+	* *X-Auth-User-Token* es un parámetro que pasa la señal de UAA, la señal de IAM o la clave de API.
 	
 	* El valor *Auth_Type* es el prefijo que define el tipo de señal o de clave de API. En la lista siguiente se muestran los valores válidos: *apikey*, *iam* o *uaa*, donde
 
@@ -594,7 +588,9 @@ Para actualizar una regla, siga los pasos siguientes:
 	
 	* La señal es la señal de autenticación de UAA o IAM, o la clave de API.
 	
-	* Space es el GUID del espacio. Solo es necesario cuando se utiliza una señal de UAA.
+	* Space es el GUID del espacio. 
+	
+	* METRICS_ENDPOINT representa el punto de entrada al servicio. Cada región tiene un URL diferente. Para obtener una lista de los puntos finales por región, consulte[Puntos finales](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 
 	
 	

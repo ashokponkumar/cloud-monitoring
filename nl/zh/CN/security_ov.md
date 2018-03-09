@@ -1,48 +1,48 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-07-12"
+lastupdated: "2018-02-01"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
 # 安全性
 {: #security_ov}
 
-可以使用不同的认证方法将度量值发送到 {{site.data.keyword.monitoringshort}} 服务。访问、修改和删除度量值的许可权通过使用角色进行控制。
+要控制允许用户执行的 {{site.data.keyword.monitoringshort}} 服务操作，您可以向用户分配一个或多个角色。要认证用户以处理度量值和警报，可以使用 UAA 令牌、IAM 令牌或 API 密钥。
 {:shortdesc}
 
    
 ## 认证模型
 {: #auth}
 
-要访问在 {{site.data.keyword.monitoringshort}} 服务中存储的针对 {{site.data.keyword.Bluemix_notm}} 空间的度量值，您需要认证令牌或 API 密钥。 
+要使用在 {{site.data.keyword.monitoringshort}} 服务中为空间存储的度量值，您需要认证令牌或 API 密钥。 
 
-{{site.data.keyword.monitoringshort}} 服务支持以下认证模型：
+要获取安全性令牌，请参阅：
 
-* [{{site.data.keyword.Bluemix_notm}} UAA 认证](/docs/services/cloud-monitoring/security/auth_uaa.html#auth_uaa)
-* [{{site.data.keyword.Bluemix_notm}} IAM 认证](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam)
+* [获取 UAA 令牌](/docs/services/cloud-monitoring/security/auth_uaa.html#auth_uaa)
+* [获取 IAM 令牌](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam)
+
+要获取 API 密钥，请参阅[生成 API 密钥](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key)。如果 API 密钥已损坏，可以通过删除 API 密钥来将其撤销。然后，您可以重新创建一个新的 API 密钥。有关更多信息，请参阅[使用 {{site.data.keyword.Bluemix_notm}} UI 撤销 API 密钥](/docs/services/cloud-monitoring/security/auth_api_key.html#revoke_ui)。 
 
 UAA 令牌和 IAM 令牌在一段时间后到期。API 密钥不会到期。
  
 
-如果 API 密钥已损坏，可以通过删除 API 密钥来将其撤销。然后，您可以重新创建一个新的 API 密钥。有关更多信息，请参阅[使用 Bluemix UI 撤销 API 密钥](/docs/services/cloud-monitoring/security/auth_iam.html#revoke_ui)。 
-
-IAM 认证模型提供 UI、CLI 或 API 管理功能。您仅可以使用 CLI 来管理 UAA 令牌。
-
-下表列出了每种类型的域支持的认证模型：
+下表列出了每种类型的域支持的安全性模型：
 
 <table>
-  <caption>表 1. 每种域支持的认证模型</caption>
+  <caption>表 1. 每个域支持的安全性模型</caption>
   <tr>
     <th></th>
 	<th align="right">帐户</th>
@@ -67,13 +67,13 @@ IAM 认证模型提供 UI、CLI 或 API 管理功能。您仅可以使用 CLI �
 
 
 
-## Bluemix UAA 角色
+## Cloud Foundry 角色
 {: #bmx_roles}
 
-下表列出了每个 {{site.data.keyword.Bluemix_notm}} 角色使用 {{site.data.keyword.monitoringshort}} 服务的特权：
+下表列出了使用 {{site.data.keyword.monitoringshort}} 服务的每个 Cloud Foundry 角色的特权：
 
 <table>
-  <caption>表 2. 使用 {{site.data.keyword.monitoringshort}} 服务的 {{site.data.keyword.Bluemix_notm}} 角色和特权。</caption>
+  <caption>表 2. 使用 {{site.data.keyword.monitoringshort}} 服务的 Cloud Foundry 角色和特权。</caption>
   <tr>
     <th>角色</th>
 	<th>域</th>
@@ -85,7 +85,7 @@ IAM 认证模型提供 UI、CLI 或 API 管理功能。您仅可以使用 CLI �
 	<td>所有 RESTful API</td>
   </tr>
   <tr>
-    <td>开发人员</td>
+    <td>开发者</td>
 	<td>空间</td>
 	<td>所有 RESTful API</td>
   </tr>
@@ -97,47 +97,60 @@ IAM 认证模型提供 UI、CLI 或 API 管理功能。您仅可以使用 CLI �
 </table>
 
 
-## Bluemix IAM 角色
+## IAM 角色
 {: #iam_roles}
 
-下表列出了 {{site.data.keyword.monitoringshort}} 服务使用的 API、服务操作和 IAM 角色之间的关系。
+下表列出了在处理度量值和向用户授予许可权的 IAM 角色执行来这些任务时的 {{site.data.keyword.monitoringshort}} 服务操作：
 
 <table>
-  <caption>表 3. API、服务操作和 IAM 角色之间的关系。</caption>
+  <caption>表 3. 处理度量值</caption>
   <tr>
-    <th>API</th>
 	<th>操作</th>
 	<th>IAM 角色</th>
-	<th>描述</th>
   </tr>
   <tr>
-    <td>POST /v1/metrics</td>
-    <td>domain.write</td>
+    <td>向域发送度量值</td>
 	<td>管理员、编辑者和操作员</td>
-	<td>向域发送度量值</td>
   </tr>
   <tr>
-    <td>GET /v1/metrics</td>
-    <td>domain.render</td>
+    <td>检索/查询度量值</td>
 	<td>管理员、编辑者和查看者</td>
-	<td>检索/查询度量值</td>
   </tr>
   <tr>
-    <td>GET /v1/metrics/list</td>
-    <td>domain.find</td>
+    <td>在域中搜索度量值</td>
 	<td>管理员和编辑者</td>
-	<td>在域中搜索度量值</td>
   </tr>
 </table>
 
-## 获取安全性令牌或 API 密钥
-{: #get_token}
+下表列出了在使用警报和向用户授予许可权的 IAM 角色执行来这些任务时的 {{site.data.keyword.monitoringshort}} 服务操作：
 
-使用 {{site.data.keyword.Bluemix_notm}} UAA 模型可获取认证令牌，可以使用该认证令牌访问 {{site.data.keyword.monitoringshort}} 服务中存储的针对 {{site.data.keyword.Bluemix_notm}} 中空间的数据。可以使用 {{site.data.keyword.Bluemix_notm}} CLI 或使用 `Login` REST API 来获取认证令牌。
-有关更多信息，请参阅[使用 {{site.data.keyword.Bluemix_notm}} CLI 获取 UAA 令牌](/docs/services/cloud-monitoring/security/auth_uaa.html#auth_cli)和[使用 API 获取 UAA 令牌](/docs/services/cloud-monitoring/security/auth_uaa.html#auth_api)。
-
-使用 {{site.data.keyword.Bluemix_notm}} IAM 模型可获取认证令牌，可以使用该认证令牌访问在 {{site.data.keyword.monitoringshort}} 服务中存储的数据或者获取 API 密钥。该令牌有到期时间。API 密钥不会到期。
-有关更多信息，请参阅[使用 {{site.data.keyword.Bluemix_notm}} CLI 获取 IAM 令牌](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli)、[使用 {{site.data.keyword.Bluemix_notm}} CLI 生成 IAM API 密钥](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli)或[使用 {{site.data.keyword.Bluemix_notm}} UI 生成 IAM API 密钥](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_ui)。
+<table>
+  <caption>表 4. 处理警报。</caption>
+  <tr>
+	<th>操作</th>
+	<th>IAM 角色</th>
+  </tr>
+  <tr>
+    <td>创建、编辑和删除警报规则</td>
+	<td>管理员和编辑者</td>
+  </tr>
+  <tr>
+    <td>查看警报</td>
+	<td>管理员、编辑者和查看者</td>
+  </tr>
+  <tr>
+    <td>创建、编辑和删除警报通知</td>
+	<td>管理员和编辑者</td>
+  </tr>
+  <tr>
+    <td>查看通知</td>
+	<td>管理员、编辑者和查看者</td>
+  </tr>
+  <tr>
+    <td>查看已触发的警报历史记录</td>
+	<td>管理员、编辑者和查看者</td>
+  </tr>
+</table>
 
 
 

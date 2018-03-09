@@ -1,38 +1,43 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-07-18"
+lastupdated: "2018-02-01"
 
 ---
 
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
-# Mithilfe der Alerts-API mit Regeln arbeiten
+# CRUD-Regeln
 {: #rules}
 
-Verwenden Sie die Alerts-API, um eine Regel zu erstellen, zu löschen oder zu aktualisieren, um die Details einer Regel anzuzeigen und um die Regeln aufzulisten, die in Ihrem {{site.data.keyword.Bluemix_notm}}-Bereich definiert sind.
+Verwenden Sie die Alerts-API, um eine Regel zu erstellen, zu löschen oder zu aktualisieren, um die Details einer Regel anzuzeigen und um die Regeln aufzulisten, die in einem Bereich definiert sind.
 {:shortdesc}
 
 
 ## Eine Regel erstellen
 {: #create}
 
-Führen Sie die folgenden Schritte aus, um eine Regel zu erstellen:
+Zum Konfigurieren einer Regel im {{site.data.keyword.monitoringshort}}-Service erstellen Sie eine Regeldatei, die die Regeldetails enthält, und registrieren Sie die Regel beim {{site.data.keyword.monitoringshort}}-Service.
+
+Führen Sie die folgenden Schritte aus:
 
 1. Erstellen Sie eine Regeldatei mit Daten im JSON-Format. Speichern Sie die Datei. 
 
-    Verwenden Sie zum Speichern der Datei beispielsweise ein Präfix wie *s-* für Regeln, die Sie für Abfragen definieren, die in einem {{site.data.keyword.Bluemix_notm}}-Bereich ausgeführt werden.
+    Verwenden Sie zum Speichern der Datei beispielsweise ein Präfix wie *s-* für Regeln, die Sie für Abfragen definieren, die in einem Bereich ausgeführt werden.
 	
 	**Tipps:** 
 	
-	* Definieren Sie verschiedene Regeln für eine Abfrage, um auf Fehler oder Warnungen hinzuweisen, indem Sie eine andere Benachrichtigungsmethode verwenden. Sie können nur genau eine Benachrichtigungsmethode pro Regel festlegen. 
+	* Definieren Sie verschiedene Regeln für eine Abfrage, um auf Fehler oder Warnungen hinzuweisen, indem Sie eine andere Benachrichtigungsmethode verwenden. 
 	* Erstellen Sie Ihre Regeldatei im Verzeichnis *~/cloud-monitoring/rules/*, um die Ressourcen des {{site.data.keyword.monitoringshort_notm}}-Service in einer Gruppe zusammenzufassen. 
 
     Geben Sie die folgenden Informationen in der Regeldatei ein:
@@ -50,7 +55,7 @@ Führen Sie die folgenden Schritte aus, um eine Regel zu erstellen:
 	* *dashboard_url*: Definiert eine URL, die in Grafana ein Dashboard mit der Abfrage anzeigt.
 	* *notifications*: Die Benachrichtigungsmethode für den Fall, dass der durch diese Regel beschriebene Alert ausgelöst wird.
 	
-	Beispiel: 
+	Die Regeldatei 'myrulefile.json' sieht wie im folgenden Beispiel aus:
 	
 	```
 	{
@@ -73,50 +78,52 @@ Führen Sie die folgenden Schritte aus, um eine Regel zu erstellen:
     ```
 	{: screen}
 	
-2. Melden Sie sich bei einer Region, einer Organisation und einem Bereich von {{site.data.keyword.Bluemix_notm}} an. Führen Sie den folgenden Befehl aus:
-
-    Führen Sie zum Beispiel den folgenden Befehl aus, um sich beim Bereich 'US South' anzumelden: 
+	Anschließend exportieren Sie die Variable *RULE_FILE*:
 	
 	```
-    bx login -a https://api.ng.bluemix.net
+	export RULE_FILE="myrulefile.json"
+	```
+	{: screen}
+	
+2. Melden Sie sich bei einer Region, einer Organisation und einem Bereich in {{site.data.keyword.Bluemix_notm}} an.
+
+    Weitere Informationen finden Sie unter [Wie melde ich mich bei {{site.data.keyword.Bluemix_notm}} an?](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+3. Rufen Sie das Sicherheitstoken ab. Sie können ein UAA-Token, ein IAM-Token oder einen API-Schlüssel verwenden. Wählen Sie eine der folgenden Methoden aus, um das Sicherheitstoken abzurufen:
+	
+	* Informationen zum Abrufen eines UAA-Tokens finden Sie unter [UAA-Token über die {{site.data.keyword.Bluemix_notm}}-CLI abrufen](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
+	
+	* Informationen zum Abrufen eines IAM-Tokens finden Sie unter [IAM-Token über die {{site.data.keyword.Bluemix_notm}}-CLI abrufen](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* Informationen zum Abrufen eines API-Schlüssels finden Sie unter [API-Schlüssel abrufen](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
+	Führen Sie zum Beispiel den folgenden Befehl aus, um das IAM-Token zu verwenden:
+    
+    ```
+    bx iam oauth-tokens
     ```
     {: codeblock}
-
-    Befolgen Sie die Anweisungen. Geben Sie Ihre {{site.data.keyword.Bluemix_notm}}-Berechtigungsnachweise ein, wählen Sie eine Organisation und einen Bereich aus.
-
-3. Rufen Sie das Authentifizierungstoken oder den API-Schlüssel ab.
-
-    * Informationen zur IAM-Authentifizierung finden Sie in [IAM-Token über die Bluemix-Befehlzeilenschnittstelle abrufen](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) oder [IAM-API-Schlüssel über die Bluemix-Befehlzeilenschnittstelle generieren](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
 	
-	* Informationen zur UAA-Authentifizierung finden Sie in [UAA-Token über die Bluemix-Befehlzeilenschnittstelle abrufen](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) oder [UAA-Token über die REST-API abrufen](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
-	Führen Sie zum Beispiel den folgenden Befehl aus, um das IAM-Token zu verwenden:
-
+    Das Ergebnis dieses Befehls lautet wie folgt:
+	
     ```
-	bx iam oauth-tokens
-	```
-	{: codeblock}
-	
-	Das Ergebnis dieses Befehls lautet wie folgt:
-	
-	```
-	IAM token:  Bearer djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ
+    IAM token:  Bearer djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ
     UAA token:  Bearer eyJhbGciOiJIUz..Ky6vagp3k_QcIcKJ-td83qXhO5Uze43KcplG6PzcGs8
-	```
-	{: screen}
+    ```
+    {: screen}
 	
-	Anschließend exportieren Sie die Variable *Token*:
+    Anschließend exportieren Sie die Variable *Token*:
 	
-	```
-	export Token="djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ"
-	```
-	{: screen}
+    ```
+    export Token="djn.._l_HWtlNTbxslBXs0qjBI9GqCnuQ"
+    ```
+    {: screen}
 	
-	**Hinweis:** Das Token schließt *Bearer* (Träger) aus.
-
+    **Hinweis:** Das Token schließt *Bearer* (Träger) aus.
+	
 4. Rufen Sie die Bereichs-GUID ab. Die GUID muss das Präfix *s-* aufweisen, um einen Bereich zu kennzeichnen.
 
-    Führen Sie den folgenden Befehl aus:
+    Führen Sie folgenden Befehl aus:
 	
 	```
 	bx iam space SpaceName --guid
@@ -125,7 +132,7 @@ Führen Sie die folgenden Schritte aus, um eine Regel zu erstellen:
 	
 	Dabei ist *SpaceName* der Name des Bereichs, in dem Sie eine Benachrichtigung definieren werden.
 	
-	Beispiel: Führen Sie folgenden Befehl aus, um die GUID eines Bereichs mit dem Namen *dev* abzurufen:
+	Um beispielsweise die GUID eines Bereichs mit dem Namen *dev* abzurufen, führen Sie den folgenden Befehl aus:
 	
 	```
 	bx iam space dev --guid
@@ -139,25 +146,25 @@ Führen Sie die folgenden Schritte aus, um eine Regel zu erstellen:
 	```
 	{: screen}
 	
-	Exportieren Sie anschließend die Variable *Space*:
+	Anschließend exportieren Sie die Variable *Space*:
 	
 	```
 	export Space="s-667fadfc-jhtg-1234-9f0e-cf4123451095"
 	```
 	{: screen}
 	
-5. Führen Sie den folgenden cURL-Befehl aus, um eine Regel zu erstellen:
+5. Führen Sie den folgenden cURL-Befehl aus, um die Regel beim {{site.data.keyword.monitoringshort}}-Service zu registrieren:
 
     ```
-	curl -XPOST -d @Rule_File --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rule
+	curl -XPOST -d @$RULE_FILE --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/rule
 	```
 	{: codeblock}
 	
 	dabei gilt:
 	
-	* Rule_File ist die JSON-Datei, die Ihre Alertregel definiert.
+	* RULE_FILE ist die JSON-Datei, die Ihre Alertregel definiert.
 	
-	* Das *X-Auth-User-Token* ist ein Parameter, der das UAA-Token, das IAM-Token oder den API-Schlüssel von {{site.data.keyword.Bluemix_notm}} übergibt.
+	* Das *X-Auth-User-Token* ist ein Parameter, der das UAA-Token, IAM-Token oder den API-Schlüssel von {{site.data.keyword.Bluemix_notm}} übergibt.
 	
 	* *Auth_Type* ist das Präfix, das den Typ des Tokens oder den API-Schlüssel definiert. Die folgende Liste enthält die gültigen Werte: *apikey*, *iam* oder *uaa*, wobei
   * *apikey* angibt, dass das Token ein API-Schlüssel ist.
@@ -168,12 +175,14 @@ Führen Sie die folgenden Schritte aus, um eine Regel zu erstellen:
 	
 	* Token ist das UAA- oder IAM-Authentifizierungstoken oder der API-Schlüssel.
 	
-	* Space (Bereich) ist die GUID des Bereichs. Die GUID ist nur erforderlich, wenn Sie ein UAA-Token verwenden.
+	* Space (Bereich) ist die GUID des Bereichs. 
+	
+	* METRICS_ENDPOINT stellt den Eingangspunkt zum Service dar. Jede Region verfügt über eine andere URL. Informationen zum Abrufen der Liste der Endpunkte nach Region finden Sie unter [Endpunkte](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
     Beispiel: 	
 	
 	```
-	curl -XPOST -d @s-rule-1.json --header "X-Auth-User-Token:iam ${Token}" https://metrics.ng.bluemix.net/v1/alert/rule
+	curl -XPOST -d @$RULE_FILE --header "X-Auth-User-Token:iam ${Token}" https://metrics.ng.bluemix.net/v1/alert/rule
 	```
 	{: screen}
 
@@ -182,23 +191,18 @@ Führen Sie die folgenden Schritte aus, um eine Regel zu erstellen:
 
 Führen Sie folgende Schritte aus, um eine Regel zu löschen:
 
-1. Melden Sie sich bei einer Region, einer Organisation und einem Bereich von {{site.data.keyword.Bluemix_notm}} an. Führen Sie den folgenden Befehl aus:
+1. Melden Sie sich bei einer Region, einer Organisation und einem Bereich in {{site.data.keyword.Bluemix_notm}} an.
 
-    Führen Sie zum Beispiel den folgenden Befehl aus, um sich beim Bereich 'US South' anzumelden:
+    Weitere Informationen finden Sie unter [Wie melde ich mich bei {{site.data.keyword.Bluemix_notm}} an?](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+2. Rufen Sie das Sicherheitstoken ab. Sie können ein UAA-Token, ein IAM-Token oder einen API-Schlüssel verwenden. Wählen Sie eine der folgenden Methoden aus, um das Sicherheitstoken abzurufen:
 	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    Befolgen Sie die Anweisungen. Geben Sie Ihre {{site.data.keyword.Bluemix_notm}}-Berechtigungsnachweise ein, wählen Sie eine Organisation und einen Bereich aus.
-
-2. Rufen Sie das Authentifizierungstoken oder den API-Schlüssel ab.
-
-    * Weitere Informationen zur IAM-Authentifizierung finden Sie in [IAM-Token über die Bluemix-Befehlszeilenschnittstelle abrufen](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) oder [IAM-API-Schlüssel über die Bluemix-Befehlszeilenschnittstelle generieren](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	* Informationen zum Abrufen eines UAA-Tokens finden Sie unter [UAA-Token über die {{site.data.keyword.Bluemix_notm}}-CLI abrufen](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
 	
-	* Weitere Informationen zur UAA-Authentifizierung finden Sie in [UAA-Token über die Bluemix-Befehlszeilenschnittstelle abrufen](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) oder [UAA-Token über die REST-API abrufen](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
+	* Informationen zum Abrufen eines IAM-Tokens finden Sie unter [IAM-Token über die {{site.data.keyword.Bluemix_notm}}-CLI abrufen](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* Informationen zum Abrufen eines API-Schlüssels finden Sie unter [API-Schlüssel abrufen](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
 	Führen Sie zum Beispiel den folgenden Befehl aus, um das IAM-Token zu verwenden:
 
     ```
@@ -222,8 +226,8 @@ Führen Sie folgende Schritte aus, um eine Regel zu löschen:
 	{: screen}
 	
 	**Hinweis:** Das Token schließt *Bearer* (Träger) aus.
-
-2. Rufen Sie die Bereichs-GUID ab. Die GUID muss das Präfix *s-* aufweisen, um einen Bereich zu kennzeichnen.
+	
+3. Rufen Sie die Bereichs-GUID ab. Die GUID muss das Präfix *s-* aufweisen, um einen Bereich zu kennzeichnen.
 
     Führen Sie den folgenden Befehl aus:
 	
@@ -254,17 +258,17 @@ Führen Sie folgende Schritte aus, um eine Regel zu löschen:
 	export Space="s-667fadfc-jhtg-1234-9f0e-cf4123451095"
 	```
 	{: screen}
-	
+		
 4. Führen Sie den folgenden cURL-Befehl aus, um eine Regel zu löschen:
 
     ```
-	curl -XDELETE --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rule/Rule_Name
+	curl -XDELETE --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/rule/Rule_Name
 	```
 	{: codeblock}
 	
 	wobei gilt:
 	
-    * Das *X-Auth-User-Token* ist ein Parameter, der das  UAA-Token, IAM-Token oder den API-Schlüssel von {{site.data.keyword.Bluemix_notm}} übergibt.
+    * *X-Auth-User-Token* ist ein Parameter, der das UAA-Token, das IAM-Token oder den API-Schlüssel übergibt.
 	
 	* *Auth_Type* ist das Präfix, das den Typ des Tokens oder den API-Schlüssel definiert. Die folgende Liste enthält die gültigen Werte: *apikey*, *iam* oder *uaa*, wobei
   * *apikey* angibt, dass das Token ein API-Schlüssel ist.
@@ -275,9 +279,11 @@ Führen Sie folgende Schritte aus, um eine Regel zu löschen:
 	
 	* Token ist das UAA- oder IAM-Authentifizierungstoken oder der API-Schlüssel.
 	
-	* Space (Bereich) ist die GUID des Bereichs. Die GUID ist nur erforderlich, wenn Sie ein UAA-Token verwenden.
+	* Space (Bereich) ist die GUID des Bereichs. 
 	
 	* Rule_Name ist der Name der Regel, die im Feld *name* angegeben ist.
+	
+	* METRICS_ENDPOINT stellt den Eingangspunkt zum Service dar. Jede Region verfügt über eine andere URL. Informationen zum Abrufen der Liste der Endpunkte nach Region finden Sie unter [Endpunkte](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
     
 	
@@ -286,23 +292,18 @@ Führen Sie folgende Schritte aus, um eine Regel zu löschen:
 
 Führen Sie die folgenden Schritte aus, um alle Regeln aufzulisten:
 
-1. Melden Sie sich bei einer Region, einer Organisation und einem Bereich von {{site.data.keyword.Bluemix_notm}} an. Führen Sie den folgenden Befehl aus:
+1. Melden Sie sich bei einer Region, einer Organisation und einem Bereich in {{site.data.keyword.Bluemix_notm}} an.
 
-    Führen Sie zum Beispiel den folgenden Befehl aus, um sich beim Bereich 'US South' anzumelden:
+    Weitere Informationen finden Sie unter [Wie melde ich mich bei {{site.data.keyword.Bluemix_notm}} an?](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+2. Rufen Sie das Sicherheitstoken ab. Sie können ein UAA-Token, ein IAM-Token oder einen API-Schlüssel verwenden. Wählen Sie eine der folgenden Methoden aus, um das Sicherheitstoken abzurufen:
 	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    Befolgen Sie die Anweisungen. Geben Sie Ihre {{site.data.keyword.Bluemix_notm}}-Berechtigungsnachweise ein, wählen Sie eine Organisation und einen Bereich aus.
-
-2. Rufen Sie das Authentifizierungstoken oder den API-Schlüssel ab.
-
-    * Weitere Informationen zur IAM-Authentifizierung finden Sie in [IAM-Token über die Bluemix-Befehlszeilenschnittstelle abrufen](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) oder [IAM-API-Schlüssel über die Bluemix-Befehlszeilenschnittstelle generieren](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	* Informationen zum Abrufen eines UAA-Tokens finden Sie unter [UAA-Token über die {{site.data.keyword.Bluemix_notm}}-CLI abrufen](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
 	
-	* Weitere Informationen zur UAA-Authentifizierung finden Sie in [UAA-Token über die Bluemix-Befehlszeilenschnittstelle abrufen](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) oder [UAA-Token über die REST-API abrufen](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
+	* Informationen zum Abrufen eines IAM-Tokens finden Sie unter [IAM-Token über die {{site.data.keyword.Bluemix_notm}}-CLI abrufen](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* Informationen zum Abrufen eines API-Schlüssels finden Sie unter [API-Schlüssel abrufen](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
 	Führen Sie zum Beispiel den folgenden Befehl aus, um das IAM-Token zu verwenden:
 
     ```
@@ -326,8 +327,8 @@ Führen Sie die folgenden Schritte aus, um alle Regeln aufzulisten:
 	{: screen}
 	
 	**Hinweis:** Das Token schließt *Bearer* (Träger) aus.
-
-2. Rufen Sie die Bereichs-GUID ab. Die GUID muss das Präfix *s-* aufweisen, um einen Bereich zu kennzeichnen.
+	
+3. Rufen Sie die Bereichs-GUID ab. Die GUID muss das Präfix *s-* aufweisen, um einen Bereich zu kennzeichnen.
 
     Führen Sie den folgenden Befehl aus:
 	
@@ -362,13 +363,13 @@ Führen Sie die folgenden Schritte aus, um alle Regeln aufzulisten:
 4. Führen Sie den folgenden cURL-Befehl aus, um alle Regeln in einem Bereich aufzulisten:
 
     ```
-	curl -XGET --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rules
+	curl -XGET --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/rules
 	```
 	{: codeblock}
 	
 	dabei gilt:
 	
-	* Das *X-Auth-User-Token* ist ein Parameter, der das  UAA-Token, IAM-Token oder den API-Schlüssel von {{site.data.keyword.Bluemix_notm}} übergibt.
+	* *X-Auth-User-Token* ist ein Parameter, der das UAA-Token, das IAM-Token oder den API-Schlüssel übergibt.
 	
 	* *Auth_Type* ist das Präfix, das den Typ des Tokens oder den API-Schlüssel definiert. Die folgende Liste enthält die gültigen Werte: *apikey*, *iam* oder *uaa*, wobei
   * *apikey* angibt, dass das Token ein API-Schlüssel ist.
@@ -379,7 +380,9 @@ Führen Sie die folgenden Schritte aus, um alle Regeln aufzulisten:
 	
 	* Token ist das UAA- oder IAM-Authentifizierungstoken oder der API-Schlüssel.
 	
-	* Space (Bereich) ist die GUID des Bereichs. Die GUID ist nur erforderlich, wenn Sie ein UAA-Token verwenden.
+	* Space (Bereich) ist die GUID des Bereichs. 
+	
+	* METRICS_ENDPOINT stellt den Eingangspunkt zum Service dar. Jede Region verfügt über eine andere URL. Informationen zum Abrufen der Liste der Endpunkte nach Region finden Sie unter [Endpunkte](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
 
 	
@@ -390,23 +393,18 @@ Führen Sie die folgenden Schritte aus, um alle Regeln aufzulisten:
 
 Führen Sie folgende Schritte aus, um die Details einer Regel anzuzeigen:
 
-1. Melden Sie sich bei einer Region, einer Organisation und einem Bereich von {{site.data.keyword.Bluemix_notm}} an. Führen Sie den folgenden Befehl aus:
+1. Melden Sie sich bei einer Region, einer Organisation und einem Bereich in {{site.data.keyword.Bluemix_notm}} an.
 
-    Führen Sie zum Beispiel den folgenden Befehl aus, um sich beim Bereich 'US South' anzumelden:
+    Weitere Informationen finden Sie unter [Wie melde ich mich bei {{site.data.keyword.Bluemix_notm}} an?](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+2. Rufen Sie das Sicherheitstoken ab. Sie können ein UAA-Token, ein IAM-Token oder einen API-Schlüssel verwenden. Wählen Sie eine der folgenden Methoden aus, um das Sicherheitstoken abzurufen:
 	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    Befolgen Sie die Anweisungen. Geben Sie Ihre {{site.data.keyword.Bluemix_notm}}-Berechtigungsnachweise ein, wählen Sie eine Organisation und einen Bereich aus.
-
-2. Rufen Sie das Authentifizierungstoken oder den API-Schlüssel ab.
-
-    * Weitere Informationen zur IAM-Authentifizierung finden Sie in [IAM-Token über die Bluemix-Befehlszeilenschnittstelle abrufen](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) oder [IAM-API-Schlüssel über die Bluemix-Befehlszeilenschnittstelle generieren](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	* Informationen zum Abrufen eines UAA-Tokens finden Sie unter [UAA-Token über die {{site.data.keyword.Bluemix_notm}}-CLI abrufen](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
 	
-	* Weitere Informationen zur UAA-Authentifizierung finden Sie in [UAA-Token über die Bluemix-Befehlszeilenschnittstelle abrufen](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) oder [UAA-Token über die REST-API abrufen](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
+	* Informationen zum Abrufen eines IAM-Tokens finden Sie unter [IAM-Token über die {{site.data.keyword.Bluemix_notm}}-CLI abrufen](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* Informationen zum Abrufen eines API-Schlüssels finden Sie unter [API-Schlüssel abrufen](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
 	Führen Sie zum Beispiel den folgenden Befehl aus, um das IAM-Token zu verwenden:
 
     ```
@@ -430,8 +428,8 @@ Führen Sie folgende Schritte aus, um die Details einer Regel anzuzeigen:
 	{: screen}
 	
 	**Hinweis:** Das Token schließt *Bearer* (Träger) aus.
-
-2. Rufen Sie die Bereichs-GUID ab. Die GUID muss das Präfix *s-* aufweisen, um einen Bereich zu kennzeichnen.
+	
+3. Rufen Sie die Bereichs-GUID ab. Die GUID muss das Präfix *s-* aufweisen, um einen Bereich zu kennzeichnen.
 
     Führen Sie den folgenden Befehl aus:
 	
@@ -466,13 +464,13 @@ Führen Sie folgende Schritte aus, um die Details einer Regel anzuzeigen:
 4. Führen Sie den folgenden cURL-Befehl aus, um die Details für eine Regel anzuzeigen:
 
     ```
-	curl -XGET --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rule/Rule_Name
+	curl -XGET --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/rule/Rule_Name
 	```
 	{: codeblock}
 	
 	dabei gilt:
 	
-	* Das *X-Auth-User-Token* ist ein Parameter, der das  UAA-Token, IAM-Token oder den API-Schlüssel von {{site.data.keyword.Bluemix_notm}} übergibt.
+	* *X-Auth-User-Token* ist ein Parameter, der das UAA-Token, das IAM-Token oder den API-Schlüssel übergibt.
 	
 	* *Auth_Type* ist das Präfix, das den Typ des Tokens oder den API-Schlüssel definiert. Die folgende Liste enthält die gültigen Werte: *apikey*, *iam* oder *uaa*, wobei
   * *apikey* angibt, dass das Token ein API-Schlüssel ist.
@@ -483,33 +481,30 @@ Führen Sie folgende Schritte aus, um die Details einer Regel anzuzeigen:
 	
 	* Token ist das UAA- oder IAM-Authentifizierungstoken oder der API-Schlüssel.
 	
-	* Space (Bereich) ist die GUID des Bereichs. Die GUID ist nur erforderlich, wenn Sie ein UAA-Token verwenden.
+	* Space (Bereich) ist die GUID des Bereichs. 
 	
 	* Rule_Name ist der Name der Regel, die im Feld *name* angegeben ist.
+	
+	* METRICS_ENDPOINT stellt den Eingangspunkt zum Service dar. Jede Region verfügt über eine andere URL. Informationen zum Abrufen der Liste der Endpunkte nach Region finden Sie unter [Endpunkte](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
 
 ## Eine Regel aktualisieren
 {: #update}
 
-Führen Sie die folgenden Schritte aus, um eine Regel zu aktualisieren:
+Zum Aktualisieren einer Regel ändern Sie die Regeln, indem Sie die Regeldatei aktualisieren und anschließend die folgenden Schritte ausführen:
 
-1. Melden Sie sich bei einer Region, einer Organisation und einem Bereich von {{site.data.keyword.Bluemix_notm}} an. Führen Sie den folgenden Befehl aus:
+1. Melden Sie sich bei einer Region, einer Organisation und einem Bereich in {{site.data.keyword.Bluemix_notm}} an.
 
-    Führen Sie zum Beispiel den folgenden Befehl aus, um sich beim Bereich 'US South' anzumelden:
+    Weitere Informationen finden Sie unter [Wie melde ich mich bei {{site.data.keyword.Bluemix_notm}} an?](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+2. Rufen Sie das Sicherheitstoken ab. Sie können ein UAA-Token, ein IAM-Token oder einen API-Schlüssel verwenden. Wählen Sie eine der folgenden Methoden aus, um das Sicherheitstoken abzurufen:
 	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    Befolgen Sie die Anweisungen. Geben Sie Ihre {{site.data.keyword.Bluemix_notm}}-Berechtigungsnachweise ein, wählen Sie eine Organisation und einen Bereich aus.
-
-2. Rufen Sie das Authentifizierungstoken oder den API-Schlüssel ab.
-
-    * Weitere Informationen zur IAM-Authentifizierung finden Sie in [IAM-Token über die Bluemix-Befehlszeilenschnittstelle abrufen](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) oder [IAM-API-Schlüssel über die Bluemix-Befehlszeilenschnittstelle generieren](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	* Informationen zum Abrufen eines UAA-Tokens finden Sie unter [UAA-Token über die {{site.data.keyword.Bluemix_notm}}-CLI abrufen](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
 	
-	* Weitere Informationen zur UAA-Authentifizierung finden Sie in [UAA-Token über die Bluemix-Befehlszeilenschnittstelle abrufen](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) oder [UAA-Token über die REST-API abrufen](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
+	* Informationen zum Abrufen eines IAM-Tokens finden Sie unter [IAM-Token über die {{site.data.keyword.Bluemix_notm}}-CLI abrufen](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* Informationen zum Abrufen eines API-Schlüssels finden Sie unter [API-Schlüssel abrufen](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
 	Führen Sie zum Beispiel den folgenden Befehl aus, um das IAM-Token zu verwenden:
 
     ```
@@ -533,8 +528,8 @@ Führen Sie die folgenden Schritte aus, um eine Regel zu aktualisieren:
 	{: screen}
 	
 	**Hinweis:** Das Token schließt *Bearer* (Träger) aus.
-
-2. Rufen Sie die Bereichs-GUID ab. Die GUID muss das Präfix *s-* aufweisen, um einen Bereich zu kennzeichnen.
+	
+3. Rufen Sie die Bereichs-GUID ab. Die GUID muss das Präfix *s-* aufweisen, um einen Bereich zu kennzeichnen.
 
     Führen Sie den folgenden Befehl aus:
 	
@@ -569,15 +564,15 @@ Führen Sie die folgenden Schritte aus, um eine Regel zu aktualisieren:
 4. Führen Sie den folgenden cURL-Befehl aus, um eine Regel zu aktualisieren:
 
     ```
-	curl -XPUT `-d @Rule_File` --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/rule
+	curl -XPUT `-d @$RULE_FILE` --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/rule
 	```
 	{: codeblock}
 	
 	dabei gilt:
 	
-	* Rule_File ist die JSON-Datei, die Ihre Alertregel definiert.
+	* RULE_FILE ist die JSON-Datei, die Ihre Alertregel definiert.
 	
-	* Das *X-Auth-User-Token* ist ein Parameter, der das  UAA-Token, IAM-Token oder den API-Schlüssel von {{site.data.keyword.Bluemix_notm}} übergibt.
+	* *X-Auth-User-Token* ist ein Parameter, der das UAA-Token, das IAM-Token oder den API-Schlüssel übergibt.
 	
 	* *Auth_Type* ist das Präfix, das den Typ des Tokens oder den API-Schlüssel definiert. Die folgende Liste enthält die gültigen Werte: *apikey*, *iam* oder *uaa*, wobei
   * *apikey* angibt, dass das Token ein API-Schlüssel ist.
@@ -588,7 +583,9 @@ Führen Sie die folgenden Schritte aus, um eine Regel zu aktualisieren:
 	
 	* Token ist das UAA- oder IAM-Authentifizierungstoken oder der API-Schlüssel.
 	
-	* Space (Bereich) ist die GUID des Bereichs. Die GUID ist nur erforderlich, wenn Sie ein UAA-Token verwenden.
+	* Space (Bereich) ist die GUID des Bereichs. 
+	
+	* METRICS_ENDPOINT stellt den Eingangspunkt zum Service dar. Jede Region verfügt über eine andere URL. Informationen zum Abrufen der Liste der Endpunkte nach Region finden Sie unter [Endpunkte](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 
 	
 	

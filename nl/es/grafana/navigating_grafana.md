@@ -1,17 +1,21 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-05-25"
+lastupdated: "2018-02-07"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
+{:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
+
 
 # Navegación al panel de control de Grafana
 {:#navigating_grafana}
@@ -23,7 +27,7 @@ Puede iniciar Grafana de cualquiera de estas formas:
 
 * Desde {{site.data.keyword.Bluemix_notm}}
 
-    Puede iniciar métricas de contenedor Docker específicas en Grafana, en el contexto de dicho contenedor en concreto. Esta característica únicamente se aplica a contenedores desplegados en la infraestructura de nube gestionada de {{site.data.keyword.Bluemix_notm}}. 
+    Puede iniciar métricas de contenedor Docker específicas en Grafana, en el contexto de dicho contenedor en concreto. Esta característica únicamente se aplica a contenedores desplegados en la infraestructura gestionada de {{site.data.keyword.Bluemix_notm}}. 
     
     Para obtener más información, consulte [Navegación al panel de control de Grafana desde el panel de control de {{site.data.keyword.Bluemix_notm}}](navigating_grafana.html#launch_grafana_from_bluemix).
 
@@ -33,19 +37,19 @@ Puede iniciar Grafana de cualquiera de estas formas:
     
     Para obtener más información, consulte [Navegación al panel de control de Grafana desde un navegador web](navigating_grafana.html#launch_grafana_from_browser).
     
-Para obtener más información sobre Grafana, consulte la [Guía del usuario de Grafana![Icono de enlace externo](../../../icons/launch-glyph.svg "Icono de enlace externo")](http://docs.grafana.org/guides/getting_started/ "Icono de enlace externo"){: new_window}.
+Para obtener más información sobre Grafana, consulte la [Guía del usuario de Grafana ![Icono de enlace externo](../../../icons/launch-glyph.svg "Icono de enlace externo")](http://docs.grafana.org/guides/getting_started/){: new_window}.
 
 
-##  Navegación al panel de control de Grafana desde el panel de control de Bluemix
+##  Navegación al panel de control de Grafana desde el panel de control de IBM Cloud
 {: #launch_grafana_from_bluemix}
 
-**Nota:** Esta característica únicamente se aplica a contenedores desplegados en la infraestructura de nube gestionada de {{site.data.keyword.Bluemix_notm}}. 
+**Nota:** Esta característica únicamente se aplica a contenedores desplegados en la infraestructura gestionada de {{site.data.keyword.Bluemix_notm}}. 
 
 La consulta que se utiliza para filtrar los datos que aparecen en Grafana recupera los datos correspondientes al contenedor de {{site.data.keyword.Bluemix_notm}} desde el que ha iniciado Kibana. 
 
 Para ver las métricas de un contenedor Docker en Grafana, siga los pasos siguientes:
 
-1. Inicie una sesión en {{site.data.keyword.Bluemix_notm}} y pulse el contenedor en el panel de control de {{site.data.keyword.Bluemix_notm}}. 
+1. Inicie sesión en {{site.data.keyword.Bluemix_notm}} y pulse el contenedor desde el *Panel de control*. 
     
 2. En la barra de navegación, pulse **Supervisión y registros**. Se abre el separador de supervisión. 
     
@@ -59,7 +63,35 @@ La consulta que se utiliza para filtrar los datos que aparecen en Grafana recupe
 
 Siga los pasos siguientes para iniciar Grafana desde un navegador:
 
-1. Abra [https://metrics.ng.bluemix.net](https://metrics.ng.bluemix.net) para iniciar sesión en la interfaz de usuario de Grafana.
+1. Abra un navegador web. 
+2. Especifique el URL para la región en la que desea supervisar métricas. 
+
+    La tabla siguiente lista los URL por región:
+	<table>
+      <caption>URL para iniciar Grafana en diferentes regiones</caption>
+      <tr>
+        <th>Región</th>
+	    <th>Punto final</th>
+      </tr>
+      <tr>
+        <td>Alemania</td>
+	    <td>[https://metrics.eu-de.bluemix.net](https://metrics.eu-de.bluemix.net)</td>
+      </tr>
+      <tr>
+        <td>Reino Unido</td>
+	    <td>[https://metrics.eu-gb.bluemix.net](https://metrics.eu-gb.bluemix.net)</td>
+      </tr>
+      <tr>
+        <td>EE.UU. sur</td>
+    	<td>[https://metrics.ng.bluemix.net](https://metrics.ng.bluemix.net)</td>
+      </tr>
+      <tr>
+        <td>Reino Unido</td>
+	    <td>[https://metrics.au-syd.bluemix.net](https://metrics.au-syd.bluemix.net)</td>
+      </tr>
+      
+    </table>
+	
 2. Seleccione **Grafana**.
      
 

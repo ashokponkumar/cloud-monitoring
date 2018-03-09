@@ -1,28 +1,60 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-06-19"
+lastupdated: "2018-02-09"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
-# Preguntas frecuentes y respuestas sobre el uso de Grafana
+
+# Preguntas frecuentes sobre el uso de Grafana
 {: #grafana_qa}
 
 Aquí encontrará las respuestas a preguntas comunes sobre el uso de Grafana con el servicio {{site.data.keyword.monitoringshort}}. 
 {:shortdesc}
 
+* [No puedo ver las alertas que he definido mediante la API de Alertas en mi panel de control de Grafana](/docs/services/cloud-monitoring/qa/grafana_qa.html#alerts1)
+* [Recibo un error BXNMSAL41E al intentar guardar un cambio que he realizado en mi panel de control de Grafana](/docs/services/cloud-monitoring/qa/grafana_qa.html#BXNMSAL41E)
+* [Recibo un error BXNMSAL36E al intentar guardar un cambio después de añadir una alerta a mi panel de control de Grafana](/docs/services/cloud-monitoring/qa/grafana_qa.html#BXNMSAL36E)
 * [Recibo un error 404 cuando inicio una sesión en la interfaz de usuario web del servicio de supervisión](/docs/services/cloud-monitoring/qa/grafana_qa.html#404)
 * [Acabo de cargar datos json para un panel de control de Grafana; ¿por qué he perdido la barra de desplazamiento?](/docs/services/cloud-monitoring/qa/grafana_qa.html#2)
+
+
+## No puedo ver las alertas que he definido mediante la API de Alertas en mi panel de control de Grafana
+{: #alerts1}
+
+Las alertas que defina mediante la API de Alertas no se muestran en el separador de alertas en Grafana. Para ver alertas en Grafana, debe definirlas directamente en un panel de control de Grafana.
+
+Para obtener más información, consulte [Configuración de alertas en Grafana](/docs/services/cloud-monitoring/alerts/config_alerts_grafana.html#config_alerts_grafana).
+
+## Recibo un error BXNMSAL41E al intentar guardar un cambio que he realizado en mi panel de control de Grafana
+{: #BXNMSAL41E}
+
+Puede definir canales de notificación y alertas en Grafana. Si suprime un canal de notificación en Grafana, y no actualiza la regla para eliminar dicho canal de notificación, recibirá un error **BXNMSAL41E** al intentar guardar el panel de control de Grafana.
+
+Para solucionar el problema, actualice la regla utilizando la API de Alertas y vuelva a intentar guardar el panel de control. Cuando se actualice la regla, elimine el canal de notificación que se ha suprimido.
+
+Para obtener más información, consulte [API de Alertas](https://console.bluemix.net/apidocs/940-ibm-cloud-monitoring-alerts-api?&language=node#introduction).
+
+## Recibo un error BXNMSAL36E al intentar guardar un cambio después de añadir una alerta a mi panel de control de Grafana
+{: #BXNMSAL36E}
+
+Si se llega a la cuota para el dominio donde está supervisando las métricas en el servicio de {{site.data.keyword.monitoringshort}}, recibirá el error siguiente: **BXNMSAL36E**
+
+Actualice su plan y vuelva a intentarlo.
+
+Para obtener más información sobre cómo actualizar su plan, consulte [Cambio del plan](/docs/services/cloud-monitoring/plan/change_plan.html#change_plan).
 
 
 ## Recibo un error 404 cuando inicio una sesión en la interfaz de usuario web del servicio de supervisión utilizando el modelo de autorización UUA

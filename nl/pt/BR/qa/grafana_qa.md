@@ -1,28 +1,75 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-06-19"
+lastupdated: "2018-02-09"
 
 ---
 
-
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
-# Perguntas e respostas frequentes ao usar o Grafana
+
+# FAQ usando Grafana
 {: #grafana_qa}
 
 Veja as respostas para as perguntas comuns sobre como usar o Grafana com o serviço {{site.data.keyword.monitoringshort}}. 
 {:shortdesc}
 
+* [Não posso ver alertas que eu
+defini usando a API Alerts no meu painel do Grafana](/docs/services/cloud-monitoring/qa/grafana_qa.html#alerts1)
+* [Recebo um BXNMSAL41E quando
+tento salvar uma mudança que eu fiz no meu painel do Grafana](/docs/services/cloud-monitoring/qa/grafana_qa.html#BXNMSAL41E)
+* [Recebo um BXNMSAL36E quando
+tento salvar uma mudança depois de incluir um alerta no meu painel do Grafana](/docs/services/cloud-monitoring/qa/grafana_qa.html#BXNMSAL36E)
 * [Aparece um erro 404 quando efetuo login na UI da web do serviço Monitoring](/docs/services/cloud-monitoring/qa/grafana_qa.html#404)
 * [Acabei de transferir dados do json por upload para um painel do Grafana. Por que perdi minha barra de rolagem?](/docs/services/cloud-monitoring/qa/grafana_qa.html#2)
+
+
+## Não consigo ver alertas que eu defini usando a API Alerts no meu painel do Grafana
+{: #alerts1}
+
+Os alertas que você define usando a API Alerts não são mostrados na guia de alertas no Grafana. Para ver
+alertas no Grafana, eles devem ser definidos diretamente em um painel do Grafana.
+
+Para obter mais informações, consulte
+[Configurando
+alertas no Grafana](/docs/services/cloud-monitoring/alerts/config_alerts_grafana.html#config_alerts_grafana).
+
+## Recebo um BXNMSAL41E quando tento salvar uma mudança que eu fiz no meu painel do Grafana
+{: #BXNMSAL41E}
+
+É possível definir canais e alertas de notificação no Grafana. Se você excluir um canal de notificação
+no Grafana e não atualizar a regra para remover esse canal de notificação, um erro
+**BXNMSAL41E** será recebido ao tentar salvar o painel do Grafana.
+
+Para corrigir o problema, atualize a regra usando a API Alerts e tente novamente salvar o painel. Ao
+atualizar a regra, remova o canal de notificação que foi excluído.
+
+Para obter mais informações, consulte
+[API
+Alerts](https://console.bluemix.net/apidocs/940-ibm-cloud-monitoring-alerts-api?&language=node#introduction).
+
+## Recebo um BXNMSAL36E quando tento salvar uma mudança depois de incluir um alerta no meu painel do
+Grafana
+{: #BXNMSAL36E}
+
+Se você atingir a cota para o domínio no qual está monitorando métricas no
+serviço do {{site.data.keyword.monitoringshort}}, o erro a seguir será obtido:
+**BXNMSAL36E**
+
+Faça upgrade de seu plano e tente novamente.
+
+Para obter mais informações sobre como fazer upgrade do seu plano, consulte
+[Mudando o plano](/docs/services/cloud-monitoring/plan/change_plan.html#change_plan).
 
 
 ## Aparece um erro 404 quando efetuo login na UI da web do serviço Monitoring usando o modelo de autenticação do UUA
@@ -35,7 +82,7 @@ Quando você usa o [modelo de autenticação do UAA](/docs/services/cloud-monito
 
 Para verificar se você tem acesso à conta, à organização e ao espaço no qual você deseja efetuar login, efetue login no console do {{site.data.keyword.Bluemix_notm}} e alterne para o espaço. 
 
-Também é possível usar a linha de comandos para verificar se você tem acesso a esse espaço. Execute o comando a seguir para efetuar login em uma região, organização e espaço do {{site.data.keyword.Bluemix_notm}}:
+Também é possível usar a linha de comandos para verificar se você tem acesso a esse espaço. Execute o comando a seguir para efetuar login em uma região, uma organização e um espaço no {{site.data.keyword.Bluemix_notm}}:
 
 ```
 bx login -a https://api.ng.bluemix.net

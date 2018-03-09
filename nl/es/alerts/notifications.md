@@ -1,175 +1,27 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-07-18"
+lastupdated: "2018-02-01"
 
 ---
 
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 
-# Cómo trabajar con notificaciones mediante la API de alertas
+# Notificaciones CRUD
 {: #notifications}
 
-Utilice la API de alertas para crear, suprimir y actualizar una notificación, para mostrar los detalles de una notificación y para obtener una lista de las notificaciones definidas en su espacio de {{site.data.keyword.Bluemix_notm}}.
+Utilice la API de alertas para crear, suprimir y actualizar una notificación, para mostrar los detalles de una notificación y para listar las notificaciones que se definen en un espacio.
 {:shortdesc}
-
-## Creación de una plantilla de notificación
-{: #template}
-
-Una notificación es un archivo JSON. 
-
-Puede crear tantas plantillas de notificación como desee y luego reutilizarlas para crear notificaciones de ese tipo en su organización. 
-
-Puede definir cualquiera de los siguientes tipos de notificaciones:
-
-* Email: Defina una notificación de tipo *Email* para enviar un correo electrónico a una dirección de correo electrónico válida. 
-* Webhook: Defina una notificación de tipo *Webhook* solo para puntos finales https. Añada un parámetro al punto final para ayudar a reducir la posibilidad de que alguien más intente invocar su punto final.
-* Pagerduty: Defina una notificación de tipo *PagerDuty* para enviar los datos de alerta correspondientes a una métrica al sistema de gestión de incidentes PagerDuty. 
-
-Por ejemplo, en la tabla siguiente encontrará ejemplos de plantillas de notificación:
-
-<table>
-  <caption></caption>
-  <tr>
-    <th>Tipo</th>
-	<th>Plantilla</th>
-	<th>Ejemplo</th>
-  </tr>
-  <tr>
-    <td>Correo electrónico</td>
-	<td>
-	```
-	{
-	"name": "Template_Name",
-	"type": "Email",
-	"description" : "Description",
-	"detail": "EmailAddress"
-	}
-	```
-	{: codeblock}
-	</td>
-	<td>
-	```
-	{
-	"name": "my-email",
-	"type": "Email",
-	"description" : "Send email notification when there is an infrastructure problem.",
-    "detail": "xxx@yyy.com"
-    }
-	```
-	{: screen}
-	</td>
-  </tr>
-  <tr>
-    <td>Webhook</td>
-	<td>
-	```
-	{
-	"name": "Template_Name",
-	"type": "Webhook",
-	"description" : "Description",
-	"detail": "Endpoint"
-	}
-	```
-	{: codeblock}
-	</td>
-	<td>
-	```
-	{
-	"name": "my-webhook",
-	"type": "Webhook",
-	"description" : "Fire a webhook when there is an infrastructure problem..",
-    "detail": "https://myendpoint.bluemix.net?key=abcd1234"
-    }
-	```
-	{: screen}
-	</td>
-  </tr>
-  <tr>
-    <td>Pagerduty</td>
-	<td>
-	```
-	{
-	"name": "Template_Name",
-	"type": "PagerDuty",
-	"description" : "Description",
-	"detail": "Pagerduty_APIkey"
-	}
-	```
-	{: codeblock}
-	</td>
-	<td>
-	```
-	{
-	"name": "my-pagerduty",
-	"type": "PagerDuty",
-	"description" : "Fire a PagerDuty alert when there is an infrastructure problem..",
-    "detail": "abcd1234"
-    }
-	```
-	{: screen}
-	</td>
-  </tr>
-</table>
-
-Donde
-
-* *Template_Name* define el nombre de la plantilla de notificación.
-* *Description* explica cuándo se utiliza este tipo de notificación.
-* *EmailAddress* define la dirección de correo electrónico del destinatario de la notificación.
-* *Endpoint* define el URL en el que se debe realizar la acción POST. Es el URL que puede admitir la solicitud POST. 
-* *Pagerduty_APIkey* define una clave de API exclusiva. Esta clave de API la genera el administrador o el propietario de la cuenta de PagerDuty.
-
-
-Siga los pasos siguientes para crear una plantilla de notificación:
-
-1. Cree un directorio para almacenar los recursos del servicio {{site.data.keyword.monitoringshort}}, por ejemplo *cloud-monitoring*.
-
-    Por ejemplo, en un sistema Ubuntu, ejecute el siguiente mandato:
-	
-	```
-	mkdir ~/cloud-monitoring
-	```
-	{: codeblock}
-	
-2. Cree un directorio para almacenar sus plantillas de notificación, por ejemplo *notification-templates*.
-
-    Por ejemplo, en un sistema Ubuntu, ejecute el siguiente mandato:
-	
-	```
-	mkdir ~/cloud-monitoring/notification-templates
-	```
-	{: codeblock}
-	
-	Cambie a este directorio:
-	
-	```
-	cd ~/cloud-monitoring/notification-templates
-	```
-	{: codeblock}
-	
-3. Crear una plantilla de notificación en un directorio local del sistema.
-
-    Por ejemplo, cree el archivo **email-template.json** para una plantilla de notificación por correo electrónico, utilizando, por ejemplo, el editor vi: 
-	
-	```
-	{
-    "name": "email_template",
-    "type": "Email",
-    "description" : "Send email to manager of department X when ....",
-    "detail": "xxx@yyy"
-    }
-	```
-	{: codeblock}
-	
-
 
 ## Creación de una notificación
 {: #create}
@@ -179,7 +31,7 @@ crear una notificación, siga los pasos siguientes:
 
 1. Cree un archivo de notificación.
 
-    1. Utilice una plantilla de notificación para crear el archivo. Para obtener más información, consulte [Creación de una plantilla de notificación](#template).
+    1. Utilice una plantilla de notificación para crear un archivo de notificación. Para obtener más información, consulte [Plantillas de notificación](/docs/services/cloud-monitoring/config_alerts_ov.html#notification_template).
 	
 	2. Actualice el archivo:
 	
@@ -187,27 +39,29 @@ crear una notificación, siga los pasos siguientes:
 		* Entre una descripción.
 		* Escriba una dirección de correo electrónico, punto final de URL o clave de PagerDuty válidos.
 		
-	3. Guarde el archivo. Por ejemplo, utilice un prefijo como *s-* para las notificaciones que defina para las consultas que se ejecutan en un espacio de {{site.data.keyword.Bluemix_notm}}.
+	3. Guarde el archivo. Por ejemplo, utilice un prefijo como *s-* para las notificaciones que defina para las consultas que se ejecutan en un espacio.
 	
 	    **Consejo:** Cree su archivo de notificaciones en el siguiente directorio: *~/cloud-monitoring/notifications/* para agrupar los recursos del servicio {{site.data.keyword.monitoringshort_notm}}. 
 	
-2. Inicie la sesión en una región, organización y espacio de {{site.data.keyword.Bluemix_notm}}. Ejecute el mandato:
-
-    Por ejemplo, para iniciar sesión en la región EE. UU. sur, ejecute el siguiente mandato:
+	4. Exporte la variable *NOTIFICATION_FILE*:
 	
 	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    Siga las instrucciones. Escriba sus credenciales de {{site.data.keyword.Bluemix_notm}}, seleccione una organización y un espacio.
-
-3. Obtenga la señal de autenticación o la clave de API.
-
-    * Para la autenticación de IAM, consulte [Obtención de la señal de IAM utilizando la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) u [Obtención de la clave de API de IAM utilizando la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	export NOTIFICATION_FILE="mynotificationfile.json"
+	```
+	{: screen}
 	
-	* Para la autenticación de UAA, consulte [Obtención de la señal de UAA mediante la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) o bien [Obtención de la señal de UAA mediante la API REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
+2. Inicie la sesión en una región, organización y espacio en {{site.data.keyword.Bluemix_notm}}. 
 
+    Para obtener más información, consulte [Cómo iniciar la sesión en {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+3. Obtenga la señal de seguridad. Puede utilizar una señal de UAA, una señal de IAM o una clave de API. Elija uno de los métodos siguientes para obtener la señal de seguridad:
+	
+	* Para obtener una señal UAA, consulte [Obtención de la señal de UAA mediante la CLI de {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
+	
+	* Para obtener una señal de IAM, consulte [Obtención de la señal de IAM mediante la CLI de {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* Para obtener una clave de API, consulte [Obtención de una clave de API](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
 	Por ejemplo, para utilizar la señal de IAM, ejecute el siguiente mandato:
 
     ```
@@ -231,7 +85,7 @@ crear una notificación, siga los pasos siguientes:
 	{: screen}
 	
 	**Nota:** La señal excluye *Bearer*.
-		
+	
 4. Obtenga el GUID del espacio. El GUID debe tener el prefijo *s-* para identificar un espacio.
 
     Ejecute el mandato siguiente:
@@ -264,16 +118,16 @@ crear una notificación, siga los pasos siguientes:
 	```
 	{: screen}
 	
-5. Ejecute el siguiente mandato cURL para crear una notificación:
+5. Registre una notificación con el servicio de {{site.data.keyword.monitoringshort}}.
 
     ```
-	curl -XPOST -d @Notification_File --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/notification
+	curl -XPOST -d @$NOTIFICATION_FILE --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/notification
 	```
 	{: codeblock}
 	
 	donde
 	
-	* Notification_File es un archivo JSON que define la notificación.
+	* NOTIFICATION_FILE es el archivo JSON que define la notificación.
 	
 	* El valor *X-Auth-User-Token* es un parámetro que pasa la señal UAA de {{site.data.keyword.Bluemix_notm}}, la señal IAM o la clave de API.
 	
@@ -287,12 +141,14 @@ crear una notificación, siga los pasos siguientes:
 	
 	* La señal es la señal de UAA, la señal de IAM o la clave de API.
 	
-	* Space es el GUID del espacio. Solo es necesario cuando se utiliza una señal de UAA.
+	* Space es el GUID del espacio. 
+	
+	* METRICS_ENDPOINT representa el punto de entrada al servicio. Cada región tiene un URL diferente. Para obtener una lista de los puntos finales por región, consulte[Puntos finales](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
     Por ejemplo, 	
 	
 	```
-	curl -XPOST -d @s-email-dep-A.json --header "X-Auth-User-Token:iam ${Token}" https://metrics.{DomainName}/v1/alert/notification
+	curl -XPOST -d @$NOTIFICATION_FILE  --header "X-Auth-User-Token: iam ${Token}" https://metrics.ng.bluemix.net/v1/alert/notification
 	```
 	{: screen}
 
@@ -301,23 +157,18 @@ crear una notificación, siga los pasos siguientes:
 
 Para suprimir una notificación, siga los pasos siguientes:
 
-1. Inicie la sesión en una región, organización y espacio de {{site.data.keyword.Bluemix_notm}}. Ejecute el mandato:
+1. Inicie la sesión en una región, organización y espacio en {{site.data.keyword.Bluemix_notm}}. 
 
-    Por ejemplo, para iniciar sesión en la región EE. UU. sur, ejecute el siguiente mandato:
+    Para obtener más información, consulte [Cómo iniciar sesión en {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+2. Obtenga la señal de seguridad. Puede utilizar una señal de UAA, una señal de IAM o una clave de API. Elija uno de los métodos siguientes para obtener la señal de seguridad:
 	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    Siga las instrucciones. Escriba sus credenciales de {{site.data.keyword.Bluemix_notm}}, seleccione una organización y un espacio.
-
-2. Obtenga la señal de autenticación o la clave de API.
-
-    * Para la autenticación de IAM, consulte [Obtención de la señal de IAM mediante la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) o [Generación de una clave de API de IAM mediante la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	* Para obtener una señal de UAA, consulte [Obtención de una señal de UAA mediante la CLI de {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
 	
-	* Para la autenticación de UAA, consulte [Obtención de la señal de UAA utilizando la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) u [Obtención de la señal de UAA utilizando la API REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
+	* Para obtener una señal de IAM, consulte [Obtención de una señal de IAM mediante la CLI de {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* Para obtener una clave de API, consulte [Obtención de una clave de API](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
 	Por ejemplo, para utilizar la señal de IAM, ejecute el siguiente mandato:
 
     ```
@@ -377,11 +228,13 @@ Para suprimir una notificación, siga los pasos siguientes:
 4. Ejecute el siguiente mandato cURL para suprimir una notificación:
 
     ```
-	curl -XDELETE --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/notification/Notification_Name
+	curl -XDELETE --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/notification/Notification_Name
 	```
 	{: codeblock}
 	
 	donde
+	
+	* *X-Auth-User-Token* es un parámetro que pasa la señal de UAA, la señal de IAM o la clave de API.
 	
 	* El valor *Auth_Type* es el prefijo que define el tipo de señal o de clave de API. En la lista siguiente se muestran los valores válidos: *apikey*, *iam* o *uaa*, donde
 
@@ -397,9 +250,11 @@ Para suprimir una notificación, siga los pasos siguientes:
 		
 	* La señal es la señal de UAA, la señal de IAM o la clave de API.
 	
-	* Space es el GUID del espacio. Solo es necesario cuando se utiliza una señal de UAA.
+	* Space es el GUID del espacio. 
 	
 	* Notification_Name es el nombre de la notificación, es decir, el valor del campo *name* cuando genera una lista de las propiedades de una notificación.
+	
+	* METRICS_ENDPOINT representa el punto de entrada al servicio. Cada región tiene un URL diferente. Para obtener una lista de los puntos finales por región, consulte[Puntos finales](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
 
 
@@ -408,23 +263,18 @@ Para suprimir una notificación, siga los pasos siguientes:
 
 Para obtener una lista de todas las notificaciones, siga estos pasos:
 
-1. Inicie la sesión en una región, organización y espacio de {{site.data.keyword.Bluemix_notm}}. Ejecute el mandato:
+1. Inicie la sesión en una región, organización y espacio en {{site.data.keyword.Bluemix_notm}}. 
 
-    Por ejemplo, para iniciar sesión en la región EE. UU. sur, ejecute el siguiente mandato:
+    Para obtener más información, consulte [Cómo iniciar sesión en {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+2. Obtenga la señal de seguridad. Puede utilizar una señal de UAA, una señal de IAM o una clave de API. Elija uno de los métodos siguientes para obtener la señal de seguridad:
 	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    Siga las instrucciones. Escriba sus credenciales de {{site.data.keyword.Bluemix_notm}}, seleccione una organización y un espacio.
-
-2. Obtenga la señal de autenticación o la clave de API.
-
-    * Para la autenticación de IAM, consulte [Obtención de la señal de IAM mediante la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) o [Generación de una clave de API de IAM mediante la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	* Para obtener una señal de UAA, consulte [Obtención de una señal de UAA mediante la CLI de {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
 	
-	* Para la autenticación de UAA, consulte [Obtención de la señal de UAA utilizando la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) u [Obtención de la señal de UAA utilizando la API REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
+	* Para obtener una señal de IAM, consulte [Obtención de una señal de IAM mediante la CLI de {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* Para obtener una clave de API, consulte [Obtención de una clave de API](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
 	Por ejemplo, para utilizar la señal de IAM, ejecute el siguiente mandato:
 
     ```
@@ -484,11 +334,13 @@ Para obtener una lista de todas las notificaciones, siga estos pasos:
 4. Ejecute el siguiente mandato cURL para obtener una lista de todas las notificaciones:
 
     ```
-	curl -XGET --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/notifications
+	curl -XGET --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/notifications
 	```
 	{: codeblock}
 	
 	donde
+	
+	* El valor *X-Auth-User-Token* es un parámetro que pasa la señal UAA de {{site.data.keyword.Bluemix_notm}}, la señal IAM o la clave de API.
 	
 	* El valor *Auth_Type* es el prefijo que define el tipo de señal o de clave de API. En la lista siguiente se muestran los valores válidos: *apikey*, *iam* o *uaa*, donde
 
@@ -504,8 +356,9 @@ Para obtener una lista de todas las notificaciones, siga estos pasos:
 		
 	* La señal es la señal de UAA, la señal de IAM o la clave de API.
 	
-	* Space es el GUID del espacio. Solo es necesario cuando se utiliza una señal de UAA.
-
+	* Space es el GUID del espacio. 
+	
+	* METRICS_ENDPOINT representa el punto de entrada al servicio. Cada región tiene un URL diferente. Para obtener una lista de los puntos finales por región, consulte[Puntos finales](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 
 			
 
@@ -515,23 +368,18 @@ Para obtener una lista de todas las notificaciones, siga estos pasos:
 
 Para mostrar la información sobre una notificación, siga los siguientes pasos:
 
-1. Inicie la sesión en una región, organización y espacio de {{site.data.keyword.Bluemix_notm}}. Ejecute el mandato:
+1. Inicie la sesión en una región, organización y espacio en {{site.data.keyword.Bluemix_notm}}. 
 
-    Por ejemplo, para iniciar sesión en la región EE. UU. sur, ejecute el siguiente mandato:
+    Para obtener más información, consulte [Cómo iniciar sesión en {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+2. Obtenga la señal de seguridad. Puede utilizar una señal de UAA, una señal de IAM o una clave de API. Elija uno de los métodos siguientes para obtener la señal de seguridad:
 	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    Siga las instrucciones. Escriba sus credenciales de {{site.data.keyword.Bluemix_notm}}, seleccione una organización y un espacio.
-
-2. Obtenga la señal de autenticación o la clave de API.
-
-    * Para la autenticación de IAM, consulte [Obtención de la señal de IAM mediante la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) o [Generación de una clave de API de IAM mediante la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	* Para obtener una señal de UAA, consulte [Obtención de una señal de UAA mediante la CLI de {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
 	
-	* Para la autenticación de UAA, consulte [Obtención de la señal de UAA utilizando la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) u [Obtención de la señal de UAA utilizando la API REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
+	* Para obtener una señal de IAM, consulte [Obtención de una señal de IAM mediante la CLI de {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* Para obtener una clave de API, consulte [Obtención de una clave de API](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
 	Por ejemplo, para utilizar la señal de IAM, ejecute el siguiente mandato:
 
     ```
@@ -591,13 +439,15 @@ Para mostrar la información sobre una notificación, siga los siguientes pasos:
 4. Ejecute el siguiente mandato cURL para mostrar los detalles de una notificación:
 
     ```
-	curl -XGET --header "X-Auth-User-Token:uaa ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/notification/Notification_Name
+	curl -XGET --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/notification/NOTIFICATION_NAME
 	```
 	{: codeblock}
 	
 	donde
 	
-	* El valor *X-Auth-User-Token* es un parámetro que pasa la señal UAA de {{site.data.keyword.Bluemix_notm}}, la señal IAM o la clave de API. La señal o la clave de API deben llevar uno de los siguientes prefijos: *apikey*, *iam* o *uaa*, donde
+	* El valor *X-Auth-User-Token* es un parámetro que pasa la señal UAA de {{site.data.keyword.Bluemix_notm}}, la señal IAM o la clave de API.
+	
+	* El valor *Auth_Type* es el prefijo que define el tipo de señal o de clave de API. En la lista siguiente se muestran los valores válidos: *apikey*, *iam* o *uaa*, donde
 
   * *apikey* identifica que la señal es una clave de API.
 		* *iam* identifica que la señal especificada es una señal generada por IAM.
@@ -605,9 +455,11 @@ Para mostrar la información sobre una notificación, siga los siguientes pasos:
 		
 	* La señal es la señal de UAA, la señal de IAM o la clave de API.
 	
-	* Space es el GUID del espacio. Solo es necesario cuando se utiliza una señal de UAA.
+	* Space es el GUID del espacio. 
 	
-	* Notification_Name es el nombre de la notificación, es decir, el valor del campo *name* cuando genera una lista de las propiedades de una notificación.
+	* NOTIFICATION_NAME es el nombre de la notificación, es decir, el valor del campo *name* cuando genera una lista de las propiedades de una notificación.
+	
+	* METRICS_ENDPOINT representa el punto de entrada al servicio. Cada región tiene un URL diferente. Para obtener una lista de los puntos finales por región, consulte[Puntos finales](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
      
 		
@@ -618,23 +470,18 @@ Para mostrar la información sobre una notificación, siga los siguientes pasos:
 			
 Para probar una notificación, siga los pasos siguientes:
 
-1. Inicie la sesión en una región, organización y espacio de {{site.data.keyword.Bluemix_notm}}. Ejecute el mandato:
+1. Inicie la sesión en una región, organización y espacio en {{site.data.keyword.Bluemix_notm}}. 
 
-    Por ejemplo, para iniciar sesión en la región EE. UU. sur, ejecute el siguiente mandato:
+    Para obtener más información, consulte [Cómo iniciar sesión en {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+2. Obtenga la señal de seguridad. Puede utilizar una señal de UAA, una señal de IAM o una clave de API. Elija uno de los métodos siguientes para obtener la señal de seguridad:
 	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    Siga las instrucciones. Escriba sus credenciales de {{site.data.keyword.Bluemix_notm}}, seleccione una organización y un espacio.
-
-2. Obtenga la señal de autenticación o la clave de API.
-
-    * Para la autenticación de IAM, consulte [Obtención de la señal de IAM mediante la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) o [Generación de una clave de API de IAM mediante la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	* Para obtener una señal de UAA, consulte [Obtención de una señal de UAA mediante la CLI de {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
 	
-	* Para la autenticación de UAA, consulte [Obtención de la señal de UAA utilizando la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) u [Obtención de la señal de UAA utilizando la API REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
+	* Para obtener una señal de IAM, consulte [Obtención de una señal de IAM mediante la CLI de {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* Para obtener una clave de API, consulte [Obtención de una clave de API](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
 	Por ejemplo, para utilizar la señal de IAM, ejecute el siguiente mandato:
 
     ```
@@ -658,7 +505,7 @@ Para probar una notificación, siga los pasos siguientes:
 	{: screen}
 	
 	**Nota:** La señal excluye *Bearer*.
-
+	
 3. Obtenga el GUID del espacio. El GUID debe tener el prefijo *s-* para identificar un espacio.
 
     Ejecute el mandato siguiente:
@@ -694,11 +541,13 @@ Para probar una notificación, siga los pasos siguientes:
 4. Ejecute el siguiente mandato cURL para probar una notificación:
 
     ```
-	curl -XPOST --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/notification/test/Notification_Name
+	curl -XPOST --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/notification/test/NOTIFICATION_NAME
 	```
 	{: codeblock}
 	
 	donde
+	
+	* El valor *X-Auth-User-Token* es un parámetro que pasa la señal UAA de {{site.data.keyword.Bluemix_notm}}, la señal IAM o la clave de API.
 	
 	* El valor *Auth_Type* es el prefijo que define el tipo de señal o de clave de API. En la lista siguiente se muestran los valores válidos: *apikey*, *iam* o *uaa*, donde
 
@@ -714,9 +563,11 @@ Para probar una notificación, siga los pasos siguientes:
 		
 	* La señal es la señal de UAA, la señal de IAM o la clave de API.
 	
-	* Space es el GUID del espacio. Solo es necesario cuando se utiliza una señal de UAA.
+	* Space es el GUID del espacio. 
 	
-	* Notification_Name es el nombre de la notificación, es decir, el valor del campo *name* cuando genera una lista de las propiedades de una notificación.
+	* NOTIFICATION_NAME es el nombre de la notificación, es decir, el valor del campo *name* cuando genera una lista de las propiedades de una notificación.
+	
+	* METRICS_ENDPOINT representa el punto de entrada al servicio. Cada región tiene un URL diferente. Para obtener una lista de los puntos finales por región, consulte[Puntos finales](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
 
 
@@ -725,23 +576,18 @@ Para probar una notificación, siga los pasos siguientes:
 
 Para actualizar una notificación, siga los pasos siguientes:
 
-1. Inicie la sesión en una región, organización y espacio de {{site.data.keyword.Bluemix_notm}}. Ejecute el mandato:
+1. Inicie la sesión en una región, organización y espacio en {{site.data.keyword.Bluemix_notm}}. 
 
-    Por ejemplo, para iniciar sesión en la región EE. UU. sur, ejecute el siguiente mandato:
+    Para obtener más información, consulte [Cómo iniciar sesión en {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/qa/cli_qa.html#login).
+
+2. Obtenga la señal de seguridad. Puede utilizar una señal de UAA, una señal de IAM o una clave de API. Elija uno de los métodos siguientes para obtener la señal de seguridad:
 	
-	```
-    bx login -a https://api.ng.bluemix.net
-    ```
-    {: codeblock}
-
-    Siga las instrucciones. Escriba sus credenciales de {{site.data.keyword.Bluemix_notm}}, seleccione una organización y un espacio.
-
-2. Obtenga la señal de autenticación o la clave de API.
-
-    * Para la autenticación de IAM, consulte [Obtención de la señal de IAM mediante la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_token_cli) o [Generación de una clave de API de IAM mediante la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_iam.html#iam_apikey_cli).
+	* Para obtener una señal de UAA, consulte [Obtención de una señal de UAA mediante la CLI de {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli).
 	
-	* Para la autenticación de UAA, consulte [Obtención de la señal de UAA utilizando la CLI de Bluemix](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_cli) u [Obtención de la señal de UAA utilizando la API REST](/docs/services/cloud-monitoring/security/auth_uaa.html#uaa_api).
-
+	* Para obtener una señal de IAM, consulte [Obtención de una señal de IAM mediante la CLI de {{site.data.keyword.Bluemix_notm}}](/docs/services/cloud-monitoring/security/auth_iam.html#auth_iam).
+	
+	* Para obtener una clave de API, consulte [Obtención de una clave de API](/docs/services/cloud-monitoring/security/auth_api_key.html#auth_api_key).
+	
 	Por ejemplo, para utilizar la señal de IAM, ejecute el siguiente mandato:
 
     ```
@@ -801,13 +647,13 @@ Para actualizar una notificación, siga los pasos siguientes:
 4. Ejecute el siguiente mandato cURL para actualizar una notificación:
 
     ```
-	curl -XPUT -d @Notification_File --header "X-Auth-User-Token:Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" https://metrics.ng.bluemix.net/v1/alert/notification
+	curl -XPUT -d @$NOTIFICATION_FILE --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/alert/notification
 	```
 	{: codeblock}
 	
 	donde
 	
-	* Notification_File es un archivo JSON que define la notificación.
+	* NOTIFICATION_FILE es el archivo JSON que define la notificación.
 	
 	* El valor *Auth_Type* es el prefijo que define el tipo de señal o de clave de API. En la lista siguiente se muestran los valores válidos: *apikey*, *iam* o *uaa*, donde
 
@@ -823,8 +669,9 @@ Para actualizar una notificación, siga los pasos siguientes:
 		
 	* La señal es la señal de UAA, la señal de IAM o la clave de API.
 	
-	* Space es el GUID del espacio. Solo es necesario cuando se utiliza una señal de UAA.
+	* Space es el GUID del espacio. 
 
+	* METRICS_ENDPOINT representa el punto de entrada al servicio. Cada región tiene un URL diferente. Para obtener una lista de los puntos finales por región, consulte[Puntos finales](/docs/services/cloud-monitoring/send_retrieve_metrics_ov.html#endpoints).
 	
         
 

@@ -1,32 +1,105 @@
 ---
 
 copyright:
-  years: 2017
+  years: 2017, 2018
 
-lastupdated: "2017-07-12"
+lastupdated: "2018-02-09"
 
 ---
 
-{:shortdesc: .shortdesc}
 {:new_window: target="_blank"}
-{:codeblock: .codeblock}
+{:shortdesc: .shortdesc}
 {:screen: .screen}
 {:pre: .pre}
-
+{:table: .aria-labeledby="caption"}
+{:codeblock: .codeblock}
+{:tip: .tip}
+{:download: .download}
 
 # Configuración de alertas
 {: #config_alerts_ov}
 
-El servicio {{site.data.keyword.monitoringshort}} proporciona un sistema de alertas basado en consultas. Puede utilizar la API de alertas para definir las reglas y métodos de notificación para cada consulta de métrica que desea supervisar. Puede emitir notificaciones enviando un correo electrónico, activando un webhook o enviando una alerta a PagerDuty.
+El servicio {{site.data.keyword.monitoringshort}} proporciona un sistema de alertas basado en consultas. Puede configurar alertas mediante la API de {{site.data.keyword.monitoringshort}} o mediante Grafana. Para configurar una alerta, debe definir las reglas y métodos de notificación para cada consulta de métrica que desea supervisar. Puede emitir notificaciones enviando un correo electrónico, activando un webhook o enviando una alerta a PagerDuty.
 {:shortdesc}
 
 Puede definir una alerta para activar una notificación para una métrica. Una alerta se define por una regla que describe la consulta de métrica que se va a supervisar, el valor de umbral y la acción que se emprenderá cuando se supere el umbral, y uno o varios métodos de notificación.  
 
-Puede definir alertas para una única instancia o para varias instancias. Cuando una consulta que supervisa a través de una regla de alerta incluye un comodín, el comodín identifica varios destinos, es decir, varias instancias de servicio o instancias de aplicaciones. Cada 5 minutos, el servicio {{site.data.keyword.monitoringshort}} ejecuta la consulta que se configura en una regla de alerta y comprueba los últimos puntos de datos que se devuelven para cada instancia o grupo de instancias. El servicio {{site.data.keyword.monitoringshort}} realiza un seguimiento del último estado para cada instancia y genera una alerta nueva si cambia el estado de la alerta. 
+En la tabla siguiente se muestran los distintos métodos y acciones soportadas que puede utilizar para trabajar con alertas:
+
+<table>
+  <caption>Métodos para trabajar con alertas</caption>
+	<tr>
+    <th>Método</th>
+		<th>Definir una alerta</th>
+		<th>Actualizar una alerta</th>
+		<th>Suprimir una alerta</th>
+	</tr>
+	<tr>
+    <td>API de alertas</td>
+		<td>Sí</td>
+		<td>Sí</td>
+		<td>Sí</td>
+	</tr>
+	<tr>
+    <td>Grafana</td>
+		<td>Sí</td>
+		<td>Sí</td>
+		<td>Sí</td>
+	</tr>
+</table>
+
+**Nota:** Las alertas que defina mediante la API de alertas no se muestran en el panel de control de Grafana.
+
 
 La figura siguiente muestra los distintos tipos de notificación que puede configurar en el servicio {{site.data.keyword.monitoringshort}} para que le alerte:
 
 ![Visión general de los componentes de alto nivel de los tipos de notificación disponibles en el servicio {{site.data.keyword.monitoringlong}} ](images/alerts_ov_f1.gif)
+
+Puede definir alertas para una única instancia o para varias instancias. Cuando una consulta que supervisa a través de una regla de alerta incluye un comodín, el comodín identifica varios destinos, es decir, varias instancias de servicio o instancias de aplicaciones. Cada 5 minutos, el servicio {{site.data.keyword.monitoringshort}} ejecuta la consulta que se configura en una regla de alerta y comprueba los últimos puntos de datos que se devuelven para cada instancia o grupo de instancias. El servicio {{site.data.keyword.monitoringshort}} realiza un seguimiento del último estado para cada instancia y genera una alerta nueva si cambia el estado de la alerta. 
+
+
+
+## Trabajar con alertas mediante la API de alertas
+{: #api}
+
+Puede definir, actualizar o suprimir alertas mediante la API de alertas.
+
+Para definir una alerta en una consulta de métricas mediante la API de alertas, debe:
+
+1. Definir una o varias consultas de métrica en un panel de control de Grafana. 
+
+    **Nota:** No puede definir alertas en paneles de control de Grafana que utilizan variables de plantilla.
+
+2. Configurar una alerta en una consulta de métricas definida en el panel de control de Grafana.
+
+    * [Configuración de una alerta que envía un correo electrónico](/docs/services/cloud-monitoring/alerts/configure_email_alert.html#configure_email_alert).
+    * [Configuración de una alerta que envía una notificación de PagerDuty](/docs/services/cloud-monitoring/alerts/configure_pagerduty_alert.html#configure_pagerduty_alert).
+    * [Configuración de una alerta que envía una notificación de Webhook](/docs/services/cloud-monitoring/alerts/configure_webhook_alert.html#configure_webhook_alert).
+
+    **Nota:** Solo puede definir notificaciones por correo electrónico para consultas de métrica definidas en el dominio de métrica de cuenta.
+
+
+
+## Trabajar con alertas mediante Grafana
+{: #grafana}
+
+Puede definir y suprimir alertas directamente en un panel de control de Grafana. Puede actualizar también las definiciones de reglas. Sin embargo, cualquier cambio de canal de notificación debe realizarse mediante la API de alertas.
+
+Considere la siguiente información cuando trabaje con alertas en Grafana:
+
+* Para modificar los canales de notificación asignados a una regla, debe utilizar la API de alertas.
+* Cuando se suprime un canal de notificación en un dominio del espacio, las reglas que tienen dicho canal configurado no se actualizan. Debe utilizar la API de alertas para modificar la regla y eliminar dicho canal de notificación de la misma. 
+
+Para definir una alerta en una consulta de métricas directamente en un panel de control de Grafana, debe:
+
+1. Definir una o varias consultas de métrica en un panel de control de Grafana. 
+
+    **Nota:** No puede definir alertas en paneles de control de Grafana que utilizan variables de plantilla.
+
+2. Configurar una alerta en una consulta de métricas definida en el panel de control de Grafana.
+
+    Para obtener más información, consulte [Configuración de alertas en Grafana](/docs/services/cloud-monitoring/alerts/config_alerts_grafana.html#config_alerts_grafana).
+
 
 ## Estados de alerta
 {: #status}
@@ -60,6 +133,8 @@ El estado de una alerta se utiliza para definir el estado en cualquiera de los s
 
 Por ejemplo, si se supera un umbral de aviso, se genera un registro histórico que registrará la transición de *OK* a *WARNING*. Paralelamente, cuando el valor vuelve a estar por debajo del umbral, se genera un registro histórico que registra la transición de *WARNING* a *OK*.
 
+Para obtener más información, consulte [Recuperación del historial de una regla](/docs/services/cloud-monitoring/alerts/retrieve_history.html#retrieve_history).
+
 
 ## Reglas
 {: #rules}
@@ -67,6 +142,12 @@ Por ejemplo, si se supera un umbral de aviso, se genera un registro histórico q
 Una regla describe la consulta de métrica que se va a supervisar, el valor de umbral y la acción que se emprenderá cuando se supere el umbral. 
 
 * Puede crear, suprimir, actualizar y mostrar los detalles de una regla y elaborar una lista de todas las reglas mediante la API de alertas. Para obtener más información, consulte [Cómo trabajar con reglas](/docs/services/cloud-monitoring/alerts/rules.html#rules).
+
+    * Para crear una regla, consulte [Creación de una regla](/docs/services/cloud-monitoring/alerts/rules.html#create).
+	* Para suprimir una regla, consulte [Supresión de una regla](/docs/services/cloud-monitoring/alerts/rules.html#delete).
+	* Para actualizar una regla, consulte [Actualización de una regla](/docs/services/cloud-monitoring/alerts/rules.html#update).
+	* Para listar todas las reglas, consulte [Listado de todas las reglas](/docs/services/cloud-monitoring/alerts/rules.html#list).
+	* Para mostrar información sobre una regla, consulte [Visualización de detalles de una regla](/docs/services/cloud-monitoring/alerts/rules.html#showing-the-details-of-a-rule).
 
 * El sistema de alerta comprueba cada 5 minutos las reglas que están habilitadas en el espacio.
 
@@ -76,7 +157,7 @@ Una regla describe la consulta de métrica que se va a supervisar, el valor de u
 
 * De forma predeterminada, una regla se crea con el campo *allow_no_data* establecido en `true`. Cuando no hay puntos de datos disponibles, las notificaciones no se envían a menos que se desencadene la condición de regla. Si desea recibir una notificación para informar de que no se han encontrado datos para la regla X, debe establecer el campo *allow_no_data* en `false`. 
 
-**Consejo:** verifique la consulta que se supervisa a través de una regla de alerta en Grafana. Compruebe que no excede el tiempo de espera, por ejemplo, como resultado de configurar de un largo periodo de tiempo o utilizando una consulta que incluya un comodín. Fíjese en que, cuando la consulta excede el tiempo de espera en Grafana, no se desencadena una alerta configurada para dicha consulta.
+**Consejo:** verifique la consulta que se supervisa a través de una regla de alerta en Grafana. Compruebe que no ha superado el tiempo de espera. Por ejemplo, una consulta puede superar el tiempo de espera como resultado de configurar un largo periodo de tiempo o si define una consulta que incluya un comodín. Fíjese en que, cuando la consulta excede el tiempo de espera en Grafana, no se desencadena una alerta configurada para dicha consulta.
 
 Se necesitan los siguientes campos para definir una regla:
 
@@ -97,7 +178,7 @@ debe ser exclusivo.</td>
   </tr>
   <tr>
     <td>expression</td>
-	<td>Consulta de métrica que desea supervisar y enviar una alerta si se supera un umbral. <br>Las expresiones válidas son: un solo nombre de métrica, varias métricas identificadas con caracteres comodín o una función sobre una o varias métricas. <br>**Consejo:** Puede copiar una consulta verificada de Grafana.</td>
+	<td>Consulta de métrica que desea supervisar y enviar una alerta si se supera un umbral. <br>Son expresiones válidas: un solo nombre de métrica, varias métricas identificadas con caracteres comodín o funciones para agregar datos. <br>**Consejo:** Puede copiar una consulta verificada de Grafana.</td>
   </tr>
   <tr>
     <td>enabled</td>
@@ -186,48 +267,26 @@ Una notificación describe el método y los detalles que se utilizan para la not
 
 * Puede utilizar la [API REST de alertas](https://console.bluemix.net/apidocs/940-ibm-cloud-monitoring-alerts-api?&language=node#introduction){: new_window} para crear, suprimir y actualizar una notificación, para mostrar los detalles de una notificación y para crear una lista de las notificaciones definidas en un espacio.
 
+    * Para crear una notificación, consulte [Creación de una notificación](/docs/services/cloud-monitoring/alerts/notifications.html#create).
+	* Para suprimir una notificación, consulte [Supresión de una notificación](/docs/services/cloud-monitoring/alerts/notifications.html#delete).
+	* Para actualizar una notificación, consulte [Actualización de una notificación](/docs/services/cloud-monitoring/alerts/notifications.html#update).
+	* Para listar todas las notificaciones, consulte [Listado de todas las notificaciones](/docs/services/cloud-monitoring/alerts/notifications.html#list).
+	* Para mostrar información acerca de una notificación, consulte [Visualización de los detalles de una notificación](/docs/services/cloud-monitoring/alerts/notifications.html#show).
 
-Se admiten los siguientes métodos de notificación:
-
-<table>
- <caption>Tabla 2. Lista de métodos de notificación.</caption>
- <tr>
-    <th>Método</th>
-	<th>Más información</th>
- </tr>
- <tr>
-    <td>Correo electrónico</td>
-	<td>[Configuración de una notificación por correo electrónico](/docs/services/cloud-monitoring/alerts/configure_alerts.html#send_email)</td>
-  </tr>
-  <tr>
-    <td>PagerDuty</td>
-	<td>[Configuración de una notificación de PagerDuty](/docs/services/cloud-monitoring/alerts/configure_alerts.html#config_alert_pagerduty)</td>
-  </tr>
-  <tr>
-    <td>Webhook</td>
-	<td>[Configuración de una notificación de webhook](/docs/services/cloud-monitoring/alerts/configure_alerts.html#config_webhook)</td>
-  </tr>
-</table>
+* Puede configurar una notificación de correo electrónico, una configuración de PagerDuty y una notificación de webhook. 
 
 **Nota:** Las notificaciones de alerta se definen independientemente de las reglas para que pueda reutilizar las notificaciones con varias reglas.
+
 	
-## Plantillas de notificación
+## Notificación - plantillas de JSON
 {: #notification_template}
 	
 Una notificación es un archivo JSON. 
 
-Puede crear tantas plantillas de notificación como desee y luego reutilizarlas para crear notificaciones de ese tipo en su organización. 
-
-Puede definir cualquiera de los siguientes tipos de notificaciones:
-
-* Email: Defina una notificación de tipo *Email* para enviar un correo electrónico a una dirección de correo electrónico válida. 
-* Webhook: Defina una notificación de tipo *Webhook* solo para puntos finales https. Añada un parámetro al punto final para ayudar a reducir la posibilidad de que alguien más intente invocar su punto final.
-* Pagerduty: Defina una notificación de tipo *PagerDuty* para enviar los datos de alerta correspondientes a una métrica al sistema de gestión de incidentes PagerDuty. 
-
-Por ejemplo, en la tabla siguiente encontrará ejemplos de plantillas de notificación:
+La tabla siguiente incluye una plantilla de notificación para el tipo de método de notificación:
 
 <table>
-  <caption>Tabla 3. Ejemplos de plantillas de notificación</caption>
+  <caption>Tabla 3. Plantillas de notificación</caption>
   <tr>
     <th>Tipo</th>
 	<th>Plantilla</th>
@@ -317,6 +376,35 @@ Donde
 * *Endpoint* define el URL en el que se debe realizar la acción POST. 
 * *Pagerduty_APIkey* define una clave de API exclusiva. Esta clave de API la genera el administrador o el propietario de la cuenta de PagerDuty.
 
-Para obtener más información, consulte [Creación de una plantilla de notificación](/docs/services/cloud-monitoring/alerts/notifications.html#template).
+
+
+## Reglas - plantilla de JSON
+{: #rules_template}
+
+Se describe una regla mediante un archivo JSON. 
+
+El código siguiente es una plantilla para una regla:
+
+```
+{
+"name": "Enter rule name",
+"description": "Desccribe rule",
+"expression": "Add metric query",
+"enabled": true,
+"from": "-5min",
+"until": "now",
+"comparison": "below",
+"comparison_scope": "last",
+"error_level" : xxxx,
+"warning_level" : xxxx,
+"frequency": "1min",
+"dashboard_url": "https://metrics.ng.bluemix.net",
+"notifications": [
+ "List of Notifications by name. Include all the motification methods for this rule separated by commas."
+ ]
+}
+```
+{: screen}
+
 
 
