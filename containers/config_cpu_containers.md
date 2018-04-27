@@ -3,7 +3,7 @@
 copyright:
   years: 2017, 2018
 
-lastupdated: "2018-02-07"
+lastupdated: "2018-04-20"
 
 ---
 
@@ -113,7 +113,7 @@ Complete the following steps to create a Grafana dashboard and define a query to
 
 3. Define the query that filters the data that is displayed in the graph. 
 
-    For information about the format of the query, see [Query format for CPU metrics collected for containers](/docs/services/cloud-monitoring/reference/metrics_format.html#cpu_containers).
+    For information about the format of the query, see [Query format for CPU metrics collected for containers](/docs/services/cloud-monitoring/reference/metrics_format_containers.html#cpu_containers).
 
     In the *Metrics* tab, select **Add query**. </br>A query entry is added. Each query is labeled with a letter.
 	

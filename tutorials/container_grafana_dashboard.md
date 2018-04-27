@@ -3,7 +3,7 @@
 copyright:
   years: 2017, 2018
 
-lastupdated: "2018-03-05"
+lastupdated: "2018-04-20"
 
 ---
 
@@ -42,7 +42,7 @@ The tutorial assumes:
 * A cluster is available in the US South region. 
 * Your user ID has an IAM policy for the {{site.data.keyword.monitoringshort}} service with **viewer** permissions.
 
-To complete this tutorial, you must complete the tutorial [Analyze metrics in Grafana for an app that is deployed in a Kubernetes cluster](/docs/services/cloud-monitoring/container_service_metrics.html#container_service_metrics) or have a cluster provisoned with at least 1 application deployed.
+To complete this tutorial, you must complete the tutorial [Analyze metrics in Grafana for an app that is deployed in a Kubernetes cluster](/docs/services/cloud-monitoring/tutorials/container_service_metrics.html#container_service_metrics) or have a cluster provisoned with at least 1 application deployed.
 
 
 
@@ -101,7 +101,7 @@ Complete the following steps:
 
 Define the query that filters the data that is displayed in the graph. This query monitors the nanoseconds of cpu time across all cores for a container.
 
-For information about the format of the query, see [Query format for CPU metrics collected for containers](/docs/services/cloud-monitoring/reference/metrics_format.html#cpu_containers).
+For information about the format of the query, see [Query format for CPU metrics collected for containers](/docs/services/cloud-monitoring/reference/metrics_format_containers.html#cpu_containers).
  
 In the *Metrics* tab, select **Add query**. <br>A query entry is added. Each query is labeled with a letter. 
 

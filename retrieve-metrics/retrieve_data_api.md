@@ -3,7 +3,7 @@
 copyright:
   years: 2017, 2018
 
-lastupdated: "2018-02-01"
+lastupdated: "2018-04-24"
 
 ---
 
@@ -99,8 +99,7 @@ To retrieve metrics from a space, complete the following steps:
 	```
 	{: screen}
 
-	
-5. Run the following cURL command to send metrics:
+4. Run the following cURL command to send metrics:
 
     ```
 	curl -XGET --header "X-Auth-User-Token: Auth_Type ${Token}" --header "X-Auth-Scope-Id: ${Space}" METRICS_ENDPOINT/v1/metrics?from=Start_Time&until=End_Time&target=string

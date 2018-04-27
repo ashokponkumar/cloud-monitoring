@@ -3,7 +3,7 @@
 copyright:
   years: 2017, 2018
 
-lastupdated: "2018-02-08"
+lastupdated: "2018-04-20"
 
 ---
 
@@ -43,7 +43,7 @@ This tutorial assumes that you are working in the US South region.
 
     Your user ID for the {{site.data.keyword.Bluemix_notm}} must have a CF role for the space where the {{site.data.keyword.monitoringshort}} service and the CF app are provisioned. The role required is *developer*.
     
-    For more information, see [Granting a user a CF role by using the IBM Cloud UI](/docs/services/cloud-monitoring/security/grant_permissions.html#grant_permissions_ui_space).
+    For more information, see [Granting a user a CF role by using the IBM Cloud UI](/docs/services/cloud-monitoring/security/assign_policy.html#grant_permissions_ui_space).
 
 2. Provision the {{site.data.keyword.monitoringshort}} service in a space where you have permisisons to provision services in the US South region.
 

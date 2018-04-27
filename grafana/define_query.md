@@ -3,7 +3,7 @@
 copyright:
   years: 2017, 2018
 
-lastupdated: "2018-02-07"
+lastupdated: "2018-04-20"
 
 ---
 
@@ -93,10 +93,6 @@ Complete the following steps to create a Grafana dashboard and define a query:
             <td>CF apps</td>
             <td>[Query format for CF apps](/docs/services/cloud-monitoring/reference/cfapps_metrics_format.html#cfapps_metrics_format)</td> 
           </tr>
-          <tr>
-            <td>{{site.data.keyword.messagehub}}</td>
-            <td>[Query format for {{site.data.keyword.messagehub}}](/docs/services/cloud-monitoring/reference/mh_metrics_format.html#mh_metrics_format)</td> 
-          </tr>
         </table>
 
         For example, for a CF app, choose:
@@ -121,7 +117,7 @@ Complete the following steps to create a Grafana dashboard and define a query:
           </tr>
           <tr>
             <td>{{site.data.keyword.containershort_notm}}</td>
-            <td>[CPU metrics](/docs/services/cloud-monitoring/cf/monitoring_cf_apps_ov.html#cpu_metrics </br>[Disk metrics](/docs/services/cloud-monitoring/cf/monitoring_cf_apps_ov.html#disk_metrics) </br>[Memory metrics](/docs/services/cloud-monitoring/cf/monitoring_cf_apps_ov.html#mem_metrics)</td> 
+            <td>[CPU metrics](/docs/services/cloud-monitoring/cf/monitoring_cf_apps_ov.html#cpu_metrics) </br>[Disk metrics](/docs/services/cloud-monitoring/cf/monitoring_cf_apps_ov.html#disk_metrics) </br>[Memory metrics](/docs/services/cloud-monitoring/cf/monitoring_cf_apps_ov.html#mem_metrics)</td> 
           </tr>
           <tr>
             <td>CF apps</td>

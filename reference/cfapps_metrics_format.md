@@ -3,7 +3,7 @@
 copyright:
   years: 2017, 2018
 
-lastupdated: "2018-02-08"
+lastupdated: "2018-03-12"
 
 ---
 
@@ -24,11 +24,11 @@ Queries that you define in Grafana to monitor a Cloud Foundry application that r
 {:shortdesc}
 
 ```
-{Source}.{Cloud Type}.{Service Name}.{Region}.{CFapp Name}.{CFapp Index}.{Metric series}.[Functions]
+{Source}.{Cloud Type}.{Service Name}.{Region}.{CFapp Name}.{CFapp Index}.{CFapp container}.{Metric Type}.{Metric Subtype}.[Functions]
 ```
 {: codeblock}
 
-where [service fields] represent the specific fields.
+where
 
 <table>
   <caption>Common fields in a query</caption>
@@ -68,14 +68,19 @@ where [service fields] represent the specific fields.
 	  <td>For example: *0* </br>If you have a CF app with one instance, there is only index 0. If you scale the CF app, for example to 10 instances, you have 0 to 9 as index values.</td>
   </tr>
   <tr>
-    <td>CFapp Index</td>
-	<td>Fixed value.</td>
-	<td>*container*</td>
+    <td>CFapp container</td>
+	  <td>Fixed value.</td>
+	  <td>*container*</td>
   </tr>
   <tr>
-    <td>Metric series</td>
-	<td>Type of metric. Disk, memory, and CPU are metric series collected automatically.</td>
-	<td>For example: *cpu-utilization* </td>
+    <td>Metric Type</td>
+	  <td>Type of metric. Disk, memory, and CPU are metric series collected automatically.</td>
+	  <td>*CPU*</td>
+  </tr>
+  <tr>
+    <td>Metric Subtype</td>
+	  <td>Metric to be dispayed. </br>[CPU metrics](/docs/services/cloud-monitoring/cf/monitoring_cf_apps_ov.html#cpu_metrics) </br>[Disk metrics](/docs/services/cloud-monitoring/cf/monitoring_cf_apps_ov.html#disk_metrics) </br>[Memory metrics](/docs/services/cloud-monitoring/cf/monitoring_cf_apps_ov.html#mem_metrics)</td>
+	  <td></td>
   </tr>
   <tr>
     <td>Functions</td>

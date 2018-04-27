@@ -3,7 +3,7 @@
 copyright:
   years: 2017, 2018
 
-lastupdated: "2018-02-07"
+lastupdated: "2018-03-12"
 
 ---
 
@@ -31,7 +31,7 @@ Queries that you define in Grafana to monitor the {{site.data.keyword.containers
 The format of a query that you define in Grafana to monitor a CPU metric for a container that runs in the {{site.data.keyword.containershort_notm}} service is described as follows: 
 
 ```
-{Source}.{Cloud Type}.{Service Name}.{Region}.{Cluster Name}.{Namespace}.{Metric Source}.{Pod Name}.{Container Name}.{Metric Type}.{Metric Subtype}
+{Source}.{Cloud Type}.{Service Name}.{Region}.{Cluster Name}.{Namespace}.{Metric Source}.{Pod Name}.{Container Name}.{Metric Type}.{Metric Subtype}.[Functions]
 ```
 {: codeblock}  
 
@@ -96,9 +96,14 @@ where
   </tr>
   <tr>
     <td>Metric Subtype</td>
-	  <td></td>
+	  <td>Metric to be displayed.</td>
 	  <td>*usage*, *num-cores*, *usage-pct*, *usage-pct-container-requested*</td>
   </tr>
+  <tr>
+    <td>Functions</td>
+    <td>Query functions that you can select to visualize a container metric in the panel. </td>
+    <td>[Functions ![(External link icon)](../../../icons/launch-glyph.svg "External link icon")](http://graphite.readthedocs.io/en/latest/functions.html){: new_window}</td>
+   </tr>
 </table>
 
 For example, a query to monitor the CPU usage for a container that is running in a Kubernetes cluster in the US South region is defined as follows:
@@ -116,7 +121,7 @@ ibmcloud.public.containers-kubernetes.us-south.myCluster.container.default.myPod
 The format of a query that you define in Grafana to monitor a load metric for a worker that runs in the {{site.data.keyword.containershort_notm}} service is described as follows: 
 
 ```
-{Source}.{Cloud Type}.{Service Name}.{Region}.{Cluster Name}.{Metric Source}.{Worker Name}.{Metric Type}.{Metric Subtype}
+{Source}.{Cloud Type}.{Service Name}.{Region}.{Cluster Name}.{Metric Source}.{Worker Name}.{Metric Type}.{Metric Subtype}.[Functions]
 ```
 {: codeblock}  
 
@@ -171,9 +176,14 @@ where
   </tr>
   <tr>
     <td>Metric Subtype</td>
-	<td></td>
-	<td>*avg-1*, *avg-5*, *avg-15*</td>
+	  <td>Metric to be displayed.</td>
+	  <td>*avg-1*, *avg-5*, *avg-15*</td>
   </tr>
+  <tr>
+    <td>Functions</td>
+    <td>Query functions that you can select to visualize a container metric in the panel. </td>
+    <td>[Functions ![(External link icon)](../../../icons/launch-glyph.svg "External link icon")](http://graphite.readthedocs.io/en/latest/functions.html){: new_window}</td>
+   </tr>
 </table>
 
 For example, a query to monitor the CPU usage for a worker that is running in a Kubernetes cluster in the US South region is defined as follows:
@@ -190,7 +200,7 @@ ibmcloud.public.containers-kubernetes.us-south.myCluster.worker.MyWorker.load.av
 The format of a query that you define in Grafana to monitor a memory metric for a container that runs in the {{site.data.keyword.containershort_notm}} service is described as follows: 
 
 ```
-{Source}.{Cloud Type}.{Service Name}.{Region}.{Cluster Name}.{Namespace}.{Metric Source}.{Pod Name}.{Container Name}.{Metric Type}.{Metric Subtype}
+{Source}.{Cloud Type}.{Service Name}.{Region}.{Cluster Name}.{Namespace}.{Metric Source}.{Pod Name}.{Container Name}.{Metric Type}.{Metric Subtype}.[Functions]
 ```
 {: codeblock}  
 
@@ -245,19 +255,24 @@ where
   </tr>
   <tr>
     <td>Container Name</td>
-	<td>Name of the container.</td>
-	<td></td>
+	  <td>Name of the container.</td>
+	  <td></td>
   </tr>
   <tr>
     <td>Metric Type</td>
-	<td>Type of metric.</td>
-	<td>*memory*</td>
+  	<td>Type of metric.</td>
+  	<td>*memory*</td>
   </tr>
   <tr>
     <td>Metric Subtype</td>
-	<td></td>
-	<td>*limit*, *current*, *usage-pct*</td>
+	  <td>Metric to be displayed.</td>
+	  <td>*limit*, *current*, *usage-pct*</td>
   </tr>
+  <tr>
+    <td>Functions</td>
+    <td>Query functions that you can select to visualize a container metric in the panel. </td>
+    <td>[Functions ![(External link icon)](../../../icons/launch-glyph.svg "External link icon")](http://graphite.readthedocs.io/en/latest/functions.html){: new_window}</td>
+   </tr>
 </table>
 
 For example, a query to monitor the memory usage for a container that is running in a Kubernetes cluster in the US South region is defined as follows:

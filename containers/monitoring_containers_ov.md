@@ -3,7 +3,7 @@
 copyright:
   years: 2017, 2018
 
-lastupdated: "2018-03-05"
+lastupdated: "2018-04-20"
 
 ---
 
@@ -24,7 +24,7 @@ lastupdated: "2018-03-05"
 In the {{site.data.keyword.Bluemix}}, cluster metrics are collected automatically. You can use Grafana to monitor the performance of your cluster. 
 {:shortdesc}
 
-**Note:** Metrics are collected and available for monitoring through the {{site.data.keyword.monitoringshort}} service for containers running in standard clusters. For more information about the features supported by a standard cluster, see [Planning clusters and apps](/docs/containers/cs_planning.html#cs_planning_cluster_type).
+**Note:** Metrics are collected and available for monitoring through the {{site.data.keyword.monitoringshort}} service for containers running in standard clusters.
 
 
 
@@ -181,7 +181,7 @@ You can launch Grafana from a browser. For more information, see [Navigating to 
 
 To monitor containers and workers that run in a Kubernetes cluster, you must define a query in Grafana for each resource:
 
-* To define a query that monitors a CPU metric for a container, see [Configuring CPU metrics for a container in Grafana](/docs/services/cloud-monitoring/containers/config_cpu_worker.html#config_cpu_worker).
+* To define a query that monitors a CPU metric for a container, see [Configuring CPU metrics for a container in Grafana](/docs/services/cloud-monitoring/containers/config_cpu_containers.html#config_cpu_containers).
 * To define a query that monitors a memory metric for a container, see [Configuring memory metrics for a container in Grafana](/docs/services/cloud-monitoring/containers/config_mem_container.html#config_mem_container).
 * To define a query that monitors a Load metric for a worker, see [Configuring Load metrics for a worker in Grafana](/docs/services/cloud-monitoring/containers/config_load_worker.html#config_load_worker).
 

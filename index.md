@@ -3,7 +3,7 @@
 copyright:
   years: 2017, 2018
 
-lastupdated: "2018-02-09"
+lastupdated: "2018-04-19"
 
 ---
 
@@ -24,7 +24,6 @@ Use this tutorial to learn how to start working with the {{site.data.keyword.mon
 {:shortdesc}
 
 By default, {{site.data.keyword.Bluemix_notm}} offers integrated monitoring capabilities for selected services. You can use the {{site.data.keyword.monitoringlong_notm}} service to expand your collection and retention capabilities when working with metrics, and to be able to define rules and alerts that notify you of conditions that require attention. The {{site.data.keyword.monitoringshort}} service offers features that give you insight into how your apps are performing and consuming resources, and help you to quickly identify trends, detect and diagnose problems; all with immediate time to value and low total cost of ownership. You monitor your environment through Grafana. 
-
 
 ## Before you begin
 {: #prereqs}

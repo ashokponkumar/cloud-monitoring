@@ -3,7 +3,7 @@
 copyright:
   years: 2017, 2018
 
-lastupdated: "2018-03-06"
+lastupdated: "2018-04-20"
 
 ---
 
@@ -48,7 +48,7 @@ This tutorial walks through the steps that are required to get the following end
     
     * An IAM policy for the {{site.data.keyword.containershort}} with *operator* or *administrator* permissions.
     
-    For more information, see [Assign an IAM policy to a user through the IBM Cloud UI](/docs/services/cloud-monitoring/security/grant_permissions.html#grant_permissions_ui_account).
+    For more information, see [Assign an IAM policy to a user through the IBM Cloud UI](/docs/services/cloud-monitoring/security/assign_policy.html#assign_policy_ui).
 
 2. Have a terminal session from where you can manage the Kubernetes cluster and deploy apps from the command line. The examples in this tutorial are given for an Ubuntu Linux system.
 
@@ -67,10 +67,7 @@ This tutorial walks through the steps that are required to get the following end
 
 Complete the following steps:
 
-1. Create a standard Kubernetes cluster.
-
-   * [Create a Kubernetes standard cluster through the UI](/docs/containers/cs_cluster.html#cs_cluster_ui).
-   * [Create a Kubernetes standard cluster by using the CLI](/docs/containers/cs_cluster.html#cs_cluster_cli).
+1. Create a standard Kubernetes cluster. For more information, see [Create a Kubernetes standard cluster](/docs/containers/cs_tutorials.html#cs_cluster_tutorial).
 
 2. Set up the cluster context in a terminal. After the context is set, you can manage the Kubernetes cluster and deploy the application in the Kubernetes cluster.
 

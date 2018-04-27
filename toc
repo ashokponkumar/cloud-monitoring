@@ -14,11 +14,13 @@ IBM Cloud Monitoring
         send_retrieve_metrics_ov.md
         config_alerts_ov.md
         analyze_metrics_ov.md
+        compliance.md
 
     {: .topicgroup}
     Monitoring cloud resources
         cf/monitoring_cf_apps_ov.md
         containers/monitoring_containers_ov.md
+        mh/monitoring_mh_ov.md
 
     {: .topicgroup}
     Tutorials
@@ -45,6 +47,8 @@ IBM Cloud Monitoring
         alerts/configure_webhook_alert.md
         alerts/retrieve_history.md
         alerts/retrieve_history_grafana.md
+        alerts/delete_notifications.md
+        alerts/delete_alerts.md
 
     {: .topicgroup}
     Containers
@@ -59,11 +63,11 @@ IBM Cloud Monitoring
         alerts/config_alerts_grafana.md
 
     {: .topicgroup}
-    Sending metrics
+    Metrics
         send-metrics/send_data_api.md
         send-metrics/conf_monitoring_plugin.md
-        
-    retrieve-metrics/retrieve_data_api.md
+        retrieve-metrics/retrieve_data_api.md
+        how-to/delete_metrics.md
 
     {: .topicgroup}
     Security
@@ -93,7 +97,6 @@ IBM Cloud Monitoring
         reference/metrics_format.md
         reference/cfapps_metrics_format.md
         reference/metrics_format_containers.md
-	
     {: .navgroup-end}
 
 

@@ -3,7 +3,7 @@
 copyright:
   years: 2017, 2018
 
-lastupdated: "2018-02-01"
+lastupdated: "2018-04-20"
 
 ---
 
@@ -46,9 +46,9 @@ The following format is deprecated:
 
 The new formats that are valid are the following:
 
-* [CPU metric query format for a container](/docs/services/cloud-monitoring/reference/metrics_format.html#cpu_containers)
-* [Load metric query format for a worker](/docs/services/cloud-monitoring/reference/metrics_format.html#load_workers)
-* [Memory metric query format for a container](/docs/services/cloud-monitoring/reference/metrics_format.html#mem_containers)
+* [CPU metric query format for a container](/docs/services/cloud-monitoring/reference/metrics_format_containers.html#cpu_containers)
+* [Load metric query format for a worker](/docs/services/cloud-monitoring/reference/metrics_format_containers.html#load_workers)
+* [Memory metric query format for a container](/docs/services/cloud-monitoring/reference/metrics_format_containers.html#mem_containers)
 
 Migrate your old queries to the new format to visualize your data in Grafana.
 
