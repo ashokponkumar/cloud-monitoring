@@ -197,7 +197,7 @@ To analyze metrics for a cluster, you must access Grafana in the cloud Public re
 
     For example, for the US South region, launch: [https://metrics.ng.bluemix.net/](https://metrics.ng.bluemix.net/).
 
-2. Set the {{site.data.keyword.monitoringshort} domain to **Account**.
+2. Set the {{site.data.keyword.monitoringshort}} domain to **Account**.
 
     In Grafana, select your ID. Then, check that you are in the correct account, and choose a domain. Select `Domain = account`.
 
